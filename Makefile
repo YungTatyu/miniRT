@@ -3,8 +3,9 @@ CC = cc
 CFLAGS = -Wall -Werror -Wextra
 #CFLAGS += -g -fsanitize=address
 
+MINILIBX_DIR = minlibx-linux
 INCLUDES_DIR = includes
-INCLUDES =  -I$(INCLUDES_DIR)
+INCLUDES =  -I$(INCLUDES_DIR) -I$(MINILIBX_DIR)
 
 SRCS_DIR = src
 SRCS = $(SRCS_DIR)/main.c
@@ -21,7 +22,7 @@ $(NAME):	$(OBJS)
 
 $(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c
 	@mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) -I $(INCLUDES) -c $< -o $@
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 clean:
 	$(RM) $(OBJS_DIR)

@@ -1,21 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tterao <tterao@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/29 17:54:04 by tterao            #+#    #+#             */
-/*   Updated: 2023/09/29 18:16:47 by tterao           ###   ########.fr       */
+/*   Created: 2023/09/29 18:14:23 by tterao            #+#    #+#             */
+/*   Updated: 2023/09/29 18:16:10 by tterao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
+#ifndef MINIRT_H
+# define MINIRT_H
 
-int	main(int argc, char *argv[])
-{
-	if (argc == 1)
-		return (EXIT_FAILURE);
-	(void)argv;
-	return (0);
-}
+#include <stdlib.h>
+
+#endif
