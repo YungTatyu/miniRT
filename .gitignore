@@ -42,6 +42,7 @@ miniRT
 *.su
 *.idb
 *.pdb
+Makefile.gen
 
 # Kernel Module Compile Results
 *.mod*
