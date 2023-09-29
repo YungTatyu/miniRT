@@ -6,11 +6,13 @@
 /*   By: tterao <tterao@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 17:54:04 by tterao            #+#    #+#             */
-/*   Updated: 2023/09/29 18:16:47 by tterao           ###   ########.fr       */
+/*   Updated: 2023/09/29 18:23:15 by tterao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
+#include <stdlib.h>
+
 
 int	main(int argc, char *argv[])
 {

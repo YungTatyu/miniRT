@@ -18,7 +18,7 @@ RM = rm -rf
 all: $(NAME)
 
 $(NAME):	$(OBJS)
-	$(CC) $(CFLAGS) $(INCLUDES) -o $(NAME) $(OBJS)
+	$(CC) $(CFLAGS) $(INCLUDES) -o $@ $^
 
 $(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c
 	@mkdir -p $(dir $@)

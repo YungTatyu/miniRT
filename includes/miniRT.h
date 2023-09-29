@@ -6,13 +6,11 @@
 /*   By: tterao <tterao@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 18:14:23 by tterao            #+#    #+#             */
-/*   Updated: 2023/09/29 18:16:10 by tterao           ###   ########.fr       */
+/*   Updated: 2023/09/29 18:23:01 by tterao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINIRT_H
 # define MINIRT_H
-
-#include <stdlib.h>
 
 #endif
