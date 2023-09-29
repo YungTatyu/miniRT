@@ -43,6 +43,7 @@ miniRT
 *.idb
 *.pdb
 Makefile.gen
+mlx-test
 
 # Kernel Module Compile Results
 *.mod*

@@ -3,12 +3,12 @@ CC = cc
 CFLAGS = -Wall -Werror -Wextra
 #CFLAGS += -g -fsanitize=address
 
-MINILIBX_DIR = minilibx-linux
 INCLUDES_DIR = include
+MINILIBX_DIR = minilibx-linux
 X11_DIR = /usr/X11
+
 INCLUDES =  -I$(INCLUDES_DIR) -I$(MINILIBX_DIR) -I$(X11_DIR)/include
 MINILIBX_FLAGS = -L$(MINILIBX_DIR) -lmlx -L$(X11_DIR)/lib -lX11 -lXext
-MINILIBX_FILE = $(MINILIBX_DIR)/libmlx.a
 
 SRCS_DIR = src
 SRCS = $(SRCS_DIR)/main.c
