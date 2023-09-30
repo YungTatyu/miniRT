@@ -1,32 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   objs.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tterao <tterao@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/29 17:54:04 by tterao            #+#    #+#             */
-/*   Updated: 2023/09/30 14:45:45 by tterao           ###   ########.fr       */
+/*   Created: 2023/09/30 14:27:32 by tterao            #+#    #+#             */
+/*   Updated: 2023/09/30 14:34:27 by tterao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
-#include <stdlib.h>
-#include <mlx.h>
+#ifndef OBJS_H
+# define OBJS_H
 
-typedef struct s_screen
+enum e_obj_type
 {
-	void	*mlx;
-	void	*mlx_win;
-	int		screen_width;
-	int		screen_height;
-}t_screen;
+	HEAD,
+	PALNE,
+	SPHERE,
+	CYLINDER,
+};
 
-
-int	main(int argc, char *argv[])
+typedef struct s_objs
 {
-	if (argc == 1)
-		return (EXIT_FAILURE);
-	
-	return (0);
-}
+	e_obj_type		type;
+	void			*obj;
+	struct s_objs	*next;
+}t_objs;
+
+t_objs	*objs_newnode(e_obj_type type, const char **info);
+t_objs	*objs_addback(t_objs **head, t_objs *newnode);
+t_objs	*objs_lastnode(t_objs **head);
+t_objs	*objs_free(t_objs **head);
+
+#endif

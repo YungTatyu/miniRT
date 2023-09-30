@@ -6,13 +6,14 @@
 /*   By: tterao <tterao@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 18:14:23 by tterao            #+#    #+#             */
-/*   Updated: 2023/09/30 14:20:38 by tterao           ###   ########.fr       */
+/*   Updated: 2023/09/30 14:59:09 by tterao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINIRT_H
 # define MINIRT_H
 
+# include "objs.h"
 
 typedef struct s_ambient_lightning
 {
@@ -20,7 +21,7 @@ typedef struct s_ambient_lightning
 	int		green;
 	int		blue;
 	float	ratio;
-}t_s_ambient_lightning;
+}t_ambient_lightning;
 
 typedef struct s_camera
 {
@@ -85,27 +86,18 @@ typedef struct s_cylinder
 	float	height;
 }t_cylinder;
 
-enum e_obj_type
-{
-	HEAD,
-	PALNE,
-	SPHERE,
-	CYLINDER,
-};
-
-typedef struct s_objs
-{
-	e_obj_type		type;
-	void			*obj;
-	struct s_objs	*next;
-}t_objs;
-
-typedef struct s_window
+typedef struct s_global_data
 {
 	void	*mlx;
 	void	*mlx_win;
 	int		height;
 	int		width;
-}t_window;
+	t_ambient_lightning	*ambient_light;
+	t_camera	*camera;
+	t_light		*light;
+	t_objs		*objs_list;
+}t_global_data;
+
+
 
 #endif
