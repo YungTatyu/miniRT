@@ -1,6 +1,6 @@
 NAME = miniRT
 CC = cc
-CFLAGS = -Wall -Werror -Wextra
+# CFLAGS = -Wall -Werror -Wextra
 #CFLAGS += -g -fsanitize=address
 
 INCLUDES_DIR = include
@@ -9,6 +9,9 @@ X11_DIR = /usr/X11
 
 INCLUDES =  -I$(INCLUDES_DIR) -I$(MINILIBX_DIR) -I$(X11_DIR)/include
 MINILIBX_FLAGS = -L$(MINILIBX_DIR) -lmlx -L$(X11_DIR)/lib -lX11 -lXext
+
+LIBFT_DIR = libft
+LIBFT_FLAGS = libft/libft.a libft/libftprintf.a libft/libftdprintf.a
 
 SRCS_DIR = src
 SRCS = $(SRCS_DIR)/main.c
@@ -22,7 +25,8 @@ all: $(NAME)
 
 $(NAME):	$(OBJS)
 	$(MAKE) -C $(MINILIBX_DIR)
-	$(CC) $(CFLAGS) $(MINILIBX_FLAGS) $(INCLUDES) -o $@ $^
+	$(MAKE) -C libft
+	$(CC) $(CFLAGS) $(MINILIBX_FLAGS) $(INCLUDES) $(LIBFT_FLAGS) -o $@ $^
 
 $(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c
 	@mkdir -p $(dir $@)
@@ -30,9 +34,11 @@ $(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c
 
 clean:
 	$(MAKE) -C $(MINILIBX_DIR) clean
+	$(MAKE) -C $(LIBFT_DIR) clean
 	$(RM) $(OBJS_DIR)
 
 fclean:	clean
+	$(MAKE) -C $(LIBFT_DIR) fclean
 	$(RM) $(NAME)
 
 re: fclean all

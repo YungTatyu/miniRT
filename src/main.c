@@ -6,7 +6,7 @@
 /*   By: tterao <tterao@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 17:54:04 by tterao            #+#    #+#             */
-/*   Updated: 2023/09/29 19:53:44 by tterao           ###   ########.fr       */
+/*   Updated: 2023/09/30 14:45:45 by tterao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,6 @@ int	main(int argc, char *argv[])
 {
 	if (argc == 1)
 		return (EXIT_FAILURE);
-	(void)argv;
-	t_screen data;
-	data.mlx = mlx_init();
-	data.screen_height = 1920;
-	data.screen_width = 1080;
-	data.mlx_win = mlx_new_window(data.mlx, data.screen_height, data.screen_width, "test");
-	while (1)
-	{
-		;
-	}
-
+	
 	return (0);
 }
