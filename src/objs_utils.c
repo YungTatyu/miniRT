@@ -1,27 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   objs_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tterao <tterao@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/29 17:54:04 by tterao            #+#    #+#             */
-/*   Updated: 2023/09/30 17:04:24 by tterao           ###   ########.fr       */
+/*   Created: 2023/09/30 15:42:57 by tterao            #+#    #+#             */
+/*   Updated: 2023/09/30 16:38:13 by tterao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parse.h"
-#include "objs.h"
-#include <stdlib.h>
-#include <mlx.h>
+#include <unistd.h>
 
-int	main(int argc, char *argv[])
+t_objs	*objs_lastnode(t_objs *head)
 {
-	t_global_data	data;
+	t_objs	*node;
 
-	if (argc != 2)
-		return (EXIT_FAILURE);
-	global_data_init(&data);
+	node = head;
+	while (node->next != NULL)
+	{
+		if ((node->next)->type == HEAD)
+			break ;
+		node = node->next;
+	}
+	return (node);
+}
 
-	return (0);
+void	objs_addback(t_objs *head, t_objs *newnode)
+{
+	t_objs	*lastnode;
+
+	lastnode = objs_lastnode(head);
+	lastnode->next = newnode;
+	newnode->next = head;
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   objs.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ryhara <ryhara@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: tterao <tterao@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 14:27:32 by tterao            #+#    #+#             */
-/*   Updated: 2023/09/30 15:05:42 by ryhara           ###   ########.fr       */
+/*   Updated: 2023/09/30 15:57:04 by tterao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 enum e_obj_type
 {
 	HEAD,
-	PALNE,
+	PLANE,
 	SPHERE,
 	CYLINDER,
 };
@@ -24,13 +24,13 @@ enum e_obj_type
 typedef struct s_objs
 {
 	enum e_obj_type		type;
-	void			*obj;
-	struct s_objs	*next;
+	void				*obj;
+	struct s_objs		*next;
 }t_objs;
 
 t_objs	*objs_newnode(enum e_obj_type type, const char **info);
-t_objs	*objs_addback(t_objs **head, t_objs *newnode);
-t_objs	*objs_lastnode(t_objs **head);
-t_objs	*objs_free(t_objs **head);
+void	objs_addback(t_objs *head, t_objs *newnode);
+t_objs	*objs_lastnode(t_objs *head);
+void	objs_free(t_objs *head);
 
 #endif

@@ -42,6 +42,7 @@ miniRT
 *.su
 *.idb
 *.pdb
+.vscode/
 Makefile.gen
 mlx-test
 

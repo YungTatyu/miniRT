@@ -7,14 +7,18 @@ INCLUDES_DIR = include
 MINILIBX_DIR = minilibx-linux
 X11_DIR = /usr/X11
 
-INCLUDES =  -I$(INCLUDES_DIR) -I$(MINILIBX_DIR) -I$(X11_DIR)/include
-MINILIBX_FLAGS = -L$(MINILIBX_DIR) -lmlx -L$(X11_DIR)/lib -lX11 -lXext
-
 LIBFT_DIR = libft
 LIBFT_FLAGS = libft/libft.a libft/libftprintf.a libft/libftdprintf.a
 
+INCLUDES =  -I$(INCLUDES_DIR) -I$(MINILIBX_DIR) -I$(X11_DIR)/include -I$(LIBFT_DIR)/includes
+MINILIBX_FLAGS = -L$(MINILIBX_DIR) -lmlx -L$(X11_DIR)/lib -lX11 -lXext
+
+
 SRCS_DIR = src
-SRCS = $(SRCS_DIR)/main.c
+SRCS = $(SRCS_DIR)/main.c	\
+		$(SRCS_DIR)/init.c	\
+		$(SRCS_DIR)/objs_newnode.c	\
+		$(SRCS_DIR)/objs_utils.c
 
 OBJS_DIR = obj
 OBJS = $(patsubst $(SRCS_DIR)/%.c,$(OBJS_DIR)/%.o,$(SRCS))

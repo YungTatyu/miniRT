@@ -6,7 +6,7 @@
 /*   By: tterao <tterao@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 14:59:20 by tterao            #+#    #+#             */
-/*   Updated: 2023/09/30 15:01:07 by tterao           ###   ########.fr       */
+/*   Updated: 2023/09/30 16:45:13 by tterao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@
 
 void				global_data_init(t_global_data *data);
 bool				parse(t_global_data *data, const char *file);
-t_ambient_lightning	*ambient_light_init();
-t_camera			*camera_init();
-t_light				*light_init();
+t_ambient_lightning	*ambient_light_init(const char **info);
+t_camera			*camera_init(const char **info);
+t_light				*light_init(const char **info);
 bool				parse_ambient_light(const char *line);
 bool				parse_camera(const char *line);
 
