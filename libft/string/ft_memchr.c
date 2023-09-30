@@ -1,36 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   objs.h                                             :+:      :+:    :+:   */
+/*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ryhara <ryhara@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/30 14:27:32 by tterao            #+#    #+#             */
-/*   Updated: 2023/09/30 15:05:42 by ryhara           ###   ########.fr       */
+/*   Created: 2023/05/21 09:21:37 by ryhara            #+#    #+#             */
+/*   Updated: 2023/09/29 12:48:05 by ryhara           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef OBJS_H
-# define OBJS_H
+#include "../includes/ft_string.h"
 
-enum e_obj_type
+void	*ft_memchr(const void *s, int c, size_t n)
 {
-	HEAD,
-	PALNE,
-	SPHERE,
-	CYLINDER,
-};
+	size_t			i;
+	unsigned char	*ans;
 
-typedef struct s_objs
-{
-	enum e_obj_type		type;
-	void			*obj;
-	struct s_objs	*next;
-}t_objs;
-
-t_objs	*objs_newnode(enum e_obj_type type, const char **info);
-t_objs	*objs_addback(t_objs **head, t_objs *newnode);
-t_objs	*objs_lastnode(t_objs **head);
-t_objs	*objs_free(t_objs **head);
-
-#endif
+	i = 0;
+	ans = (unsigned char *)s;
+	if (s == NULL)
+		return (NULL);
+	while (i < n)
+	{
+		if (*ans == (unsigned char)c)
+			return (ans);
+		ans++;
+		i++;
+	}
+	return (NULL);
+}

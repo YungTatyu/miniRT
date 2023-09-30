@@ -1,36 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   objs.h                                             :+:      :+:    :+:   */
+/*   ft_memcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ryhara <ryhara@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/30 14:27:32 by tterao            #+#    #+#             */
-/*   Updated: 2023/09/30 15:05:42 by ryhara           ###   ########.fr       */
+/*   Created: 2023/05/21 09:39:40 by ryhara            #+#    #+#             */
+/*   Updated: 2023/09/29 12:48:09 by ryhara           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef OBJS_H
-# define OBJS_H
+#include "../includes/ft_string.h"
 
-enum e_obj_type
+int	ft_memcmp(const void *s1, const void *s2, size_t n)
 {
-	HEAD,
-	PALNE,
-	SPHERE,
-	CYLINDER,
-};
+	unsigned char	*tmp1;
+	unsigned char	*tmp2;
 
-typedef struct s_objs
-{
-	enum e_obj_type		type;
-	void			*obj;
-	struct s_objs	*next;
-}t_objs;
-
-t_objs	*objs_newnode(enum e_obj_type type, const char **info);
-t_objs	*objs_addback(t_objs **head, t_objs *newnode);
-t_objs	*objs_lastnode(t_objs **head);
-t_objs	*objs_free(t_objs **head);
-
-#endif
+	tmp1 = (unsigned char *)s1;
+	tmp2 = (unsigned char *)s2;
+	if (n == 0)
+		return (0);
+	while (n--)
+	{
+		if (*tmp1 != *tmp2)
+			return (*tmp1 - *tmp2);
+		tmp1++;
+		tmp2++;
+	}
+	return (0);
+}

@@ -1,36 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   objs.h                                             :+:      :+:    :+:   */
+/*   ft_stdio.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ryhara <ryhara@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/30 14:27:32 by tterao            #+#    #+#             */
-/*   Updated: 2023/09/30 15:05:42 by ryhara           ###   ########.fr       */
+/*   Created: 2023/09/29 10:24:19 by ryhara            #+#    #+#             */
+/*   Updated: 2023/09/29 11:02:45 by ryhara           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef OBJS_H
-# define OBJS_H
+#ifndef FT_STDIO_H
+# define FT_STDIO_H
 
-enum e_obj_type
-{
-	HEAD,
-	PALNE,
-	SPHERE,
-	CYLINDER,
-};
+# include <unistd.h>
+# include <stddef.h>
+# include "../stdio/get_next_line/get_next_line.h"
 
-typedef struct s_objs
-{
-	enum e_obj_type		type;
-	void			*obj;
-	struct s_objs	*next;
-}t_objs;
+void	ft_putchar_fd(char c, int fd);
+void	ft_putendl_fd(char *s, int fd);
+void	ft_putnbr_fd(int n, int fd);
+void	ft_putstr_fd(char *s, int fd);
 
-t_objs	*objs_newnode(enum e_obj_type type, const char **info);
-t_objs	*objs_addback(t_objs **head, t_objs *newnode);
-t_objs	*objs_lastnode(t_objs **head);
-t_objs	*objs_free(t_objs **head);
+char	*get_next_line(int fd);
 
 #endif

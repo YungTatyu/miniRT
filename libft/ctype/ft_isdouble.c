@@ -1,36 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   objs.h                                             :+:      :+:    :+:   */
+/*   ft_isdouble.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ryhara <ryhara@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/30 14:27:32 by tterao            #+#    #+#             */
-/*   Updated: 2023/09/30 15:05:42 by ryhara           ###   ########.fr       */
+/*   Created: 2023/09/29 13:10:28 by ryhara            #+#    #+#             */
+/*   Updated: 2023/09/29 14:03:51 by ryhara           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef OBJS_H
-# define OBJS_H
+#include "../includes/ft_ctype.h"
 
-enum e_obj_type
+int	ft_isdouble(char *s)
 {
-	HEAD,
-	PALNE,
-	SPHERE,
-	CYLINDER,
-};
+	size_t	i;
 
-typedef struct s_objs
-{
-	enum e_obj_type		type;
-	void			*obj;
-	struct s_objs	*next;
-}t_objs;
-
-t_objs	*objs_newnode(enum e_obj_type type, const char **info);
-t_objs	*objs_addback(t_objs **head, t_objs *newnode);
-t_objs	*objs_lastnode(t_objs **head);
-t_objs	*objs_free(t_objs **head);
-
-#endif
+	i = 0;
+	if (s == NULL || s[0] == '\0')
+		return (0);
+	while (s[i] && ((s[i] >= 9 && s[i] <= 13) || s[i] == 32))
+		i++;
+	if (s[i] == '-' || s[i] == '+')
+		i++;
+	while (s[i] && ft_isdigit(s[i]))
+		i++;
+	if (i != 0 && s[i] == '.')
+	{
+		i++;
+		while (s[i] && ft_isdigit(s[i]))
+			i++;
+	}
+	if (s[i] != '\0')
+		return (0);
+	return (1);
+}

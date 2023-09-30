@@ -1,36 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   objs.h                                             :+:      :+:    :+:   */
+/*   ft_ctype.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ryhara <ryhara@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/30 14:27:32 by tterao            #+#    #+#             */
-/*   Updated: 2023/09/30 15:05:42 by ryhara           ###   ########.fr       */
+/*   Created: 2023/09/29 10:13:07 by ryhara            #+#    #+#             */
+/*   Updated: 2023/09/29 14:20:55 by ryhara           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef OBJS_H
-# define OBJS_H
+#ifndef FT_CTYPE_H
+# define FT_CTYPE_H
 
-enum e_obj_type
-{
-	HEAD,
-	PALNE,
-	SPHERE,
-	CYLINDER,
-};
+# include <limits.h>
+# include <stddef.h>
+# include "ft_stdlib.h"
 
-typedef struct s_objs
-{
-	enum e_obj_type		type;
-	void			*obj;
-	struct s_objs	*next;
-}t_objs;
-
-t_objs	*objs_newnode(enum e_obj_type type, const char **info);
-t_objs	*objs_addback(t_objs **head, t_objs *newnode);
-t_objs	*objs_lastnode(t_objs **head);
-t_objs	*objs_free(t_objs **head);
+int	ft_isalnum(int c);
+int	ft_isalpha(int c);
+int	ft_isascii(int c);
+int	ft_isdigit(int c);
+int	ft_isdouble(char *s);
+int	ft_isint(char *s);
+int	ft_isprint(int c);
+int	ft_isspace(int c);
+int	ft_tolower(int c);
+int	ft_toupper(int c);
 
 #endif

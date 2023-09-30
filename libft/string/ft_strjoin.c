@@ -1,36 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   objs.h                                             :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ryhara <ryhara@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/30 14:27:32 by tterao            #+#    #+#             */
-/*   Updated: 2023/09/30 15:05:42 by ryhara           ###   ########.fr       */
+/*   Created: 2023/05/21 14:38:10 by ryhara            #+#    #+#             */
+/*   Updated: 2023/09/29 12:49:15 by ryhara           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef OBJS_H
-# define OBJS_H
+#include "../includes/ft_string.h"
 
-enum e_obj_type
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	HEAD,
-	PALNE,
-	SPHERE,
-	CYLINDER,
-};
+	char	*ans;
+	size_t	len;
 
-typedef struct s_objs
-{
-	enum e_obj_type		type;
-	void			*obj;
-	struct s_objs	*next;
-}t_objs;
-
-t_objs	*objs_newnode(enum e_obj_type type, const char **info);
-t_objs	*objs_addback(t_objs **head, t_objs *newnode);
-t_objs	*objs_lastnode(t_objs **head);
-t_objs	*objs_free(t_objs **head);
-
-#endif
+	if (s1 == NULL || s2 == NULL)
+		return (NULL);
+	len = ft_strlen(s1) + ft_strlen(s2) + 1;
+	ans = (char *)malloc(sizeof(char) * len);
+	if (!ans)
+		return (NULL);
+	*ans = '\0';
+	ft_strlcat(ans, s1, ft_strlen(s1) + 1);
+	ft_strlcat(ans, s2, len);
+	return (ans);
+}
