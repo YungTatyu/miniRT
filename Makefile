@@ -14,7 +14,12 @@ LIBFT_DIR = libft
 LIBFT_FLAGS = libft/libft.a libft/libftprintf.a libft/libftdprintf.a
 
 SRCS_DIR = src
-SRCS = $(SRCS_DIR)/main.c
+SRC = main.c \
+	parse.c \
+	parse_objs.c \
+	parse_utils.c \
+	parse_settings.c
+SRCS = $(addprefix $(SRCS_DIR)/, $(SRC));
 
 OBJS_DIR = obj
 OBJS = $(patsubst $(SRCS_DIR)/%.c,$(OBJS_DIR)/%.o,$(SRCS))

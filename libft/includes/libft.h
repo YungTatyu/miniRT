@@ -14,7 +14,7 @@
 # define LIBFT_H
 
 # include "ft_ctype.h"
-# include "ft_doubly_circularly_linked_list.h"
+# include "ft_doubly_linked_list.h"
 # include "ft_singly_linked_list.h"
 # include "ft_stdio.h"
 # include "ft_stdlib.h"
