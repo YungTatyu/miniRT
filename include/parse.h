@@ -6,7 +6,7 @@
 /*   By: tterao <tterao@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 14:59:20 by tterao            #+#    #+#             */
-/*   Updated: 2023/09/30 16:45:13 by tterao           ###   ########.fr       */
+/*   Updated: 2023/09/30 17:41:41 by tterao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # include <stdbool.h>
 
 void				global_data_init(t_global_data *data);
+void				global_data_free(t_global_data *data);
 bool				parse(t_global_data *data, const char *file);
 t_ambient_lightning	*ambient_light_init(const char **info);
 t_camera			*camera_init(const char **info);
