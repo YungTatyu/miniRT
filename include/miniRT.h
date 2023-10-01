@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ryhara <ryhara@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: tterao <tterao@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 18:14:23 by tterao            #+#    #+#             */
-/*   Updated: 2023/10/01 15:03:40 by ryhara           ###   ########.fr       */
+/*   Updated: 2023/10/01 17:53:44 by tterao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,11 @@ typedef struct s_global_data
 {
 	void				*mlx;
 	void				*mlx_win;
+	void				*img;
+	char				*addr;
+	int					bits_per_pixel;
+	int					line_length;
+	int					endian;
 	int					height;
 	int					width;
 	t_ambient_lightning	*ambient_light;
@@ -101,5 +106,6 @@ typedef struct s_global_data
 
 void	*try_calloc(size_t count, size_t size);
 void	*try_malloc(size_t size);
+void	render(t_global_data *data);
 
 #endif

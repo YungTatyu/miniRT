@@ -28,7 +28,9 @@ SRC = main.c \
 	init.c \
 	try_calloc.c \
 	try_malloc.c \
-	error.c
+	error.c	\
+	render.c
+
 SRCS = $(addprefix $(SRCS_DIR)/, $(SRC));
 
 OBJS_DIR = obj
