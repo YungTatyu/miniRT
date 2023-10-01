@@ -1,7 +1,10 @@
 NAME = miniRT
 CC = cc
 # CFLAGS = -Wall -Werror -Wextra
-#CFLAGS += -g -fsanitize=address
+
+ifdef WITH_DEBUG
+	CFLAGS += -g -fsanitize=address
+endif
 
 INCLUDES_DIR = include
 MINILIBX_DIR = minilibx-linux
@@ -48,4 +51,7 @@ fclean:	clean
 
 re: fclean all
 
-.PHONY: all fclean clean re
+debug: fclean
+	make WITH_DEBUG=1
+
+.PHONY: all fclean clean re debug
