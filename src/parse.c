@@ -6,7 +6,7 @@
 /*   By: ryhara <ryhara@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 15:35:48 by ryhara            #+#    #+#             */
-/*   Updated: 2023/10/01 14:09:09 by ryhara           ###   ########.fr       */
+/*   Updated: 2023/10/01 15:34:01 by ryhara           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,20 +44,20 @@ static char	**_parse_check(const char *line)
 }
 
 // init 失敗時にエラーにした方が良いので返り値は変わるかもしれないです
-static void	_parse_to_init(t_global_data *data, char **info)
+static void	_parse_to_init(t_global_data *data, const char **info)
 {
 	if (!ft_strcmp("A", info[0]))
-		return ;
+		data->ambient_light = ambient_light_init(info);
 	else if (!ft_strcmp("C", info[0]))
-		return ;
+		data->camera = camera_init(info);
 	else if (!ft_strcmp("L", info[0]))
-		return ;
+		data->light = light_init(info);
 	else if (!ft_strcmp("sp", info[0]))
-		return ;
+		objs_addback(data->objs_list, objs_newnode(SPHERE, info));
 	else if (!ft_strcmp("pl", info[0]))
-		return ;
+		objs_addback(data->objs_list, objs_newnode(PLANE, info));
 	else if (!ft_strcmp("cy", info[0]))
-		return ;
+		objs_addback(data->objs_list, objs_newnode(CYLINDER, info));
 	else
 		ft_dprintf(STDERR_FILENO, "Error\n");
 }
@@ -119,7 +119,7 @@ bool	parse(t_global_data *data, const char *file)
 			return (false);
 		}
 		free(line);
-		_parse_to_init(data, info);
+		_parse_to_init(data, (const char **)info);
 		_print_char_array(info);
 		free_char_array(info);
 	}

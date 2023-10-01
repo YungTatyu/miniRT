@@ -6,11 +6,13 @@
 /*   By: ryhara <ryhara@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 16:19:01 by ryhara            #+#    #+#             */
-/*   Updated: 2023/10/01 14:13:20 by ryhara           ###   ########.fr       */
+/*   Updated: 2023/10/01 15:32:17 by ryhara           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parse.h"
+
+void	put_error(const char *name);
 
 char	**parse_sphere(const char *line)
 {
@@ -20,7 +22,7 @@ char	**parse_sphere(const char *line)
 	i = 1;
 	info = ft_split_charset(line, " ,\n");
 	if (info == NULL)
-		return (NULL);
+		put_error("malloc");
 	if (get_array_size(info) != ARR_SIZE_SP)
 		return (free_char_array(info), NULL);
 	while (i < 4)
@@ -44,7 +46,7 @@ char	**parse_plane(const char *line)
 	i = 1;
 	info = ft_split_charset(line, " ,\n");
 	if (!info)
-		return (NULL);
+		put_error("malloc");
 	if (get_array_size(info) != ARR_SIZE_PL)
 		return (free_char_array(info), NULL);
 	while (i < 4)
@@ -73,7 +75,7 @@ char	**parse_cylinder(const char *line)
 	i = 1;
 	info = ft_split_charset(line, " ,\n");
 	if (!info)
-		return (NULL);
+		put_error("malloc");
 	if (get_array_size(info) != ARR_SIZE_CY)
 		return (free_char_array(info), NULL);
 	while (i < 4)

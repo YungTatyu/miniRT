@@ -1,37 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ryhara <ryhara@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/29 17:54:04 by tterao            #+#    #+#             */
-/*   Updated: 2023/10/01 15:15:42 by ryhara           ###   ########.fr       */
+/*   Created: 2023/10/01 15:28:31 by ryhara            #+#    #+#             */
+/*   Updated: 2023/10/01 15:29:43 by ryhara           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
-#include "parse.h"
 #include <stdlib.h>
-#include <mlx.h>
+#include <stdio.h>
+#include "libft.h"
 
-int	main(int argc, char *argv[])
+void	put_error(const char *name)
 {
-	t_global_data	data;
-	t_objs	*tmp;
-
-	global_data_init(&data);
-	if (argc == 2)
-	{
-		parse(&data, argv[1]);
-		tmp = data.objs_list -> next;
-		while (tmp != data.objs_list)
-		{
-			ft_printf("%d", tmp->type);
-			tmp = tmp->next;
-		}
-	}
-	else
-		ft_dprintf(STDERR_FILENO, "Error\nInvalid number of arguments\n");
-	return (0);
+	perror(name);
+	exit (EXIT_FAILURE);
 }

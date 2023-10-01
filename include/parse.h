@@ -6,7 +6,7 @@
 /*   By: ryhara <ryhara@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 14:59:20 by tterao            #+#    #+#             */
-/*   Updated: 2023/10/01 14:12:31 by ryhara           ###   ########.fr       */
+/*   Updated: 2023/10/01 14:40:04 by ryhara           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,6 @@ bool				parse(t_global_data *data, const char *file);
 t_ambient_lightning	*ambient_light_init(const char **info);
 t_camera			*camera_init(const char **info);
 t_light				*light_init(const char **info);
-bool				parse_ambient_light(const char *line);
-bool				parse_camera(const char *line);
 
 char				**parse_ambient_light(const char *line);
 char				**parse_camera(const char *line);

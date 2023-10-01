@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tterao <tterao@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ryhara <ryhara@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 18:14:23 by tterao            #+#    #+#             */
-/*   Updated: 2023/09/30 17:03:12 by tterao           ###   ########.fr       */
+/*   Updated: 2023/10/01 15:03:40 by ryhara           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define MINIRT_H
 
 # include "objs.h"
+# include <stdlib.h>
 
 typedef struct s_ambient_lightning
 {
@@ -97,5 +98,8 @@ typedef struct s_global_data
 	t_light				*light;
 	t_objs				*objs_list;
 }t_global_data;
+
+void	*try_calloc(size_t count, size_t size);
+void	*try_malloc(size_t size);
 
 #endif
