@@ -6,7 +6,7 @@
 /*   By: ryhara <ryhara@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 14:59:20 by tterao            #+#    #+#             */
-/*   Updated: 2023/09/30 18:48:50 by ryhara           ###   ########.fr       */
+/*   Updated: 2023/10/01 14:12:31 by ryhara           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,13 @@
 # define MP_SPHERE "sp "
 # define MP_PLANE "pl "
 # define MP_CYLINDER "cy "
+# define ARR_SIZE_A 5
+# define ARR_SIZE_C 8
+# define ARR_SIZE_L 8
+# define ARR_SIZE_SP 8
+# define ARR_SIZE_PL 10
+# define ARR_SIZE_CY 12
+
 
 # include <stdbool.h>
 # include <fcntl.h>

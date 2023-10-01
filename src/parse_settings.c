@@ -6,7 +6,7 @@
 /*   By: ryhara <ryhara@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 17:04:51 by ryhara            #+#    #+#             */
-/*   Updated: 2023/09/30 18:00:43 by ryhara           ###   ########.fr       */
+/*   Updated: 2023/10/01 14:13:55 by ryhara           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	**parse_ambient_light(const char *line)
 	info = ft_split_charset(line, " ,\n");
 	if (!info)
 		return (NULL);
-	if (get_array_size(info) != 5)
+	if (get_array_size(info) != ARR_SIZE_A)
 		return (free_char_array(info), NULL);
 	if (!ft_isdouble(info[1]))
 		return (free_char_array(info), NULL);
@@ -40,7 +40,7 @@ char	**parse_camera(const char *line)
 	info = ft_split_charset(line, " ,\n");
 	if (!info)
 		return (NULL);
-	if (get_array_size(info) != 8)
+	if (get_array_size(info) != ARR_SIZE_C)
 		return (free_char_array(info), NULL);
 	while (i < 4)
 	{
@@ -69,7 +69,7 @@ char	**parse_light(const char *line)
 	info = ft_split_charset(line, " ,\n");
 	if (!info)
 		return (NULL);
-	if (get_array_size(info) != 8)
+	if (get_array_size(info) != ARR_SIZE_L)
 		return (free_char_array(info), NULL);
 	while (i < 4)
 	{

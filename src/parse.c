@@ -6,13 +6,13 @@
 /*   By: ryhara <ryhara@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 15:35:48 by ryhara            #+#    #+#             */
-/*   Updated: 2023/10/01 11:28:02 by ryhara           ###   ########.fr       */
+/*   Updated: 2023/10/01 14:09:09 by ryhara           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parse.h"
 
-void	print_char_array(char **array)
+static void	_print_char_array(char **array)
 {
 	size_t	i;
 
@@ -25,7 +25,7 @@ void	print_char_array(char **array)
 	ft_printf("\n");
 }
 
-static char	**parse_check(const char *line)
+static char	**_parse_check(const char *line)
 {
 	if (!ft_strncmp(MP_AMIBIENT_LIGHT, line, 2))
 		return (parse_ambient_light(line));
@@ -44,7 +44,7 @@ static char	**parse_check(const char *line)
 }
 
 // init 失敗時にエラーにした方が良いので返り値は変わるかもしれないです
-static void	parse_to_init(t_global_data *data, char **info)
+static void	_parse_to_init(t_global_data *data, char **info)
 {
 	if (!ft_strcmp("A", info[0]))
 		return ;
@@ -110,7 +110,7 @@ bool	parse(t_global_data *data, const char *file)
 			free(line);
 			continue ;
 		}
-		info = parse_check(line);
+		info = _parse_check(line);
 		if (info == NULL)
 		{
 			free(line);
@@ -119,8 +119,8 @@ bool	parse(t_global_data *data, const char *file)
 			return (false);
 		}
 		free(line);
-		parse_to_init(data, info);
-		print_char_array(info);
+		_parse_to_init(data, info);
+		_print_char_array(info);
 		free_char_array(info);
 	}
 	return (true);

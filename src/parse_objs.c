@@ -6,7 +6,7 @@
 /*   By: ryhara <ryhara@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 16:19:01 by ryhara            #+#    #+#             */
-/*   Updated: 2023/09/30 18:02:10 by ryhara           ###   ########.fr       */
+/*   Updated: 2023/10/01 14:13:20 by ryhara           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ char	**parse_sphere(const char *line)
 
 	i = 1;
 	info = ft_split_charset(line, " ,\n");
-	if (!info)
+	if (info == NULL)
 		return (NULL);
-	if (get_array_size(info) != 8)
+	if (get_array_size(info) != ARR_SIZE_SP)
 		return (free_char_array(info), NULL);
 	while (i < 4)
 	{
@@ -45,7 +45,7 @@ char	**parse_plane(const char *line)
 	info = ft_split_charset(line, " ,\n");
 	if (!info)
 		return (NULL);
-	if (get_array_size(info) != 10)
+	if (get_array_size(info) != ARR_SIZE_PL)
 		return (free_char_array(info), NULL);
 	while (i < 4)
 	{
@@ -74,7 +74,7 @@ char	**parse_cylinder(const char *line)
 	info = ft_split_charset(line, " ,\n");
 	if (!info)
 		return (NULL);
-	if (get_array_size(info) != 12)
+	if (get_array_size(info) != ARR_SIZE_CY)
 		return (free_char_array(info), NULL);
 	while (i < 4)
 	{
