@@ -6,7 +6,7 @@
 /*   By: ryhara <ryhara@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 15:35:48 by ryhara            #+#    #+#             */
-/*   Updated: 2023/10/01 14:09:09 by ryhara           ###   ########.fr       */
+/*   Updated: 2023/10/01 14:49:11 by ryhara           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,17 +47,17 @@ static char	**_parse_check(const char *line)
 static void	_parse_to_init(t_global_data *data, char **info)
 {
 	if (!ft_strcmp("A", info[0]))
-		return ;
+		data->ambient_light = ambient_light_init(info);
 	else if (!ft_strcmp("C", info[0]))
-		return ;
+		data->camera = camera_init(info);
 	else if (!ft_strcmp("L", info[0]))
-		return ;
+		data->light = light_init(info);
 	else if (!ft_strcmp("sp", info[0]))
-		return ;
+		objs_addback(data->objs_list, objs_newnode(SPHERE, info));
 	else if (!ft_strcmp("pl", info[0]))
-		return ;
+		objs_addback(data->objs_list, objs_newnode(PLANE, info));
 	else if (!ft_strcmp("cy", info[0]))
-		return ;
+		objs_addback(data->objs_list, objs_newnode(CYLINDER, info));
 	else
 		ft_dprintf(STDERR_FILENO, "Error\n");
 }

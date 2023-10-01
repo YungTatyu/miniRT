@@ -6,7 +6,7 @@
 /*   By: ryhara <ryhara@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 17:54:04 by tterao            #+#    #+#             */
-/*   Updated: 2023/09/30 17:44:15 by tterao           ###   ########.fr       */
+/*   Updated: 2023/10/01 15:15:42 by ryhara           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,19 @@
 
 int	main(int argc, char *argv[])
 {
-	t_global_data	*data;
+	t_global_data	data;
+	t_objs	*tmp;
 
-	data = NULL;
+	global_data_init(&data);
 	if (argc == 2)
 	{
-		parse(data, argv[1]);
+		parse(&data, argv[1]);
+		tmp = data.objs_list -> next;
+		while (tmp != data.objs_list)
+		{
+			ft_printf("%d", tmp->type);
+			tmp = tmp->next;
+		}
 	}
 	else
 		ft_dprintf(STDERR_FILENO, "Error\nInvalid number of arguments\n");

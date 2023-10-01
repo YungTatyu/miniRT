@@ -7,7 +7,7 @@ ifdef WITH_DEBUG
 endif
 
 INCLUDES_DIR = include
-MINILIBX_DIR = minilibx-linux
+MINILIBX_DIR = mlx
 X11_DIR = /usr/X11
 
 LIBFT_DIR = libft
@@ -22,7 +22,12 @@ SRC = main.c \
 	parse.c \
 	parse_objs.c \
 	parse_utils.c \
-	parse_settings.c
+	parse_settings.c \
+	objs_newnode.c \
+	objs_utils.c \
+	init.c \
+	try_calloc.c \
+	try_malloc.c
 SRCS = $(addprefix $(SRCS_DIR)/, $(SRC));
 
 OBJS_DIR = obj
@@ -55,4 +60,7 @@ re: fclean all
 debug: fclean
 	make WITH_DEBUG=1
 
-.PHONY: all fclean clean re debug
+test:
+	./miniRT files/subject.rt
+
+.PHONY: all fclean clean re debug test

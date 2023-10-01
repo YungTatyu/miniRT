@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   objs_newnode.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tterao <tterao@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ryhara <ryhara@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 16:13:00 by tterao            #+#    #+#             */
-/*   Updated: 2023/10/01 14:21:40 by tterao           ###   ########.fr       */
+/*   Updated: 2023/10/01 15:11:27 by ryhara           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ static t_plane	*_plane_newnode(const char **info)
 	t_plane	*newnode;
 
 	newnode = try_calloc(sizeof(t_plane), 1);
+	info++;
 	newnode->x = ft_atof(*(info++));
 	newnode->y = ft_atof(*(info++));
 	newnode->z = ft_atof(*(info++));
@@ -36,6 +37,7 @@ static t_sphere	*_sphere_newnode(const char **info)
 	t_sphere	*newnode;
 
 	newnode = try_calloc(sizeof(t_sphere), 1);
+	info++;
 	newnode->x = ft_atof(*(info++));
 	newnode->y = ft_atof(*(info++));
 	newnode->z = ft_atof(*(info++));
@@ -52,6 +54,7 @@ static t_cylinder	*_cylinder_newnode(const char **info)
 	t_cylinder	*newnode;
 
 	newnode = try_calloc(sizeof(t_cylinder), 1);
+	info++;
 	newnode->x = ft_atof(*(info++));
 	newnode->y = ft_atof(*(info++));
 	newnode->z = ft_atof(*(info++));
