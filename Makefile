@@ -1,6 +1,6 @@
 NAME = miniRT
 CC = cc
-# CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra
 
 ifdef WITH_DEBUG
 	CFLAGS += -g -fsanitize=address
@@ -27,7 +27,8 @@ SRC = main.c \
 	objs_utils.c \
 	init.c \
 	try_calloc.c \
-	try_malloc.c
+	try_malloc.c \
+	error.c
 SRCS = $(addprefix $(SRCS_DIR)/, $(SRC));
 
 OBJS_DIR = obj

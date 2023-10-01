@@ -6,7 +6,7 @@
 /*   By: ryhara <ryhara@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 15:35:48 by ryhara            #+#    #+#             */
-/*   Updated: 2023/10/01 14:49:11 by ryhara           ###   ########.fr       */
+/*   Updated: 2023/10/01 15:34:01 by ryhara           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static char	**_parse_check(const char *line)
 }
 
 // init 失敗時にエラーにした方が良いので返り値は変わるかもしれないです
-static void	_parse_to_init(t_global_data *data, char **info)
+static void	_parse_to_init(t_global_data *data, const char **info)
 {
 	if (!ft_strcmp("A", info[0]))
 		data->ambient_light = ambient_light_init(info);
@@ -119,7 +119,7 @@ bool	parse(t_global_data *data, const char *file)
 			return (false);
 		}
 		free(line);
-		_parse_to_init(data, info);
+		_parse_to_init(data, (const char **)info);
 		_print_char_array(info);
 		free_char_array(info);
 	}

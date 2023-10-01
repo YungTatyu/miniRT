@@ -6,20 +6,21 @@
 /*   By: ryhara <ryhara@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 17:04:51 by ryhara            #+#    #+#             */
-/*   Updated: 2023/10/01 14:13:55 by ryhara           ###   ########.fr       */
+/*   Updated: 2023/10/01 15:34:19 by ryhara           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parse.h"
 
+void	put_error(const char *name);
+
 char	**parse_ambient_light(const char *line)
 {
 	char	**info;
-	float	ratio;
 
 	info = ft_split_charset(line, " ,\n");
 	if (!info)
-		return (NULL);
+		put_error("malloc");
 	if (get_array_size(info) != ARR_SIZE_A)
 		return (free_char_array(info), NULL);
 	if (!ft_isdouble(info[1]))
@@ -39,7 +40,7 @@ char	**parse_camera(const char *line)
 	i = 1;
 	info = ft_split_charset(line, " ,\n");
 	if (!info)
-		return (NULL);
+		put_error("malloc");
 	if (get_array_size(info) != ARR_SIZE_C)
 		return (free_char_array(info), NULL);
 	while (i < 4)
@@ -68,7 +69,7 @@ char	**parse_light(const char *line)
 	i = 1;
 	info = ft_split_charset(line, " ,\n");
 	if (!info)
-		return (NULL);
+		put_error("malloc");
 	if (get_array_size(info) != ARR_SIZE_L)
 		return (free_char_array(info), NULL);
 	while (i < 4)
