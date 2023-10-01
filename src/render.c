@@ -6,9 +6,9 @@
 void	_mlx_init(t_global_data *data)
 {
 	data->mlx = mlx_init();
-	data->mlx_win = mlx_new_window(data->mlx, data->height,
-			data->width, "miniRT");
-	data->img = mlx_new_image(data->mlx, WINDOW_HEIGHT, WINDOW_WIDTH);
+	data->mlx_win = mlx_new_window(data->mlx, data->width,
+			data->height, "miniRT");
+	data->img = mlx_new_image(data->mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
 	data->addr = mlx_get_data_addr(data->img, &data->bits_per_pixel,
 			&data->line_length, &data->endian);
 }
@@ -21,10 +21,33 @@ void	my_mlx_pixel_put(t_global_data *data, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
+int	create_rgb(int r, int g, int b)
+{
+	return (r << 16 | g << 8 | b);
+}
+
+void	render_loop(t_global_data *data)
+{
+	int	y;
+	int	x;
+
+	y = 0;
+	while (y < WINDOW_HEIGHT)
+	{
+		x = 0;
+		while (x < WINDOW_WIDTH)
+		{
+			my_mlx_pixel_put(data, x, y, create_rgb(data->light->red, data->light->green, data->light->blue));
+			x++;
+		}
+		y++;
+	}
+	mlx_put_image_to_window(data->mlx, data->mlx_win, data->img, 0, 0);
+}
+
 void	render(t_global_data *data)
 {
 	_mlx_init(data);
-	my_mlx_pixel_put(data, 5, 5, 0x00FF0000);
-	mlx_put_image_to_window(data->mlx, data->mlx_win, data->img, 0, 0);
+	render_loop(data);
 	mlx_loop(data->mlx);
 }
