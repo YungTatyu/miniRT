@@ -1,30 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   try_malloc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ryhara <ryhara@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: tterao <tterao@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/29 17:54:04 by tterao            #+#    #+#             */
-/*   Updated: 2023/09/30 17:44:15 by tterao           ###   ########.fr       */
+/*   Created: 2023/10/01 14:08:14 by tterao            #+#    #+#             */
+/*   Updated: 2023/10/01 14:15:08 by tterao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
-#include "parse.h"
 #include <stdlib.h>
-#include <mlx.h>
+#include <stdio.h>
 
-int	main(int argc, char *argv[])
+void	*try_malloc(size_t size)
 {
-	t_global_data	*data;
+	void	*ptr;
 
-	data = NULL;
-	if (argc == 2)
+	ptr = malloc(size);
+	if (ptr == NULL)
 	{
-		parse(data, argv[1]);
+		perror("malloc");
+		exit(EXIT_FAILURE);
 	}
-	else
-		ft_dprintf(STDERR_FILENO, "Error\nInvalid number of arguments\n");
-	return (0);
+	return (ptr);
 }

@@ -10,11 +10,12 @@ INCLUDES_DIR = include
 MINILIBX_DIR = minilibx-linux
 X11_DIR = /usr/X11
 
-INCLUDES =  -I$(INCLUDES_DIR) -I$(MINILIBX_DIR) -I$(X11_DIR)/include
-MINILIBX_FLAGS = -L$(MINILIBX_DIR) -lmlx -L$(X11_DIR)/lib -lX11 -lXext
-
 LIBFT_DIR = libft
 LIBFT_FLAGS = libft/libft.a libft/libftprintf.a libft/libftdprintf.a
+
+INCLUDES =  -I$(INCLUDES_DIR) -I$(MINILIBX_DIR) -I$(X11_DIR)/include -I$(LIBFT_DIR)/includes
+MINILIBX_FLAGS = -L$(MINILIBX_DIR) -lmlx -L$(X11_DIR)/lib -lX11 -lXext
+
 
 SRCS_DIR = src
 SRC = main.c \

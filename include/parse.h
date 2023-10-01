@@ -39,10 +39,13 @@
 # include <stdio.h>
 
 void				global_data_init(t_global_data *data);
+void				global_data_free(t_global_data *data);
 bool				parse(t_global_data *data, const char *file);
-t_ambient_lightning	*ambient_light_init();
-t_camera			*camera_init();
-t_light				*light_init();
+t_ambient_lightning	*ambient_light_init(const char **info);
+t_camera			*camera_init(const char **info);
+t_light				*light_init(const char **info);
+bool				parse_ambient_light(const char *line);
+bool				parse_camera(const char *line);
 
 char				**parse_ambient_light(const char *line);
 char				**parse_camera(const char *line);

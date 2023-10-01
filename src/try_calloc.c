@@ -1,30 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   try_calloc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ryhara <ryhara@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: tterao <tterao@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/29 17:54:04 by tterao            #+#    #+#             */
-/*   Updated: 2023/09/30 17:44:15 by tterao           ###   ########.fr       */
+/*   Created: 2023/10/01 14:15:45 by tterao            #+#    #+#             */
+/*   Updated: 2023/10/01 14:16:46 by tterao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
-#include "parse.h"
 #include <stdlib.h>
-#include <mlx.h>
+#include <stdio.h>
+#include "libft.h"
 
-int	main(int argc, char *argv[])
+void	*try_calloc(size_t count, size_t size)
 {
-	t_global_data	*data;
+	void	*ptr;
 
-	data = NULL;
-	if (argc == 2)
+	ptr = ft_calloc(count, size);
+	if (ptr == NULL)
 	{
-		parse(data, argv[1]);
+		perror("calloc");
+		exit(EXIT_FAILURE);
 	}
-	else
-		ft_dprintf(STDERR_FILENO, "Error\nInvalid number of arguments\n");
-	return (0);
+	return (ptr);
 }

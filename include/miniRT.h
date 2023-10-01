@@ -6,7 +6,7 @@
 /*   By: tterao <tterao@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 18:14:23 by tterao            #+#    #+#             */
-/*   Updated: 2023/09/30 14:59:09 by tterao           ###   ########.fr       */
+/*   Updated: 2023/09/30 17:03:12 by tterao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ typedef struct s_ambient_lightning
 
 typedef struct s_camera
 {
-	int		x;
-	int		y;
-	int		z;
+	float	x;
+	float	y;
+	float	z;
 	float	x_axis;
 	float	y_axis;
 	float	z_axis;
@@ -36,9 +36,9 @@ typedef struct s_camera
 
 typedef struct s_light
 {
-	int		x;
-	int		y;
-	int		z;
+	float	x;
+	float	y;
+	float	z;
 	float	ratio;
 	int		red;
 	int		green;
@@ -47,9 +47,9 @@ typedef struct s_light
 
 typedef struct s_sphere
 {
-	int		x;
-	int		y;
-	int		z;
+	float	x;
+	float	y;
+	float	z;
 	float	diameter;
 	float	radius;
 	int		red;
@@ -59,9 +59,9 @@ typedef struct s_sphere
 
 typedef struct s_plane
 {
-	int		x;
-	int		y;
-	int		z;
+	float	x;
+	float	y;
+	float	z;
 	float	x_axis;
 	float	y_axis;
 	float	z_axis;
@@ -72,9 +72,9 @@ typedef struct s_plane
 
 typedef struct s_cylinder
 {
-	int		x;
-	int		y;
-	int		z;
+	float	x;
+	float	y;
+	float	z;
 	float	x_axis;
 	float	y_axis;
 	float	z_axis;
@@ -88,16 +88,14 @@ typedef struct s_cylinder
 
 typedef struct s_global_data
 {
-	void	*mlx;
-	void	*mlx_win;
-	int		height;
-	int		width;
+	void				*mlx;
+	void				*mlx_win;
+	int					height;
+	int					width;
 	t_ambient_lightning	*ambient_light;
-	t_camera	*camera;
-	t_light		*light;
-	t_objs		*objs_list;
+	t_camera			*camera;
+	t_light				*light;
+	t_objs				*objs_list;
 }t_global_data;
-
-
 
 #endif
