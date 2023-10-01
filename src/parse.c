@@ -6,7 +6,7 @@
 /*   By: ryhara <ryhara@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 15:35:48 by ryhara            #+#    #+#             */
-/*   Updated: 2023/09/30 19:01:31 by ryhara           ###   ########.fr       */
+/*   Updated: 2023/10/01 11:28:02 by ryhara           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,19 +62,44 @@ static void	parse_to_init(t_global_data *data, char **info)
 		ft_dprintf(STDERR_FILENO, "Error\n");
 }
 
+static int	parse_open(const char *file)
+{
+	size_t	i;
+	int		fd;
+
+	i = ft_strlen(file);
+	if (i < 4)
+	{
+		ft_dprintf(STDERR_FILENO, "Error\nPlease input *.rt file.\n");
+		return (-1);
+	}
+	if (!ft_strncmp(".rt", &file[i - 3], 3))
+	{
+		fd = open(file, O_RDONLY);
+		if (fd == -1)
+		{
+			ft_dprintf(STDERR_FILENO, "Error\n");
+			perror("open");
+			return (-1);
+		}
+		return (fd);
+	}
+	else
+	{
+		ft_dprintf(STDERR_FILENO, "Error\nPlease input *.rt file.\n");
+		return (-1);
+	}
+}
+
 bool	parse(t_global_data *data, const char *file)
 {
 	int		fd;
 	char	*line;
 	char	**info;
 
-	fd = open(file, O_RDONLY);
+	fd = parse_open(file);
 	if (fd == -1)
-	{
-		ft_dprintf(STDERR_FILENO, "Error\n");
-		perror("open");
 		return (false);
-	}
 	while (1)
 	{
 		line = get_next_line(fd);
