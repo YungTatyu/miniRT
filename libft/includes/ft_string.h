@@ -6,7 +6,7 @@
 /*   By: ryhara <ryhara@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 11:03:42 by ryhara            #+#    #+#             */
-/*   Updated: 2023/09/29 23:30:32 by ryhara           ###   ########.fr       */
+/*   Updated: 2023/09/30 17:09:18 by ryhara           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int		ft_memcmp(const void *s1, const void *s2, size_t n);
 void	*ft_memcpy(void *dest, const void *src, size_t n);
 void	*ft_memmove(void *dest, const void *src, size_t n);
 void	*ft_memset(void *s, int c, size_t n);
-char	**ft_split_charset(char *str, char *charset);
+char	**ft_split_charset(const char *str, char *charset);
 char	**ft_split(char const *s, char c);
 char	*ft_strchr(const char *s, int c);
 int		ft_strcmp(const char *s1, const char *s2);

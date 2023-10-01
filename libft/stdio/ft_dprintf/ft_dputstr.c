@@ -12,7 +12,7 @@
 
 #include "ft_dprintf.h"
 
-int	ft_dputstr_count(int fd, char *s, int count)
+int	ft_dputstr(int fd, char *s, int count)
 {
 	if (s == NULL)
 	{

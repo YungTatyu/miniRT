@@ -12,16 +12,6 @@
 
 #include "ft_dprintf.h"
 
-size_t	ft_strlen(const char *s)
-{
-	size_t	len;
-
-	len = 0;
-	while (s[len])
-		len++;
-	return (len);
-}
-
 static	int	check_print(int fd, char *str, va_list args, int count)
 {
 	char	*baselow;

@@ -6,13 +6,13 @@
 /*   By: ryhara <ryhara@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 23:24:53 by ryhara            #+#    #+#             */
-/*   Updated: 2023/09/29 23:30:18 by ryhara           ###   ########.fr       */
+/*   Updated: 2023/09/30 17:10:48 by ryhara           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_string.h"
 
-static size_t	word_count(char *str, char *charset)
+static size_t	word_count(const char *str, char *charset)
 {
 	size_t	count;
 
@@ -44,18 +44,18 @@ static void	free_split_all(char **array, size_t len)
 	free(array);
 }
 
-static char	**do_split_charset(char **arr, char *str, char *set, size_t len)
+static char	**do_split_charset(char **arr, const char *s, char *set, size_t len)
 {
 	size_t	i;
 	size_t	j;
 
 	j = 0;
-	while (*str && len--)
+	while (*s && len--)
 	{
-		while (*str && ft_strchr(set, *str))
-			str++;
+		while (*s && ft_strchr(set, *s))
+			s++;
 		i = 0;
-		while (str[i] && !ft_strchr(set, str[i]))
+		while (s[i] && !ft_strchr(set, s[i]))
 			i++;
 		arr[j] = (char *)malloc(sizeof(char) * (i + 1));
 		if (!arr[j])
@@ -63,15 +63,15 @@ static char	**do_split_charset(char **arr, char *str, char *set, size_t len)
 			free_split_all(arr, j);
 			return (NULL);
 		}
-		ft_strlcpy(arr[j], str, (i + 1));
+		ft_strlcpy(arr[j], s, (i + 1));
 		j++;
-		str += i;
+		s += i;
 	}
 	arr[j] = NULL;
 	return (arr);
 }
 
-char	**ft_split_charset(char *str, char *charset)
+char	**ft_split_charset(const char *str, char *charset)
 {
 	char	**array;
 	size_t	arr_len;
