@@ -6,7 +6,7 @@
 /*   By: tterao <tterao@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 16:13:00 by tterao            #+#    #+#             */
-/*   Updated: 2023/09/30 16:32:42 by tterao           ###   ########.fr       */
+/*   Updated: 2023/10/01 14:21:40 by tterao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static t_plane	*_plane_newnode(const char **info)
 {
 	t_plane	*newnode;
 
-	newnode = ft_calloc(sizeof(t_plane), 1);
+	newnode = try_calloc(sizeof(t_plane), 1);
 	newnode->x = ft_atof(*(info++));
 	newnode->y = ft_atof(*(info++));
 	newnode->z = ft_atof(*(info++));
@@ -35,7 +35,7 @@ static t_sphere	*_sphere_newnode(const char **info)
 {
 	t_sphere	*newnode;
 
-	newnode = ft_calloc(sizeof(t_sphere), 1);
+	newnode = try_calloc(sizeof(t_sphere), 1);
 	newnode->x = ft_atof(*(info++));
 	newnode->y = ft_atof(*(info++));
 	newnode->z = ft_atof(*(info++));
@@ -51,7 +51,7 @@ static t_cylinder	*_cylinder_newnode(const char **info)
 {
 	t_cylinder	*newnode;
 
-	newnode = ft_calloc(sizeof(t_cylinder), 1);
+	newnode = try_calloc(sizeof(t_cylinder), 1);
 	newnode->x = ft_atof(*(info++));
 	newnode->y = ft_atof(*(info++));
 	newnode->z = ft_atof(*(info++));
@@ -70,11 +70,14 @@ t_objs	*objs_newnode(enum e_obj_type type, const char **info)
 {
 	t_objs	*newnode;
 
-	newnode = ft_calloc(sizeof(t_objs), 1);
+	newnode = try_calloc(sizeof(t_objs), 1);
 	newnode->type = type;
 	newnode->next = NULL;
 	if (type == HEAD)
+	{
 		newnode->obj = NULL;
+		newnode->next = newnode;
+	}
 	else if (type == PLANE)
 		newnode->obj = (void *)_plane_newnode(info);
 	else if (type == SPHERE)

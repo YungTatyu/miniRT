@@ -6,7 +6,7 @@
 /*   By: tterao <tterao@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 15:42:57 by tterao            #+#    #+#             */
-/*   Updated: 2023/09/30 17:35:35 by tterao           ###   ########.fr       */
+/*   Updated: 2023/10/01 14:24:10 by tterao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,9 @@ t_objs	*objs_lastnode(t_objs *head)
 {
 	t_objs	*node;
 
-	node = head;
-	while (node->next != NULL)
-	{
-		if ((node->next)->type == HEAD)
-			break ;
+	node = head->next;
+	while (node->next != head)
 		node = node->next;
-	}
 	return (node);
 }
 
@@ -42,11 +38,12 @@ void	objs_free(t_objs *head)
 	t_objs	*node;
 	t_objs	*tmp;
 
-	node = head;
-	while (node != NULL)
+	node = head->next;
+	while (node->next != head)
 	{
 		tmp = node;
 		node = node->next;
 		free(tmp);
 	}
+	free(head);
 }

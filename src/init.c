@@ -6,7 +6,7 @@
 /*   By: tterao <tterao@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 16:38:20 by tterao            #+#    #+#             */
-/*   Updated: 2023/09/30 17:00:58 by tterao           ###   ########.fr       */
+/*   Updated: 2023/10/01 14:17:32 by tterao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ t_ambient_lightning	*ambient_light_init(const char **info)
 {
 	t_ambient_lightning	*ambient_light;
 
-	ambient_light = ft_calloc(sizeof(t_ambient_lightning), 1);
+	ambient_light = try_calloc(sizeof(t_ambient_lightning), 1);
 	ambient_light->ratio = ft_atof(*(info++));
 	ambient_light->red = ft_atoi(*(info++));
 	ambient_light->green = ft_atoi(*(info++));
@@ -29,7 +29,7 @@ t_camera	*camera_init(const char **info)
 {
 	t_camera	*camera;
 
-	camera = ft_calloc(sizeof(t_camera), 1);
+	camera = try_calloc(sizeof(t_camera), 1);
 	camera->x = ft_atof(*(info++));
 	camera->y = ft_atof(*(info++));
 	camera->z = ft_atof(*(info++));
@@ -43,7 +43,7 @@ t_light	*light_init(const char **info)
 {
 	t_light	*light;
 
-	light = ft_calloc(sizeof(t_light), 1);
+	light = try_calloc(sizeof(t_light), 1);
 	light->x = ft_atof(*(info++));
 	light->y = ft_atof(*(info++));
 	light->z = ft_atof(*(info++));
