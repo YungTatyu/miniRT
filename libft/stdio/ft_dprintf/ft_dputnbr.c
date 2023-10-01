@@ -12,7 +12,7 @@
 
 #include "ft_dprintf.h"
 
-int	ft_dputnbr_count(int fd, int n, int count)
+int	ft_dputnbr(int fd, int n, int count)
 {
 	if (n < 0)
 	{

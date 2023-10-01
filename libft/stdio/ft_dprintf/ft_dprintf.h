@@ -18,6 +18,7 @@
 # include <limits.h>
 # include <stddef.h>
 # include <stdarg.h>
+# include "../../includes/ft_string.h"
 
 int		ft_dprintf(int fd, const char *s, ...);
 int		ft_dputnbr(int fd, int n, int count);
@@ -26,6 +27,5 @@ int		ft_dputstr(int fd, char *s, int count);
 int		ft_dputui(int fd, unsigned int num, int count);
 int		ft_dputnbr_base(int fd, unsigned long n, char *base, int count);
 int		ft_dputaddress(int fd, unsigned long n, char *base, int count);
-size_t	ft_strlen(const char *s);
 
 #endif

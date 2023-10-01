@@ -3,25 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tterao <tterao@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ryhara <ryhara@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 17:54:04 by tterao            #+#    #+#             */
 /*   Updated: 2023/09/30 17:44:15 by tterao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "miniRT.h"
 #include "parse.h"
-#include "objs.h"
 #include <stdlib.h>
 #include <mlx.h>
 
 int	main(int argc, char *argv[])
 {
-	t_global_data	data;
+	t_global_data	*data;
 
-	if (argc != 2)
-		return (EXIT_FAILURE);
-	global_data_init(&data);
-	global_data_free(&data);
+	data = NULL;
+	if (argc == 2)
+	{
+		parse(data, argv[1]);
+	}
+	else
+		ft_dprintf(STDERR_FILENO, "Error\nInvalid number of arguments\n");
 	return (0);
 }

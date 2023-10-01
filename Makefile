@@ -1,7 +1,10 @@
 NAME = miniRT
 CC = cc
 # CFLAGS = -Wall -Werror -Wextra
-#CFLAGS += -g -fsanitize=address
+
+ifdef WITH_DEBUG
+	CFLAGS += -g -fsanitize=address
+endif
 
 INCLUDES_DIR = include
 MINILIBX_DIR = minilibx-linux
@@ -15,10 +18,12 @@ MINILIBX_FLAGS = -L$(MINILIBX_DIR) -lmlx -L$(X11_DIR)/lib -lX11 -lXext
 
 
 SRCS_DIR = src
-SRCS = $(SRCS_DIR)/main.c	\
-		$(SRCS_DIR)/init.c	\
-		$(SRCS_DIR)/objs_newnode.c	\
-		$(SRCS_DIR)/objs_utils.c
+SRC = main.c \
+	parse.c \
+	parse_objs.c \
+	parse_utils.c \
+	parse_settings.c
+SRCS = $(addprefix $(SRCS_DIR)/, $(SRC));
 
 OBJS_DIR = obj
 OBJS = $(patsubst $(SRCS_DIR)/%.c,$(OBJS_DIR)/%.o,$(SRCS))
@@ -47,4 +52,7 @@ fclean:	clean
 
 re: fclean all
 
-.PHONY: all fclean clean re
+debug: fclean
+	make WITH_DEBUG=1
+
+.PHONY: all fclean clean re debug
