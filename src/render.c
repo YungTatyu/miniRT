@@ -41,6 +41,7 @@ void	render_loop(t_global_data *data)
 	int			y;
 	int			x;
 	t_vector3d	coordinate;
+	t_vector3d	camera_ray;
 
 	y = 0;
 	while (y < WINDOW_HEIGHT)
@@ -49,6 +50,7 @@ void	render_loop(t_global_data *data)
 		while (x < WINDOW_WIDTH)
 		{
 			coordinate = get_3d_coordinate(x, y);
+			camera_ray = vector3d_sub(coordinate, data->camera->coordinate);
 			my_mlx_pixel_put(data, x, y, create_rgb(data->light->red, data->light->green, data->light->blue));
 			x++;
 		}

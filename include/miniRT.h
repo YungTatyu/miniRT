@@ -6,7 +6,7 @@
 /*   By: tterao <tterao@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 18:14:23 by tterao            #+#    #+#             */
-/*   Updated: 2023/10/02 17:05:10 by tterao           ###   ########.fr       */
+/*   Updated: 2023/10/02 17:22:47 by tterao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,8 @@
 # define MINIRT_H
 
 # include "objs.h"
+# include "vector3d.h"
 # include <stdlib.h>
-
-typedef struct s_vector3d
-{
-	float	x;
-	float	y;
-	float	z;
-}t_vector3d;
 
 typedef struct s_ambient_lightning
 {

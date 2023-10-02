@@ -29,7 +29,8 @@ SRC = main.c \
 	try_calloc.c \
 	try_malloc.c \
 	error.c	\
-	render.c
+	render.c	\
+	vector3d.c
 
 SRCS = $(addprefix $(SRCS_DIR)/, $(SRC));
 
