@@ -26,10 +26,21 @@ int	create_rgb(int r, int g, int b)
 	return (r << 16 | g << 8 | b);
 }
 
+t_vector3d	get_3d_coordinate(int x, int y)
+{
+	t_vector3d	coordinate;
+
+	coordinate.x = ((2 * x) / (WINDOW_WIDTH - 1)) - 1;
+	coordinate.y = ((-2 * y) / (WINDOW_HEIGHT - 1)) + 1;
+	coordinate.z = 0;
+	return (coordinate);
+}
+
 void	render_loop(t_global_data *data)
 {
-	int	y;
-	int	x;
+	int			y;
+	int			x;
+	t_vector3d	coordinate;
 
 	y = 0;
 	while (y < WINDOW_HEIGHT)
@@ -37,6 +48,7 @@ void	render_loop(t_global_data *data)
 		x = 0;
 		while (x < WINDOW_WIDTH)
 		{
+			coordinate = get_3d_coordinate(x, y);
 			my_mlx_pixel_put(data, x, y, create_rgb(data->light->red, data->light->green, data->light->blue));
 			x++;
 		}

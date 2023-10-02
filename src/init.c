@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ryhara <ryhara@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: tterao <tterao@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 16:38:20 by tterao            #+#    #+#             */
-/*   Updated: 2023/10/01 15:10:54 by ryhara           ###   ########.fr       */
+/*   Updated: 2023/10/02 17:06:22 by tterao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,12 @@ t_camera	*camera_init(const char **info)
 
 	camera = try_calloc(sizeof(t_camera), 1);
 	info++;
-	camera->x = ft_atof(*(info++));
-	camera->y = ft_atof(*(info++));
-	camera->z = ft_atof(*(info++));
-	camera->x_axis = ft_atof(*(info++));
-	camera->y_axis = ft_atof(*(info++));
-	camera->z_axis = ft_atof(*(info++));
+	camera->coordinate.x = ft_atof(*(info++));
+	camera->coordinate.y = ft_atof(*(info++));
+	camera->coordinate.z = ft_atof(*(info++));
+	camera->direction.x = ft_atof(*(info++));
+	camera->direction.y = ft_atof(*(info++));
+	camera->direction.z = ft_atof(*(info++));
 	return (camera);
 }
 
@@ -48,9 +48,9 @@ t_light	*light_init(const char **info)
 
 	light = try_calloc(sizeof(t_light), 1);
 	info++;
-	light->x = ft_atof(*(info++));
-	light->y = ft_atof(*(info++));
-	light->z = ft_atof(*(info++));
+	light->coordinate.x = ft_atof(*(info++));
+	light->coordinate.y = ft_atof(*(info++));
+	light->coordinate.z = ft_atof(*(info++));
 	light->ratio = ft_atof(*(info++));
 	light->red = ft_atoi(*(info++));
 	light->green = ft_atoi(*(info++));

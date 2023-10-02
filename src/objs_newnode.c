@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   objs_newnode.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ryhara <ryhara@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: tterao <tterao@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 16:13:00 by tterao            #+#    #+#             */
-/*   Updated: 2023/10/01 15:11:27 by ryhara           ###   ########.fr       */
+/*   Updated: 2023/10/02 17:01:36 by tterao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@ static t_plane	*_plane_newnode(const char **info)
 
 	newnode = try_calloc(sizeof(t_plane), 1);
 	info++;
-	newnode->x = ft_atof(*(info++));
-	newnode->y = ft_atof(*(info++));
-	newnode->z = ft_atof(*(info++));
-	newnode->x_axis = ft_atof(*(info++));
-	newnode->y_axis = ft_atof(*(info++));
-	newnode->z_axis = ft_atof(*(info++));
+	newnode->direction.x = ft_atof(*(info++));
+	newnode->direction.y = ft_atof(*(info++));
+	newnode->direction.z = ft_atof(*(info++));
+	newnode->coordinate.x = ft_atof(*(info++));
+	newnode->coordinate.y = ft_atof(*(info++));
+	newnode->coordinate.z = ft_atof(*(info++));
 	newnode->red = ft_atoi(*(info++));
 	newnode->green = ft_atoi(*(info++));
 	newnode->blue = ft_atoi(*(info++));
@@ -38,9 +38,9 @@ static t_sphere	*_sphere_newnode(const char **info)
 
 	newnode = try_calloc(sizeof(t_sphere), 1);
 	info++;
-	newnode->x = ft_atof(*(info++));
-	newnode->y = ft_atof(*(info++));
-	newnode->z = ft_atof(*(info++));
+	newnode->coordinate.x = ft_atof(*(info++));
+	newnode->coordinate.y = ft_atof(*(info++));
+	newnode->coordinate.z = ft_atof(*(info++));
 	newnode->diameter = ft_atof(*(info++));
 	newnode->radius = newnode->diameter / (float)2.0;
 	newnode->red = ft_atoi(*(info++));
@@ -55,12 +55,12 @@ static t_cylinder	*_cylinder_newnode(const char **info)
 
 	newnode = try_calloc(sizeof(t_cylinder), 1);
 	info++;
-	newnode->x = ft_atof(*(info++));
-	newnode->y = ft_atof(*(info++));
-	newnode->z = ft_atof(*(info++));
-	newnode->x_axis = ft_atof(*(info++));
-	newnode->y_axis = ft_atof(*(info++));
-	newnode->z_axis = ft_atof(*(info++));
+	newnode->direction.x = ft_atof(*(info++));
+	newnode->direction.y = ft_atof(*(info++));
+	newnode->direction.z = ft_atof(*(info++));
+	newnode->coordinate.x = ft_atof(*(info++));
+	newnode->coordinate.y = ft_atof(*(info++));
+	newnode->coordinate.z = ft_atof(*(info++));
 	newnode->diameter = ft_atof(*(info++));
 	newnode->radius = newnode->diameter / (float)2.0;
 	newnode->red = ft_atoi(*(info++));
