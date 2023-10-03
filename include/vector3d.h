@@ -9,10 +9,10 @@ typedef struct s_vector3d
 	float	z;
 }t_vector3d;
 
-t_vector3d	vector3d_add(t_vector3d p1, t_vector3d p2);
-t_vector3d	vector3d_sub(t_vector3d p1, t_vector3d p2);
-t_vector3d	vector3d_mul(t_vector3d p1, t_vector3d p2);
-t_vector3d	vector3d_div(t_vector3d p1, t_vector3d p2);
-float		vector3d_dot_product(t_vector3d p1, t_vector3d p2);
+t_vector3d	vector3d_add(t_vector3d v1, t_vector3d v2);
+t_vector3d	vector3d_sub(t_vector3d v1, t_vector3d v2);
+t_vector3d	vector3d_mul(t_vector3d v1, t_vector3d v2);
+t_vector3d	vector3d_div(t_vector3d v1, t_vector3d v2);
+float		vector3d_dot(t_vector3d v1, t_vector3d v2);
 
 #endif

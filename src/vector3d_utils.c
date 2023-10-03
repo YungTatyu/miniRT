@@ -6,13 +6,13 @@
 /*   By: tterao <tterao@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 15:26:32 by tterao            #+#    #+#             */
-/*   Updated: 2023/10/03 15:30:23 by tterao           ###   ########.fr       */
+/*   Updated: 2023/10/03 17:34:47 by tterao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vector3d.h"
 
-float	vector3d_dot_product(t_vector3d p1, t_vector3d p2)
+float	vector3d_dot(t_vector3d v1, t_vector3d v2)
 {
-	return (p1.x * p2.x + p1.y * p2.y + p1.z * p2.z);
+	return (v1.x * v2.x + v1.y * v2.y + v1.z * v2.z);
 }

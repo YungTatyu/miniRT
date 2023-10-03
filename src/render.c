@@ -3,6 +3,8 @@
 #include "parse.h"
 #include <mlx.h>
 
+#include <math.h>
+
 void	_mlx_init(t_global_data *data)
 {
 	data->mlx = mlx_init();
@@ -41,20 +43,22 @@ float	hit_squere(t_vector3d ray, t_vector3d camera_p,
 {
 	float	t;
 
-	t = -1.0f * (vector3d_dot_product(
+	t = -1.0f * (vector3d_dot(
 				vector3d_sub(camera_p, obj_p),
 				obj_direction))
-		/ vector3d_dot_product(ray, obj_direction);
+		/ vector3d_dot(ray, obj_direction);
+	//分母が0の場合、t = nan になる
+	if (isnan(t))
+		t = -1.0f;
 	return (t);
 }
 
-void	render_loop(t_global_data *data)
+void	render_plane_loop(t_global_data *data, t_plane *plane)
 {
 	int			y;
 	int			x;
 	t_vector3d	coordinate;
 	t_vector3d	camera_ray;
-	const t_plane	*plane = data->objs_list->next->obj;
 	float	t;
 
 	y = 0;
@@ -66,6 +70,7 @@ void	render_loop(t_global_data *data)
 			coordinate = get_3d_coordinate(x, y);
 			camera_ray = vector3d_sub(coordinate, data->camera->coordinate);
 			t = hit_squere(camera_ray, data->camera->coordinate, plane->coordinate, plane->direction);
+			printf("t=%f\n", t);
 			if (t >= 0.0f)
 				my_mlx_pixel_put(data, x, y, create_rgb(plane->red, plane->green, plane->blue));
 			else
@@ -79,7 +84,15 @@ void	render_loop(t_global_data *data)
 
 void	render(t_global_data *data)
 {
+	t_objs	*node;
+
 	_mlx_init(data);
-	render_loop(data);
+	node = data->objs_list->next;
+	while (node->type != HEAD)
+	{
+		if (node->type == PLANE)
+			render_plane_loop(data, (t_plane *)node->obj);
+		node = node->next;
+	}
 	mlx_loop(data->mlx);
 }
