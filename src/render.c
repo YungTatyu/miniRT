@@ -36,12 +36,26 @@ t_vector3d	get_3d_coordinate(int x, int y)
 	return (coordinate);
 }
 
+float	hit_squere(t_vector3d ray, t_vector3d camera_p,
+						t_vector3d obj_p, t_vector3d obj_direction)
+{
+	float	t;
+
+	t = -1.0f * (vector3d_dot_product(
+				vector3d_sub(camera_p, obj_p),
+				obj_direction))
+		/ vector3d_dot_product(ray, obj_direction);
+	return (t);
+}
+
 void	render_loop(t_global_data *data)
 {
 	int			y;
 	int			x;
 	t_vector3d	coordinate;
 	t_vector3d	camera_ray;
+	const t_plane	*plane = data->objs_list->next->obj;
+	float	t;
 
 	y = 0;
 	while (y < WINDOW_HEIGHT)
@@ -51,7 +65,11 @@ void	render_loop(t_global_data *data)
 		{
 			coordinate = get_3d_coordinate(x, y);
 			camera_ray = vector3d_sub(coordinate, data->camera->coordinate);
-			my_mlx_pixel_put(data, x, y, create_rgb(data->light->red, data->light->green, data->light->blue));
+			t = hit_squere(camera_ray, data->camera->coordinate, plane->coordinate, plane->direction);
+			if (t >= 0.0f)
+				my_mlx_pixel_put(data, x, y, create_rgb(plane->red, plane->green, plane->blue));
+			else
+				my_mlx_pixel_put(data, x, y, create_rgb(data->light->red, data->light->green, data->light->blue));
 			x++;
 		}
 		y++;
