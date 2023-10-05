@@ -6,7 +6,7 @@
 /*   By: tterao <tterao@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 16:38:20 by tterao            #+#    #+#             */
-/*   Updated: 2023/10/02 17:06:22 by tterao           ###   ########.fr       */
+/*   Updated: 2023/10/05 15:10:44 by tterao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,13 @@ t_light	*light_init(const char **info)
 	return (light);
 }
 
+void	_background_init(t_color *color)
+{
+	color->red = 100;
+	color->green = 149;
+	color->blue = 237;
+}
+
 void	global_data_init(t_global_data *data)
 {
 	data->mlx = NULL;
@@ -67,5 +74,6 @@ void	global_data_init(t_global_data *data)
 	data->ambient_light = NULL;
 	data->camera = NULL;
 	data->light = NULL;
+	_background_init(&data->background);
 	data->objs_list = objs_newnode(HEAD, NULL);
 }

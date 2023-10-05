@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ryhara <ryhara@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: tterao <tterao@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 15:35:48 by ryhara            #+#    #+#             */
-/*   Updated: 2023/10/01 15:34:01 by ryhara           ###   ########.fr       */
+/*   Updated: 2023/10/04 18:38:25 by tterao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ bool	parse(t_global_data *data, const char *file)
 		}
 		free(line);
 		_parse_to_init(data, (const char **)info);
-		_print_char_array(info);
+		// _print_char_array(info);
 		free_char_array(info);
 	}
 	return (true);

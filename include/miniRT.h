@@ -6,7 +6,7 @@
 /*   By: tterao <tterao@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 18:14:23 by tterao            #+#    #+#             */
-/*   Updated: 2023/10/02 17:22:47 by tterao           ###   ########.fr       */
+/*   Updated: 2023/10/05 14:58:40 by tterao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,13 @@ typedef struct s_cylinder
 	float		height;
 }t_cylinder;
 
+typedef struct s_color
+{
+	int	red;
+	int	green;
+	int	blue;
+}t_color;
+
 typedef struct s_global_data
 {
 	void				*mlx;
@@ -84,6 +91,7 @@ typedef struct s_global_data
 	int					endian;
 	int					height;
 	int					width;
+	t_color				background;
 	t_ambient_lightning	*ambient_light;
 	t_camera			*camera;
 	t_light				*light;

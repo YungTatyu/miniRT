@@ -32,8 +32,8 @@ t_vector3d	get_3d_coordinate(int x, int y)
 {
 	t_vector3d	coordinate;
 
-	coordinate.x = ((2 * x) / (WINDOW_WIDTH - 1)) - 1;
-	coordinate.y = ((-2 * y) / (WINDOW_HEIGHT - 1)) + 1;
+	coordinate.x = ((2.0f * x) / (WINDOW_WIDTH - 1.0f)) - 1.0f;
+	coordinate.y = (-(2.0f * y) / (WINDOW_HEIGHT - 1.0f)) + 1.0f;
 	coordinate.z = 0;
 	return (coordinate);
 }
@@ -70,11 +70,11 @@ void	render_plane_loop(t_global_data *data, t_plane *plane)
 			coordinate = get_3d_coordinate(x, y);
 			camera_ray = vector3d_sub(coordinate, data->camera->coordinate);
 			t = hit_plane(camera_ray, data->camera->coordinate, plane->coordinate, plane->direction);
-			printf("t=%f\n", t);
+			// printf("t=%f\n", t);
 			if (t >= 0.0f)
 				my_mlx_pixel_put(data, x, y, create_rgb(plane->red, plane->green, plane->blue));
 			else
-				my_mlx_pixel_put(data, x, y, create_rgb(data->light->red, data->light->green, data->light->blue));
+				my_mlx_pixel_put(data, x, y, create_rgb(data->background.red, data->background.green, data->background.blue));
 			x++;
 		}
 		y++;
@@ -100,10 +100,11 @@ float	hit_sphere(t_vector3d ray, t_vector3d camera_p,
 	const float	a = vector3d_mag_sq(ray);
 	const float	b = 2.0f * vector3d_dot(vector3d_sub(camera_p, obj_p), ray);
 	const float	c = vector3d_mag_sq(vector3d_sub(camera_p, obj_p)) - powf(radius, 2.0);
-	// const float	c = vector3d_mag_sq(camera_p) - powf(radius, 2.0);
 
 	// const float t1 = -b + sqrtf(powf(b, 2.0f) - (4 * a * c)) / (2 * a);
 	// const float t2 = -b - sqrtf(powf(b, 2.0f) - (4 * a * c)) / (2 * a);
+	// printf("a = %f b = %f c = %f\n", a, b, c);
+
 	return (powf(b, 2.0f) - (4 * a * c));
 }
 
@@ -123,12 +124,12 @@ void	render_sphere_loop(t_global_data *data, t_sphere *sphere)
 		{
 			coordinate = get_3d_coordinate(x, y);
 			camera_ray = vector3d_sub(coordinate, data->camera->coordinate);
+			// printf("x = %f y = %f z = %f\n", camera_ray.x, camera_ray.y , camera_ray.z);
 			t = hit_sphere(camera_ray, data->camera->coordinate, sphere->coordinate, sphere->radius);
-			printf("t=%f\n", t);
 			if (t >= 0.0f)
 				my_mlx_pixel_put(data, x, y, create_rgb(sphere->red, sphere->green, sphere->blue));
 			else
-				my_mlx_pixel_put(data, x, y, create_rgb(data->light->red, data->light->green, data->light->blue));
+				my_mlx_pixel_put(data, x, y, create_rgb(data->background.red, data->background.green, data->background.blue));
 			x++;
 		}
 		y++;
