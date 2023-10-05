@@ -6,7 +6,7 @@
 /*   By: tterao <tterao@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 18:14:23 by tterao            #+#    #+#             */
-/*   Updated: 2023/10/05 14:58:40 by tterao           ###   ########.fr       */
+/*   Updated: 2023/10/05 15:34:29 by tterao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,5 +101,6 @@ typedef struct s_global_data
 void	*try_calloc(size_t count, size_t size);
 void	*try_malloc(size_t size);
 void	render(t_global_data *data);
+t_vector3d	get_3d_coordinate(int x, int y);
 
 #endif
