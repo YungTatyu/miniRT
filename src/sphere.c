@@ -5,16 +5,15 @@
 #include <math.h>
 #include <mlx.h>
 
-
 #define DIFFUSE_REFLECTION 0.69f /* 拡散反射係数 */
 #define AMBIENT_LIGHT_REFLECTION 0.01f /* 環境光反射係数 */
 #define SPECULAR_REFLECTION 0.3f /* 鏡面反射係数 */
-#define COLOR 255 /* colorの範囲 */
+#define COLOR 255.0f /* colorの範囲 */
 
 static float	_calc_t(float a, float b, float c)
 {
-	const float	t1 = -b + sqrtf(powf(b, 2.0f) - (4 * a * c)) / (2 * a);
-	const float	t2 = -b - sqrtf(powf(b, 2.0f) - (4 * a * c)) / (2 * a);
+	const float	t1 = -b + sqrtf(powf(b, 2.0f) - (4.0f * a * c)) / (2.0f * a);
+	const float	t2 = -b - sqrtf(powf(b, 2.0f) - (4.0f * a * c)) / (2.0f * a);
 
 	if (t1 > 0.0f && t2 > 0.0f)
 		return (fminf(t1, t2));
@@ -39,8 +38,8 @@ float	hit_sphere(t_vector3d ray, t_vector3d camera_pos,
 	const float	a = vector3d_mag_sq(ray);
 	const float	b = 2.0f * vector3d_dot(vector3d_sub(camera_pos, obj_pos), ray);
 	const float	c = vector3d_mag_sq(
-			vector3d_sub(camera_pos, obj_pos)) - powf(radius, 2.0);
-	const float	d = powf(b, 2.0f) - (4 * a * c);
+			vector3d_sub(camera_pos, obj_pos)) - powf(radius, 2.0f);
+	const float	d = powf(b, 2.0f) - (4.0f * a * c);
 
 	if (d == 0.0f)
 		return (-(b) / 2.0f * a);
@@ -138,6 +137,19 @@ static float	_get_ligth_specular_reflection_radiance(
 	return (SPECULAR_REFLECTION * data->light->ratio * _dot);
 }
 
+
+/**
+ * @brief 反射光の放射輝度𝑅𝑟を計算する
+ *
+ * ambient_light_radiance:環境光の反射光の放射輝度
+ * light_diffuse_radiance:直接光の拡散反射光の放射輝度
+ * ligth_specular_reflection_radiance:直接光の鏡面反射光の放射輝度
+ *
+ * @param data
+ * @param ray
+ * @param t
+ * @return float
+ */
 static	float	_calc_shade(t_global_data *data, t_vector3d ray, const float t)
 {
 	const float	ambient_light_radiance = AMBIENT_LIGHT_REFLECTION
@@ -180,7 +192,10 @@ void	render_sphere_loop(t_global_data *data, t_sphere *sphere)
 			if (t >= 0.0f)
 			{
 				radiance = _calc_shade(data, camera_ray, t);
-				my_mlx_pixel_put(data, x, y, create_rgb(sphere->red * radiance, sphere->green * radiance, sphere->blue * radiance));
+				printf("%f\n", radiance);
+				// my_mlx_pixel_put(data, x, y, create_rgb(sphere->red, sphere->green, sphere->blue));
+				// my_mlx_pixel_put(data, x, y, create_rgb(sphere->red * radiance, sphere->green * radiance, sphere->blue * radiance));
+				my_mlx_pixel_put(data, x, y, create_rgb(radiance, radiance, radiance));
 			}
 			else
 				my_mlx_pixel_put(data, x, y, create_rgb(data->background.red, data->background.green, data->background.blue));
