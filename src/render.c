@@ -50,20 +50,20 @@ t_vector3d	get_3d_coordinate(int x, int y)
  * @brief 平面とレイの交差判定をおこなう
  *
  * @param ray
- * @param camera_p
- * @param obj_p
- * @param obj_direction
+ * @param camera_pos
+ * @param obj_pos
+ * @param obj_dir
  * @return float t cameraからobjectまでの距離のベクトルの大きさを示すtが返す
  */
-float	hit_plane(t_vector3d ray, t_vector3d camera_p,
-						t_vector3d obj_p, t_vector3d obj_direction)
+float	hit_plane(t_vector3d ray, t_vector3d camera_pos,
+						t_vector3d obj_pos, t_vector3d obj_dir)
 {
 	float	t;
 
 	t = -1.0f * (vector3d_dot(
-				vector3d_sub(camera_p, obj_p),
-				obj_direction))
-		/ vector3d_dot(ray, obj_direction);
+				vector3d_sub(camera_pos, obj_pos),
+				obj_dir))
+		/ vector3d_dot(ray, obj_dir);
 	//分母が0の場合、t = nan になる
 	if (isnan(t))
 		t = -1.0f;

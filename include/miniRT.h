@@ -6,7 +6,7 @@
 /*   By: tterao <tterao@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 18:14:23 by tterao            #+#    #+#             */
-/*   Updated: 2023/10/05 15:34:29 by tterao           ###   ########.fr       */
+/*   Updated: 2023/10/06 16:26:34 by tterao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,5 +102,7 @@ void	*try_calloc(size_t count, size_t size);
 void	*try_malloc(size_t size);
 void	render(t_global_data *data);
 t_vector3d	get_3d_coordinate(int x, int y);
+void	my_mlx_pixel_put(t_global_data *data, int x, int y, int color);
+int	create_rgb(int r, int g, int b);
 
 #endif

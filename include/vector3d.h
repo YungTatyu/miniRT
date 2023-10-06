@@ -17,5 +17,7 @@ float		vector3d_dot(t_vector3d v1, t_vector3d v2);
 float		vector3d_mag_sq(t_vector3d v);
 float		vector3d_mag(t_vector3d v);
 void		vector3d_print(t_vector3d v);
+t_vector3d	vector3d_fmulv(float f, t_vector3d v);
+t_vector3d	vector3d_normalize(t_vector3d v);
 
 #endif
