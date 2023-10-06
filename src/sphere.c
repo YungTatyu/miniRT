@@ -60,14 +60,14 @@ float	hit_sphere(t_vector3d ray, t_vector3d camera_pos,
  * @param t
  * @return float
  */
-static float	_get_incidence_dot(t_global_data *data, t_vector3d ray, const float t)
+static float	_get_incidence_dot(t_global_data *data, t_sphere *sphere, t_vector3d ray, const float t)
 {
 	const t_vector3d	intersection_pos = vector3d_add(
 			data->camera->coordinate, vector3d_fmulv(t, ray));
 	const t_vector3d	incidence_vec = vector3d_sub(
 			data->light->coordinate, intersection_pos);
 	const t_vector3d	normal = vector3d_sub(
-			intersection_pos, data->camera->coordinate);
+			intersection_pos, sphere->coordinate);
 	float				dot;
 
 	dot = vector3d_dot(normal, incidence_vec);
@@ -116,18 +116,16 @@ static float	_calc_ligth_specular_reflection_radiance_dot(t_vector3d ray, t_vect
  * @param data
  * @param ray
  * @param dot
- * @param t
+ * @param intersection_pos:交点位置
  * @return float
  */
 static float	_get_ligth_specular_reflection_radiance(
-			t_global_data *data, t_vector3d ray, const float dot, const float t)
+			t_global_data *data, t_sphere *sphere, t_vector3d ray, const float dot, const t_vector3d intersection_pos)
 {
-	const t_vector3d	intersection_pos = vector3d_add(
-			data->camera->coordinate, vector3d_fmulv(t, ray));
 	const t_vector3d	incidence_vec = vector3d_sub(
 			data->light->coordinate, intersection_pos);
 	const t_vector3d	normal = vector3d_sub(
-			intersection_pos, data->camera->coordinate);
+			intersection_pos, sphere->coordinate);
 	float				_dot;
 
 	if (dot <= 0.0f)
@@ -150,16 +148,17 @@ static float	_get_ligth_specular_reflection_radiance(
  * @param t
  * @return float
  */
-static	float	_calc_shade(t_global_data *data, t_vector3d ray, const float t)
+static	float	_calc_shade(t_global_data *data, t_sphere *sphere, t_vector3d ray, const float t)
 {
 	const float	ambient_light_radiance = AMBIENT_LIGHT_REFLECTION
 		* data->ambient_light->ratio;
 	const float	light_diffuse_radiance
 		= DIFFUSE_REFLECTION * data->light->ratio
-		* _get_incidence_dot(data, ray, t);
+		* _get_incidence_dot(data, sphere, ray, t);
 	const float	ligth_specular_reflection_radiance
-		= _get_ligth_specular_reflection_radiance(data, ray,
-			_get_incidence_dot(data, ray, t), t);
+		= _get_ligth_specular_reflection_radiance(data, sphere, ray,
+			_get_incidence_dot(data, sphere, ray, t),
+			vector3d_add(data->camera->coordinate, vector3d_fmulv(t, ray)));
 	float		sum_radiance;
 
 	sum_radiance = ambient_light_radiance
@@ -189,13 +188,14 @@ void	render_sphere_loop(t_global_data *data, t_sphere *sphere)
 			coordinate = get_3d_coordinate(x, y);
 			camera_ray = vector3d_sub(coordinate, data->camera->coordinate);
 			t = hit_sphere(camera_ray, data->camera->coordinate, sphere->coordinate, sphere->radius);
+			printf("t=%f\n", t);
 			if (t >= 0.0f)
 			{
-				radiance = _calc_shade(data, camera_ray, t);
-				printf("%f\n", radiance);
+				radiance = _calc_shade(data, sphere, camera_ray, t);
+				printf("radiance=%f\n", radiance);
 				// my_mlx_pixel_put(data, x, y, create_rgb(sphere->red, sphere->green, sphere->blue));
-				// my_mlx_pixel_put(data, x, y, create_rgb(sphere->red * radiance, sphere->green * radiance, sphere->blue * radiance));
-				my_mlx_pixel_put(data, x, y, create_rgb(radiance, radiance, radiance));
+				my_mlx_pixel_put(data, x, y, create_rgb(sphere->red * radiance, sphere->green * radiance, sphere->blue * radiance));
+				// my_mlx_pixel_put(data, x, y, create_rgb(radiance, radiance, radiance));
 			}
 			else
 				my_mlx_pixel_put(data, x, y, create_rgb(data->background.red, data->background.green, data->background.blue));
