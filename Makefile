@@ -14,7 +14,7 @@ LIBFT_DIR = libft
 LIBFT_FLAGS = libft/libft.a libft/libftprintf.a libft/libftdprintf.a
 
 INCLUDES =  -I$(INCLUDES_DIR) -I$(MINILIBX_DIR) -I$(X11_DIR)/include -I$(LIBFT_DIR)/includes
-MINILIBX_FLAGS = -L$(MINILIBX_DIR) -lmlx -L$(X11_DIR)/lib -lX11 -lXext
+MINILIBX_FLAGS = -Lmlx -lmlx -framework OpenGL -framework AppKit
 
 
 SRCS_DIR = src
