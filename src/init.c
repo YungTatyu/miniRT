@@ -6,7 +6,7 @@
 /*   By: tterao <tterao@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 16:38:20 by tterao            #+#    #+#             */
-/*   Updated: 2023/10/05 15:10:44 by tterao           ###   ########.fr       */
+/*   Updated: 2023/10/07 14:17:32 by tterao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ t_ambient_lightning	*ambient_light_init(const char **info)
 	ambient_light = try_calloc(sizeof(t_ambient_lightning), 1);
 	info++;
 	ambient_light->ratio = ft_atof(*(info++));
-	ambient_light->red = ft_atoi(*(info++));
-	ambient_light->green = ft_atoi(*(info++));
-	ambient_light->blue = ft_atoi(*(info++));
+	ambient_light->color.red = ft_atoi(*(info++));
+	ambient_light->color.green = ft_atoi(*(info++));
+	ambient_light->color.blue = ft_atoi(*(info++));
 	return (ambient_light);
 }
 
@@ -52,9 +52,9 @@ t_light	*light_init(const char **info)
 	light->coordinate.y = ft_atof(*(info++));
 	light->coordinate.z = ft_atof(*(info++));
 	light->ratio = ft_atof(*(info++));
-	light->red = ft_atoi(*(info++));
-	light->green = ft_atoi(*(info++));
-	light->blue = ft_atoi(*(info++));
+	light->color.red = ft_atoi(*(info++));
+	light->color.green = ft_atoi(*(info++));
+	light->color.blue = ft_atoi(*(info++));
 	return (light);
 }
 

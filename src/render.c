@@ -24,9 +24,9 @@ void	my_mlx_pixel_put(t_global_data *data, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
-int	create_rgb(int r, int g, int b)
+int	create_rgb(int red, int green, int blue)
 {
-	return (r << 16 | g << 8 | b);
+	return (red << 16 | green << 8 | blue);
 }
 
 /**
@@ -89,7 +89,7 @@ void	render_plane_loop(t_global_data *data, t_plane *plane)
 			t = hit_plane(camera_ray, data->camera->coordinate, plane->coordinate, plane->direction);
 			// printf("t=%f\n", t);
 			if (t >= 0.0f)
-				my_mlx_pixel_put(data, x, y, create_rgb(plane->red, plane->green, plane->blue));
+				my_mlx_pixel_put(data, x, y, create_rgb(plane->color.red, plane->color.green, plane->color.blue));
 			else
 				my_mlx_pixel_put(data, x, y, create_rgb(data->background.red, data->background.green, data->background.blue));
 			x++;

@@ -6,7 +6,7 @@
 /*   By: tterao <tterao@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 16:13:00 by tterao            #+#    #+#             */
-/*   Updated: 2023/10/02 17:30:05 by tterao           ###   ########.fr       */
+/*   Updated: 2023/10/07 14:15:02 by tterao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ static t_plane	*_plane_newnode(const char **info)
 	newnode->coordinate.x = ft_atof(*(info++));
 	newnode->coordinate.y = ft_atof(*(info++));
 	newnode->coordinate.z = ft_atof(*(info++));
-	newnode->red = ft_atoi(*(info++));
-	newnode->green = ft_atoi(*(info++));
-	newnode->blue = ft_atoi(*(info++));
+	newnode->color.red = ft_atoi(*(info++));
+	newnode->color.green = ft_atoi(*(info++));
+	newnode->color.blue = ft_atoi(*(info++));
 	return (newnode);
 }
 
@@ -43,9 +43,9 @@ static t_sphere	*_sphere_newnode(const char **info)
 	newnode->coordinate.z = ft_atof(*(info++));
 	newnode->diameter = ft_atof(*(info++));
 	newnode->radius = newnode->diameter / 2.0f;
-	newnode->red = ft_atoi(*(info++));
-	newnode->green = ft_atoi(*(info++));
-	newnode->blue = ft_atoi(*(info++));
+	newnode->color.red = ft_atoi(*(info++));
+	newnode->color.green = ft_atoi(*(info++));
+	newnode->color.blue = ft_atoi(*(info++));
 	return (newnode);
 }
 
@@ -63,9 +63,9 @@ static t_cylinder	*_cylinder_newnode(const char **info)
 	newnode->coordinate.z = ft_atof(*(info++));
 	newnode->diameter = ft_atof(*(info++));
 	newnode->radius = newnode->diameter / 2.0f;
-	newnode->red = ft_atoi(*(info++));
-	newnode->green = ft_atoi(*(info++));
-	newnode->blue = ft_atoi(*(info++));
+	newnode->color.red = ft_atoi(*(info++));
+	newnode->color.green = ft_atoi(*(info++));
+	newnode->color.blue = ft_atoi(*(info++));
 	return (newnode);
 }
 

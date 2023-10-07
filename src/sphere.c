@@ -194,7 +194,7 @@ void	render_sphere_loop(t_global_data *data, t_sphere *sphere)
 				radiance = _calc_shade(data, sphere, camera_ray, t);
 				printf("radiance=%f\n", radiance);
 				// my_mlx_pixel_put(data, x, y, create_rgb(sphere->red, sphere->green, sphere->blue));
-				my_mlx_pixel_put(data, x, y, create_rgb(sphere->red * radiance, sphere->green * radiance, sphere->blue * radiance));
+				my_mlx_pixel_put(data, x, y, create_rgb(sphere->color.red * radiance, sphere->color.green * radiance, sphere->color.blue * radiance));
 				// my_mlx_pixel_put(data, x, y, create_rgb(radiance, radiance, radiance));
 			}
 			else
