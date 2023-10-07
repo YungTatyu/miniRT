@@ -20,8 +20,8 @@
  */
 static float	_calc_t(float a, float b, float c)
 {
-	const float	t1 = -b + sqrtf(powf(b, 2.0f) - (4.0f * a * c)) / (2.0f * a);
-	const float	t2 = -b - sqrtf(powf(b, 2.0f) - (4.0f * a * c)) / (2.0f * a);
+	const float	t1 = (-b + sqrtf(powf(b, 2.0f) - (4.0f * a * c))) / (2.0f * a);
+	const float	t2 = (-b - sqrtf(powf(b, 2.0f) - (4.0f * a * c))) / (2.0f * a);
 
 	if (t1 > 0.0f && t2 > 0.0f)
 		return (fminf(t1, t2));
@@ -50,7 +50,9 @@ float	hit_sphere(t_vector3d ray, t_vector3d camera_pos,
 	const float	d = powf(b, 2.0f) - (4.0f * a * c);
 
 	if (d == 0.0f)
-		return (-(b) / 2.0f * a);
+		return (-(b) / (2.0f * a));
+	else if (d < 0)
+		return (-1.0f);
 	return (_calc_t(a, b, c));
 }
 
@@ -197,12 +199,12 @@ static float	_get_radiance(
 			)
 		* SPECULAR_REFLECTION * data->light->ratio;
 
-	// printf("alr=%f, ldr=%f, lsrr=%f, dot=%f\n", ambient_light_radiance, light_diffuse_radiance, ligth_specular_reflection_radiance, dot);
+	printf("alr=%f, ldr=%f, lsrr=%f, dot=%f t=%f\n", ambient_light_radiance, light_diffuse_radiance, ligth_specular_reflection_radiance, dot, t);
 	return (
-		dot
-		// ambient_light_radiance
-		// + light_diffuse_radiance
-		// + ligth_specular_reflection_radiance
+		// dot
+		ambient_light_radiance
+		+ light_diffuse_radiance
+		+ ligth_specular_reflection_radiance
 	);
 }
 
@@ -258,8 +260,8 @@ void	render_sphere_loop(t_global_data *data, t_sphere *sphere)
 				radiance = _calc_shade(data, sphere, camera_ray, t);
 				printf("radiance=%f\n", radiance);
 				// my_mlx_pixel_put(data, x, y, create_rgb(sphere->red, sphere->green, sphere->blue));
-				my_mlx_pixel_put(data, x, y, create_rgb(sphere->color.red * radiance, sphere->color.green * radiance, sphere->color.blue * radiance));
-				// my_mlx_pixel_put(data, x, y, create_rgb(radiance, radiance, radiance));
+				// my_mlx_pixel_put(data, x, y, create_rgb(sphere->color.red * radiance, sphere->color.green * radiance, sphere->color.blue * radiance));
+				my_mlx_pixel_put(data, x, y, create_rgb(radiance, radiance, radiance));
 			}
 			else
 				my_mlx_pixel_put(data, x, y, create_rgb(data->background.red, data->background.green, data->background.blue));
