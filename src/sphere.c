@@ -46,6 +46,7 @@ float	hit_sphere(t_vector3d ray, t_vector3d camera_pos,
 	return (_calc_t(a, b, c));
 }
 
+
 /**
  * @brief 入射ベクトルと法線ベクトルの内積を返す
  *
@@ -105,36 +106,87 @@ static float	_calc_ligth_specular_reflection_radiance_dot(t_vector3d ray, t_vect
 	return (dot);
 }
 
+static t_vector3d	_get_intersection_pos(const t_vector3d camera_pos, const float t, const t_vector3d ray)
+{
+	return (vector3d_add(camera_pos, vector3d_fmulv(t, ray)));
+}
+
+static t_vector3d	_get_incidence_vector(const t_vector3d light_pos, const t_vector3d intersection_pos)
+{
+	return (vector3d_sub(light_pos, intersection_pos));
+}
+
+static t_vector3d	_get_normal_vector(const t_vector3d intersection_pos, const t_vector3d sphere_pos)
+{
+	return (vector3d_sub(intersection_pos, sphere_pos));
+}
+
 /**
- * @brief 直接光の拡散反射光の放射輝度𝑅𝑑を計算する
+ * @brief 内積(𝐯⃗ ⋅𝐫⃗ )を計算する
  *
- * intersection_pos:交点位置
- * incidence_vec:入射ベクトル
- * normal:法線ベクトル
- * _dot:内積
+ * 視線ベクトルの逆ベクトル𝐯と正反射ベクトル𝐫の内積
  *
- * @param data
  * @param ray
  * @param dot
- * @param intersection_pos:交点位置
+ * @param incidence_vec
+ * @param normal_vec
  * @return float
  */
 static float	_get_ligth_specular_reflection_radiance(
-			t_global_data *data, t_sphere *sphere, t_vector3d ray, const float dot, const t_vector3d intersection_pos)
+			const t_vector3d ray, const float dot, const t_vector3d incidence_vec, const t_vector3d normal_vec)
 {
-	const t_vector3d	incidence_vec = vector3d_sub(
-			data->light->coordinate, intersection_pos);
-	const t_vector3d	normal = vector3d_sub(
-			intersection_pos, sphere->coordinate);
-	float				_dot;
-
 	if (dot <= 0.0f)
 		return (0.0f);
-	_dot = _calc_ligth_specular_reflection_radiance_dot(
-			ray, incidence_vec, normal);
-	return (SPECULAR_REFLECTION * data->light->ratio * _dot);
+	return (
+		_calc_ligth_specular_reflection_radiance_dot
+		(ray, incidence_vec, normal_vec)
+	);
 }
 
+/**
+ * @brief 反射光を計算する
+ *
+ * 以下三つの足し算
+ * 環境光
+ * 拡散反射光
+ * 鏡面反射光
+ *
+ * ambient_light_radiance:環境光の反射光の放射輝度
+ * light_diffuse_radiance:直接光の拡散反射光の放射輝度
+ * ligth_specular_reflection_radiance:直接光の鏡面反射光の放射輝度
+ *
+ * @param data
+ * @param sphere
+ * @param ray
+ * @param t
+ * @return float
+ */
+static float	_get_radiance(
+		t_global_data *data, t_sphere *sphere, t_vector3d ray, const float t)
+{
+	const float	ambient_light_radiance = AMBIENT_LIGHT_REFLECTION
+		* data->ambient_light->ratio;
+	const float	dot = _get_incidence_dot(data, sphere, ray, t);
+	const float	light_diffuse_radiance
+		= DIFFUSE_REFLECTION * data->light->ratio
+		* dot;
+	const float	ligth_specular_reflection_radiance
+		= _get_ligth_specular_reflection_radiance(
+			ray, dot,
+			_get_incidence_vector(data->light->coordinate,
+				_get_intersection_pos(data->camera->coordinate, t, ray)),
+			_get_normal_vector(_get_intersection_pos(
+					data->camera->coordinate, t, ray),
+				sphere->coordinate)
+			)
+		* SPECULAR_REFLECTION * data->light->ratio;
+
+	return (
+		ambient_light_radiance
+		+ light_diffuse_radiance
+		+ ligth_specular_reflection_radiance
+	);
+}
 
 /**
  * @brief 反射光の放射輝度𝑅𝑟を計算する
@@ -150,19 +202,9 @@ static float	_get_ligth_specular_reflection_radiance(
  */
 static	float	_calc_shade(t_global_data *data, t_sphere *sphere, t_vector3d ray, const float t)
 {
-	const float	ambient_light_radiance = AMBIENT_LIGHT_REFLECTION
-		* data->ambient_light->ratio;
-	const float	light_diffuse_radiance
-		= DIFFUSE_REFLECTION * data->light->ratio
-		* _get_incidence_dot(data, sphere, ray, t);
-	const float	ligth_specular_reflection_radiance
-		= _get_ligth_specular_reflection_radiance(data, sphere, ray,
-			_get_incidence_dot(data, sphere, ray, t),
-			vector3d_add(data->camera->coordinate, vector3d_fmulv(t, ray)));
 	float		sum_radiance;
 
-	sum_radiance = ambient_light_radiance
-		+ light_diffuse_radiance + ligth_specular_reflection_radiance;
+	sum_radiance = _get_radiance(data, sphere, ray, t);
 	if (sum_radiance > 1.0f)
 		sum_radiance = 1.0f;
 	else if (sum_radiance < 0.0f)
