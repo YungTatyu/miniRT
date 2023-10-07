@@ -30,6 +30,8 @@ int	create_rgb(int red, int green, int blue)
 	return (red << 16 | green << 8 | blue);
 }
 
+t_vector3d vector3d_cross(t_vector3d v1, t_vector3d v2);
+
 /**
  * @brief Get the 3d coordinate object
  *
@@ -41,14 +43,41 @@ t_vector3d	get_3d_coordinate(int x, int y)
 {
 	t_vector3d	coordinate;
 
-	// screeen_unit_vec
-	// xunit (0, 1, 0) cross camera_normal_vec -> dx
-	// yunit camera_normal_vec crosss xunit -> dy
-	// camera_to_screen_distance
 	coordinate.x = ((2.0f * x) / (WINDOW_WIDTH - 1.0f)) - 1.0f;
 	coordinate.y = (-(2.0f * y) / (WINDOW_HEIGHT - 1.0f)) + 1.0f;
 	coordinate.z = 0;
-	// (camera_coordinate + cammera_directtion * camera_to_screen_distance) + x* dx + y * dy
+	return (coordinate);
+}
+
+t_vector3d	get_3d_coordinate_new(int x, int y , t_global_data *data)
+{
+	t_vector3d	coordinate;
+	t_vector3d	up;
+	t_vector3d 	screen_unit_x;
+	t_vector3d 	screen_unit_y;
+	float		camera_to_screen_distance;
+	float		f_x;
+	float		f_y;
+
+	up.x = 0;
+	up.y = 1;
+	up.z = 0;
+	screen_unit_x = vector3d_cross(up, data->camera->direction);
+	screen_unit_y = vector3d_cross(data->camera->direction, screen_unit_x);
+	camera_to_screen_distance = WINDOW_WIDTH / 2.0f * (tanf((float)(data->camera->fov * M_PI / 180) / 2.0f));
+	f_x = ((2.0f * (float)x) / ((float)WINDOW_WIDTH - 1.0f)) - 1.0f;
+	f_y = (-(2.0f * (float)y) / ((float)WINDOW_HEIGHT - 1.0f)) + 1.0f;
+	coordinate = vector3d_add(vector3d_add(vector3d_add(data->camera->coordinate,
+					vector3d_fmulv(camera_to_screen_distance, data->camera->direction)),
+					vector3d_fmulv(f_x, screen_unit_x)),
+					vector3d_fmulv(f_y, screen_unit_y));
+	printf("-------------------------------\n");
+	vector3d_print(screen_unit_x);
+	vector3d_print(screen_unit_y);
+	printf("distance:%f tan %f\n", camera_to_screen_distance, tanf((data->camera->fov * M_PI / 180) / 2.0f));
+	printf("f_x:%f\n", f_x);
+	printf("f_y:%f\n", f_y);
+	vector3d_print(coordinate);
 	return (coordinate);
 }
 

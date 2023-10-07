@@ -46,6 +46,9 @@ bool	hit_cylinder(t_vector3d ray, t_vector3d camera_pos,
 	return (true);
 }
 
+
+t_vector3d	get_3d_coordinate_new(int x, int y , t_global_data *data);
+
 void	render_cylinder_loop(t_global_data *data, t_cylinder *cylinder)
 {
 	int			y;
@@ -65,7 +68,7 @@ void	render_cylinder_loop(t_global_data *data, t_cylinder *cylinder)
 		x = 0;
 		while (x < WINDOW_WIDTH)
 		{
-			coordinate = get_3d_coordinate(x, y);
+			coordinate = get_3d_coordinate_new(x, y, data);
 			camera_ray = vector3d_sub(coordinate, data->camera->coordinate);
 			if (hit_cylinder(camera_ray, data->camera->coordinate, cylinder->coordinate, cylinder->radius, cylinder))
 			{
@@ -83,8 +86,8 @@ void	render_cylinder_loop(t_global_data *data, t_cylinder *cylinder)
 				{
 					ray1 = vector3d_sub(vector3d_add(data->camera->coordinate, vector3d_fmulv(t1, camera_ray)), cylinder->coordinate);
 					ray2 = vector3d_sub(vector3d_add(data->camera->coordinate, vector3d_fmulv(t2, camera_ray)), cylinder->coordinate);
-					printf("ray1 vector3d_dot:%f\n", vector3d_dot(ray1, cylinder->direction));
-					printf("ray2 vector3d_dot:%f\n", vector3d_dot(ray2, cylinder->direction));
+					// printf("ray1 vector3d_dot:%f\n", vector3d_dot(ray1, cylinder->direction));
+					// printf("ray2 vector3d_dot:%f\n", vector3d_dot(ray2, cylinder->direction));
 					if (0 <= vector3d_dot(ray1, cylinder->direction) && vector3d_dot(ray1, cylinder->direction) < cylinder->height && t1 > 0.0f)
 					{
 						printf("T1\n");
@@ -98,7 +101,7 @@ void	render_cylinder_loop(t_global_data *data, t_cylinder *cylinder)
 					else
 						t = -1.0f;
 				}
-				printf("t:%f t1:%f t2:%f\n", t, t1, t2);
+				// printf("t:%f t1:%f t2:%f\n", t, t1, t2);
 				if (t < 0.0f)
 					my_mlx_pixel_put(data, x, y, create_rgb(data->background.red, data->background.green, data->background.blue));
 				else
