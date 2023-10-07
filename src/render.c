@@ -41,9 +41,14 @@ t_vector3d	get_3d_coordinate(int x, int y)
 {
 	t_vector3d	coordinate;
 
+	// screeen_unit_vec
+	// xunit (0, 1, 0) cross camera_normal_vec -> dx
+	// yunit camera_normal_vec crosss xunit -> dy
+	// camera_to_screen_distance
 	coordinate.x = ((2.0f * x) / (WINDOW_WIDTH - 1.0f)) - 1.0f;
 	coordinate.y = (-(2.0f * y) / (WINDOW_HEIGHT - 1.0f)) + 1.0f;
 	coordinate.z = 0;
+	// (camera_coordinate + cammera_directtion * camera_to_screen_distance) + x* dx + y * dy
 	return (coordinate);
 }
 
