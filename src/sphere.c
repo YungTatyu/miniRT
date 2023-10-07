@@ -12,8 +12,8 @@
 
 static float	_calc_t(float a, float b, float c)
 {
-	const float	t1 = -b + sqrtf(powf(b, 2.0f) - (4.0f * a * c)) / (2.0f * a);
-	const float	t2 = -b - sqrtf(powf(b, 2.0f) - (4.0f * a * c)) / (2.0f * a);
+	const float	t1 = (-b + sqrtf(powf(b, 2.0f) - (4.0f * a * c))) / (2.0f * a);
+	const float	t2 = (-b - sqrtf(powf(b, 2.0f) - (4.0f * a * c))) / (2.0f * a);
 
 	if (t1 > 0.0f && t2 > 0.0f)
 		return (fminf(t1, t2));
@@ -42,7 +42,7 @@ float	hit_sphere(t_vector3d ray, t_vector3d camera_pos,
 	const float	d = powf(b, 2.0f) - (4.0f * a * c);
 
 	if (d == 0.0f)
-		return (-(b) / 2.0f * a);
+		return (-(b) / (2.0f * a));
 	return (_calc_t(a, b, c));
 }
 

@@ -4,6 +4,7 @@
 #include <mlx.h>
 #include <math.h>
 
+void	render_cylinder_loop(t_global_data *data, t_cylinder *cylinder);
 void	render_sphere_loop(t_global_data *data, t_sphere *sphere);
 
 void	_mlx_init(t_global_data *data)
@@ -99,6 +100,23 @@ void	render_plane_loop(t_global_data *data, t_plane *plane)
 	mlx_put_image_to_window(data->mlx, data->mlx_win, data->img, 0, 0);
 }
 
+int	close_esc(int keycode, t_global_data *data)
+{
+	if (keycode == ESC_KEY)
+	{
+		mlx_destroy_window(data->mlx, data->mlx_win);
+		exit(0);
+	}
+	return (0);
+}
+
+int	close_x(t_global_data *data)
+{
+	mlx_destroy_window(data->mlx, data->mlx_win);
+	exit(0);
+	return (0);
+}
+
 void	render(t_global_data *data)
 {
 	t_objs	*node;
@@ -111,7 +129,11 @@ void	render(t_global_data *data)
 			render_plane_loop(data, (t_plane *)node->obj);
 		else if (node->type == SPHERE)
 			render_sphere_loop(data, (t_sphere *)node->obj);
+		else if (node->type == CYLINDER)
+			render_cylinder_loop(data, (t_cylinder*)node->obj);
 		node = node->next;
 	}
+	mlx_hook(data->mlx_win, ON_KEYDOWN, 0, close_esc, data);
+	mlx_hook(data->mlx_win, ON_DESTROY, 0, close_x, data);
 	mlx_loop(data->mlx);
 }

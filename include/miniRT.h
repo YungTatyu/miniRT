@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tterao <tterao@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ryhara <ryhara@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 18:14:23 by tterao            #+#    #+#             */
-/*   Updated: 2023/10/07 14:20:54 by tterao           ###   ########.fr       */
+/*   Updated: 2023/10/07 15:29:01 by ryhara           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,10 @@
 # include "objs.h"
 # include "vector3d.h"
 # include <stdlib.h>
+
+# define ON_KEYDOWN 2
+# define ON_DESTROY 17
+# define ESC_KEY 53
 
 typedef struct s_color
 {
