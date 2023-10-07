@@ -1,6 +1,6 @@
 NAME = miniRT
 CC = cc
-CFLAGS = -Wall -Werror -Wextra
+# CFLAGS = -Wall -Werror -Wextra
 
 ifdef WITH_DEBUG
 	CFLAGS += -g -fsanitize=address
@@ -14,7 +14,7 @@ LIBFT_DIR = libft
 LIBFT_FLAGS = libft/libft.a libft/libftprintf.a libft/libftdprintf.a
 
 INCLUDES =  -I$(INCLUDES_DIR) -I$(MINILIBX_DIR) -I$(X11_DIR)/include -I$(LIBFT_DIR)/includes
-MINILIBX_FLAGS = -L$(MINILIBX_DIR) -lmlx -L$(X11_DIR)/lib -lX11 -lXext
+MINILIBX_FLAGS = -Lmlx -lmlx -framework OpenGL -framework AppKit
 
 
 SRCS_DIR = src
@@ -28,7 +28,12 @@ SRC = main.c \
 	init.c \
 	try_calloc.c \
 	try_malloc.c \
-	error.c
+	error.c	\
+	render.c	\
+	vector3d.c	\
+	vector3d_utils.c	\
+	sphere.c
+
 SRCS = $(addprefix $(SRCS_DIR)/, $(SRC));
 
 OBJS_DIR = obj
