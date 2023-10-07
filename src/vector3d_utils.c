@@ -6,7 +6,7 @@
 /*   By: tterao <tterao@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 15:26:32 by tterao            #+#    #+#             */
-/*   Updated: 2023/10/06 14:23:21 by tterao           ###   ########.fr       */
+/*   Updated: 2023/10/07 14:28:49 by tterao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ float	vector3d_dot(t_vector3d v1, t_vector3d v2)
 }
 
 /**
- * @brief ベクトルの大きさを返す
+ * @brief ベクトルの大きさの二乗を返す
  *
  * @param v
  * @return float
@@ -37,7 +37,7 @@ float	vector3d_mag_sq(t_vector3d v)
 }
 
 /**
- * @brief ベクトルの大きさの二乗を返す
+ * @brief ベクトルの大きさを返す
  *
  * @param v
  * @return float
