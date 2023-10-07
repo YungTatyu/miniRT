@@ -43,7 +43,7 @@ t_vector3d	vector3d_div(t_vector3d v1, t_vector3d v2)
 	return (result);
 }
 
-void	vector3d_print(t_vector3d v)
+void	vector3d_print(const t_vector3d v)
 {
 	printf("x=%f, y=%f, z=%f\n", v.x, v.y, v.z);
 }

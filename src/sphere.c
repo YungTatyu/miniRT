@@ -10,6 +10,14 @@
 #define SPECULAR_REFLECTION 0.3f /* 鏡面反射係数 */
 #define COLOR 255.0f /* colorの範囲 */
 
+/**
+ * @brief
+ *
+ * @param a
+ * @param b
+ * @param c
+ * @return float
+ */
 static float	_calc_t(float a, float b, float c)
 {
 	const float	t1 = -b + sqrtf(powf(b, 2.0f) - (4.0f * a * c)) / (2.0f * a);
@@ -46,6 +54,20 @@ float	hit_sphere(t_vector3d ray, t_vector3d camera_pos,
 	return (_calc_t(a, b, c));
 }
 
+static t_vector3d	_get_intersection_pos(const t_vector3d camera_pos, const float t, const t_vector3d ray)
+{
+	return (vector3d_add(camera_pos, vector3d_fmulv(t, ray)));
+}
+
+static t_vector3d	_get_incidence_vector(const t_vector3d light_pos, const t_vector3d intersection_pos)
+{
+	return (vector3d_sub(light_pos, intersection_pos));
+}
+
+static t_vector3d	_get_normal_vector(const t_vector3d intersection_pos, const t_vector3d sphere_pos)
+{
+	return (vector3d_normalize(vector3d_sub(intersection_pos, sphere_pos)));
+}
 
 /**
  * @brief 入射ベクトルと法線ベクトルの内積を返す
@@ -63,15 +85,18 @@ float	hit_sphere(t_vector3d ray, t_vector3d camera_pos,
  */
 static float	_get_incidence_dot(t_global_data *data, t_sphere *sphere, t_vector3d ray, const float t)
 {
-	const t_vector3d	intersection_pos = vector3d_add(
-			data->camera->coordinate, vector3d_fmulv(t, ray));
-	const t_vector3d	incidence_vec = vector3d_sub(
+	const t_vector3d	intersection_pos = _get_intersection_pos(
+			data->camera->coordinate, t, ray);
+	const t_vector3d	incidence_vec = _get_incidence_vector(
 			data->light->coordinate, intersection_pos);
-	const t_vector3d	normal = vector3d_sub(
+	const t_vector3d	normal = _get_normal_vector(
 			intersection_pos, sphere->coordinate);
 	float				dot;
 
+	vector3d_print(intersection_pos);
+	vector3d_print(incidence_vec);
 	dot = vector3d_dot(normal, incidence_vec);
+	printf("dot=%f\n", dot);
 	if (dot > 1.0f)
 		dot = 1.0f;
 	else if (dot < 0.0f)
@@ -88,7 +113,7 @@ static float	_get_incidence_dot(t_global_data *data, t_sphere *sphere, t_vector3
  * @param normal 法線ベクトル
  * @return float
  */
-static float	_calc_ligth_specular_reflection_radiance_dot(t_vector3d ray, t_vector3d incidence_vec, t_vector3d normal)
+static float	_calc_light_specular_reflection_radiance_dot(t_vector3d ray, t_vector3d incidence_vec, t_vector3d normal)
 {
 	const t_vector3d	regular_reflection = vector3d_sub(
 			vector3d_fmulv(2.0f * vector3d_dot(normal, incidence_vec),
@@ -106,20 +131,7 @@ static float	_calc_ligth_specular_reflection_radiance_dot(t_vector3d ray, t_vect
 	return (dot);
 }
 
-static t_vector3d	_get_intersection_pos(const t_vector3d camera_pos, const float t, const t_vector3d ray)
-{
-	return (vector3d_add(camera_pos, vector3d_fmulv(t, ray)));
-}
 
-static t_vector3d	_get_incidence_vector(const t_vector3d light_pos, const t_vector3d intersection_pos)
-{
-	return (vector3d_sub(light_pos, intersection_pos));
-}
-
-static t_vector3d	_get_normal_vector(const t_vector3d intersection_pos, const t_vector3d sphere_pos)
-{
-	return (vector3d_sub(intersection_pos, sphere_pos));
-}
 
 /**
  * @brief 内積(𝐯⃗ ⋅𝐫⃗ )を計算する
@@ -132,13 +144,17 @@ static t_vector3d	_get_normal_vector(const t_vector3d intersection_pos, const t_
  * @param normal_vec
  * @return float
  */
-static float	_get_ligth_specular_reflection_radiance(
+static float	_get_ligth_specular_reflection_dot(
 			const t_vector3d ray, const float dot, const t_vector3d incidence_vec, const t_vector3d normal_vec)
 {
+	// vector3d_print(ray);
+	// vector3d_print(incidence_vec);
+	// vector3d_print(normal_vec);
+	// printf("dot=%f\n", dot);
 	if (dot <= 0.0f)
 		return (0.0f);
 	return (
-		_calc_ligth_specular_reflection_radiance_dot
+		_calc_light_specular_reflection_radiance_dot
 		(ray, incidence_vec, normal_vec)
 	);
 }
@@ -171,7 +187,7 @@ static float	_get_radiance(
 		= DIFFUSE_REFLECTION * data->light->ratio
 		* dot;
 	const float	ligth_specular_reflection_radiance
-		= _get_ligth_specular_reflection_radiance(
+		= _get_ligth_specular_reflection_dot(
 			ray, dot,
 			_get_incidence_vector(data->light->coordinate,
 				_get_intersection_pos(data->camera->coordinate, t, ray)),
@@ -181,10 +197,12 @@ static float	_get_radiance(
 			)
 		* SPECULAR_REFLECTION * data->light->ratio;
 
+	// printf("alr=%f, ldr=%f, lsrr=%f, dot=%f\n", ambient_light_radiance, light_diffuse_radiance, ligth_specular_reflection_radiance, dot);
 	return (
-		ambient_light_radiance
-		+ light_diffuse_radiance
-		+ ligth_specular_reflection_radiance
+		dot
+		// ambient_light_radiance
+		// + light_diffuse_radiance
+		// + ligth_specular_reflection_radiance
 	);
 }
 
@@ -202,14 +220,14 @@ static float	_get_radiance(
  */
 static	float	_calc_shade(t_global_data *data, t_sphere *sphere, t_vector3d ray, const float t)
 {
-	float		sum_radiance;
+	float		radiance;
 
-	sum_radiance = _get_radiance(data, sphere, ray, t);
-	if (sum_radiance > 1.0f)
-		sum_radiance = 1.0f;
-	else if (sum_radiance < 0.0f)
-		sum_radiance = 0.0f;
-	return (sum_radiance);
+	radiance = _get_radiance(data, sphere, ray, t);
+	if (radiance > 1.0f)
+		radiance = 1.0f;
+	else if (radiance < 0.0f)
+		radiance = 0.0f;
+	return (COLOR * radiance);
 }
 
 void	render_sphere_loop(t_global_data *data, t_sphere *sphere)
@@ -222,13 +240,17 @@ void	render_sphere_loop(t_global_data *data, t_sphere *sphere)
 	float	radiance;
 
 	y = 0;
+	// vector3d_print(data->camera->coordinate);
+	// vector3d_print(sphere->coordinate);
 	while (y < WINDOW_HEIGHT)
 	{
 		x = 0;
 		while (x < WINDOW_WIDTH)
 		{
 			coordinate = get_3d_coordinate(x, y);
+			// vector3d_print(coordinate);
 			camera_ray = vector3d_sub(coordinate, data->camera->coordinate);
+			// vector3d_print(camera_ray);
 			t = hit_sphere(camera_ray, data->camera->coordinate, sphere->coordinate, sphere->radius);
 			printf("t=%f\n", t);
 			if (t >= 0.0f)
