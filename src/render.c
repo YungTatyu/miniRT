@@ -4,6 +4,7 @@
 #include <mlx.h>
 #include <math.h>
 
+void	render_cylinder_loop(t_global_data *data, t_cylinder *cylinder);
 void	render_sphere_loop(t_global_data *data, t_sphere *sphere);
 
 void	_mlx_init(t_global_data *data)
@@ -27,23 +28,6 @@ void	my_mlx_pixel_put(t_global_data *data, int x, int y, int color)
 int	create_rgb(int red, int green, int blue)
 {
 	return (red << 16 | green << 8 | blue);
-}
-
-/**
- * @brief Get the 3d coordinate object
- *
- * @param x
- * @param y
- * @return t_vector3d
- */
-t_vector3d	get_3d_coordinate(int x, int y)
-{
-	t_vector3d	coordinate;
-
-	coordinate.x = ((2.0f * x) / (WINDOW_WIDTH - 1.0f)) - 1.0f;
-	coordinate.y = (-(2.0f * y) / (WINDOW_HEIGHT - 1.0f)) + 1.0f;
-	coordinate.z = 0;
-	return (coordinate);
 }
 
 /**
@@ -84,8 +68,7 @@ void	render_plane_loop(t_global_data *data, t_plane *plane)
 		x = 0;
 		while (x < WINDOW_WIDTH)
 		{
-			coordinate = get_3d_coordinate(x, y);
-			camera_ray = vector3d_sub(coordinate, data->camera->coordinate);
+			camera_ray =  get_camera_ray(x, y, data);
 			t = hit_plane(camera_ray, data->camera->coordinate, plane->coordinate, plane->direction);
 			// printf("t=%f\n", t);
 			if (t >= 0.0f)
@@ -97,6 +80,23 @@ void	render_plane_loop(t_global_data *data, t_plane *plane)
 		y++;
 	}
 	mlx_put_image_to_window(data->mlx, data->mlx_win, data->img, 0, 0);
+}
+
+int	close_esc(int keycode, t_global_data *data)
+{
+	if (keycode == ESC_KEY)
+	{
+		mlx_destroy_window(data->mlx, data->mlx_win);
+		exit(0);
+	}
+	return (0);
+}
+
+int	close_x(t_global_data *data)
+{
+	mlx_destroy_window(data->mlx, data->mlx_win);
+	exit(0);
+	return (0);
 }
 
 void	render(t_global_data *data)
@@ -111,7 +111,11 @@ void	render(t_global_data *data)
 			render_plane_loop(data, (t_plane *)node->obj);
 		else if (node->type == SPHERE)
 			render_sphere_loop(data, (t_sphere *)node->obj);
+		else if (node->type == CYLINDER)
+			render_cylinder_loop(data, (t_cylinder*)node->obj);
 		node = node->next;
 	}
+	mlx_hook(data->mlx_win, ON_KEYDOWN, 0, close_esc, data);
+	mlx_hook(data->mlx_win, ON_DESTROY, 0, close_x, data);
 	mlx_loop(data->mlx);
 }

@@ -3,27 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tterao <tterao@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ryhara <ryhara@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 15:35:48 by ryhara            #+#    #+#             */
-/*   Updated: 2023/10/04 18:38:25 by tterao           ###   ########.fr       */
+/*   Updated: 2023/10/08 14:56:46 by ryhara           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parse.h"
-
-static void	_print_char_array(char **array)
-{
-	size_t	i;
-
-	i = 0;
-	while (array[i])
-	{
-		ft_printf("%s ", array[i]);
-		i++;
-	}
-	ft_printf("\n");
-}
 
 static char	**_parse_check(const char *line)
 {
@@ -43,7 +30,6 @@ static char	**_parse_check(const char *line)
 		return (NULL);
 }
 
-// init 失敗時にエラーにした方が良いので返り値は変わるかもしれないです
 static void	_parse_to_init(t_global_data *data, const char **info)
 {
 	if (!ft_strcmp("A", info[0]))
@@ -91,15 +77,11 @@ static int	parse_open(const char *file)
 	}
 }
 
-bool	parse(t_global_data *data, const char *file)
+bool	parse_loop(t_global_data *data, int fd)
 {
-	int		fd;
 	char	*line;
 	char	**info;
 
-	fd = parse_open(file);
-	if (fd == -1)
-		return (false);
 	while (1)
 	{
 		line = get_next_line(fd);
@@ -114,14 +96,24 @@ bool	parse(t_global_data *data, const char *file)
 		if (info == NULL)
 		{
 			free(line);
-			// free data all
-			ft_dprintf(STDERR_FILENO, "Error\nInvalid format\n");
-			return (false);
+			global_data_free(data);
+			return (ft_dprintf(STDERR_FILENO, "Error\nInvalid format\n"), false);
 		}
 		free(line);
 		_parse_to_init(data, (const char **)info);
-		// _print_char_array(info);
 		free_char_array(info);
 	}
+	return (true);
+}
+
+bool	parse(t_global_data *data, const char *file)
+{
+	int		fd;
+
+	fd = parse_open(file);
+	if (fd == -1)
+		return (false);
+	if (!parse_loop(data, fd))
+		return (false);
 	return (true);
 }

@@ -35,7 +35,13 @@ SRC = main.c \
 	sphere.c	\
 	color.c	\
 	sphere_get_radiance.c	\
-	sphere_get_incidence_dot.c
+	sphere_get_incidence_dot.c  \
+	vector3d_utils2.c	\
+	sphere.c \
+	cylinder.c \
+	cylinder_utils.c \
+	get_camera_ray.c \
+	free.c
 
 SRCS = $(addprefix $(SRCS_DIR)/, $(SRC));
 

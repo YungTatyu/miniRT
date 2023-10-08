@@ -6,7 +6,7 @@
 /*   By: tterao <tterao@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 14:59:20 by tterao            #+#    #+#             */
-/*   Updated: 2023/10/07 18:54:14 by tterao           ###   ########.fr       */
+/*   Updated: 2023/10/08 14:40:02 by ryhara           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,9 @@
 # include "../libft/includes/libft.h"
 # include "../libft/stdio/ft_printf/ft_printf.h"
 # include "../libft/stdio/ft_dprintf/ft_dprintf.h"
+# include <stdbool.h>
+# include <fcntl.h>
+# include <stdio.h>
 
 # define WINDOW_HEIGHT 1200.0f
 # define WINDOW_WIDTH 1000.0f
@@ -33,10 +36,6 @@
 # define ARR_SIZE_PL 10
 # define ARR_SIZE_CY 12
 
-
-# include <stdbool.h>
-# include <fcntl.h>
-# include <stdio.h>
 
 void				global_data_init(t_global_data *data);
 void				global_data_free(t_global_data *data);
@@ -57,4 +56,5 @@ bool				check_range_int(int num, int min, int max);
 size_t				get_array_size(char **array);
 void				free_char_array(char **array);
 bool				check_color_range(char **info, size_t start, size_t end);
+
 #endif

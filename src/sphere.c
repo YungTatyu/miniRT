@@ -85,9 +85,7 @@ void	render_sphere_loop(t_global_data *data, t_sphere *sphere)
 		x = 0;
 		while (x < WINDOW_WIDTH)
 		{
-			// vector3d_print(coordinate);
-			camera_ray = vector3d_sub(get_3d_coordinate(x, y), data->camera->coordinate);
-			// vector3d_print(camera_ray);
+			camera_ray = get_camera_ray(x, y, data);
 			t = hit_sphere(camera_ray, data->camera->coordinate, sphere->coordinate, sphere->radius);
 			// printf("t=%f\n", t);
 			if (t >= 0.0f)

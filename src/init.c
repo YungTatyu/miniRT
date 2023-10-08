@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tterao <tterao@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ryhara <ryhara@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 16:38:20 by tterao            #+#    #+#             */
-/*   Updated: 2023/10/07 14:17:32 by tterao           ###   ########.fr       */
+/*   Updated: 2023/10/08 11:20:32 by ryhara           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ t_camera	*camera_init(const char **info)
 	camera->direction.x = ft_atof(*(info++));
 	camera->direction.y = ft_atof(*(info++));
 	camera->direction.z = ft_atof(*(info++));
+	camera->fov = ft_atoi(*(info++));
 	return (camera);
 }
 
