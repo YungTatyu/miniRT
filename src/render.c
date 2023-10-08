@@ -5,7 +5,7 @@
 #include <math.h>
 
 void	render_cylinder_loop(t_global_data *data, t_cylinder *cylinder);
-void	render_sphere_loop(t_global_data *data, t_sphere *sphere);
+void	render_sphere_loop(t_global_data *data, t_objs *node);
 
 void	_mlx_init(t_global_data *data)
 {
@@ -110,7 +110,7 @@ void	render(t_global_data *data)
 		if (node->type == PLANE)
 			render_plane_loop(data, (t_plane *)node->obj);
 		else if (node->type == SPHERE)
-			render_sphere_loop(data, (t_sphere *)node->obj);
+			render_sphere_loop(data, node);
 		else if (node->type == CYLINDER)
 			render_cylinder_loop(data, (t_cylinder*)node->obj);
 		node = node->next;

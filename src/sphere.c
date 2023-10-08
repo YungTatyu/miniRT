@@ -5,7 +5,7 @@
 #include <math.h>
 #include <mlx.h>
 
-t_fcolor	get_radiance(t_global_data *data, t_sphere *sphere,
+t_fcolor	get_radiance(t_global_data *data, t_objs *node,
 				t_vector3d ray, const float t);
 
 /**
@@ -71,7 +71,7 @@ float	constrain(float n, float min, float max)
 	return (n);
 }
 
-void	render_sphere_loop(t_global_data *data, t_sphere *sphere)
+void	render_sphere_loop(t_global_data *data, t_objs *node)
 {
 	int			y;
 	int			x;
@@ -85,12 +85,12 @@ void	render_sphere_loop(t_global_data *data, t_sphere *sphere)
 		x = 0;
 		while (x < WINDOW_WIDTH)
 		{
-			camera_ray = get_camera_ray(x, y, data);
-			t = hit_sphere(camera_ray, data->camera->coordinate, sphere->coordinate, sphere->radius);
+			camera_ray = get_camera_ray_dynamic(x, y, data);
+			t = hit_sphere(camera_ray, data->camera->coordinate, objs_get_coordinate(node), ((t_sphere *)node->obj)->radius);
 			// printf("t=%f\n", t);
 			if (t >= 0.0f)
 			{
-				radiance = get_radiance(data, sphere, camera_ray, t);
+				radiance = get_radiance(data, node, camera_ray, t);
 				my_mlx_pixel_put(data, x, y, create_rgb(radiance.red, radiance.green, radiance.blue));
 			}
 			else

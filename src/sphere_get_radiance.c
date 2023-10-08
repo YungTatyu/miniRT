@@ -6,12 +6,12 @@
 /*   By: tterao <tterao@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 16:54:18 by tterao            #+#    #+#             */
-/*   Updated: 2023/10/08 16:59:34 by tterao           ###   ########.fr       */
+/*   Updated: 2023/10/08 18:57:48 by tterao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
-
+#include "objs.h"
 #define DIFFUSE_REFLECTION 0.69f /* 拡散反射係数 */
 #define AMBIENT_LIGHT_REFLECTION 0.5f /* 環境光反射係数 */
 #define SPECULAR_REFLECTION 0.5f /* 鏡面反射係数 */
@@ -24,23 +24,23 @@ t_vector3d	get_incidence_vector(const t_vector3d light_pos,
 				const t_vector3d intersection_pos);
 t_vector3d	get_normal_vector(const t_vector3d intersection_pos,
 				const t_vector3d sphere_pos);
-float		get_incidence_dot(t_global_data *data, t_sphere *sphere,
+float		get_incidence_dot(t_global_data *data, t_vector3d coordinate,
 				t_vector3d ray, const float t);
 
 static t_fcolor	_calc_radiance(
-	t_sphere *sphere, const float ambient_light_radiance,
+	t_color color, const float ambient_light_radiance,
 		const float light_diffuse_radiance,
 		const float light_specular_reflection_radiance)
 {
 	t_fcolor	radiance;
 
-	radiance.red = (color_to_fcolor(sphere->color.red) * light_diffuse_radiance)
+	radiance.red = (color_to_fcolor(color.red) * light_diffuse_radiance)
 		+ ambient_light_radiance + light_specular_reflection_radiance;
 	radiance.green
-		= (color_to_fcolor(sphere->color.green) * light_diffuse_radiance)
+		= (color_to_fcolor(color.green) * light_diffuse_radiance)
 		+ ambient_light_radiance + light_specular_reflection_radiance;
 	radiance.blue
-		= (color_to_fcolor(sphere->color.blue) * light_diffuse_radiance)
+		= (color_to_fcolor(color.blue) * light_diffuse_radiance)
 		+ ambient_light_radiance + light_specular_reflection_radiance;
 	radiance.red = constrain(radiance.red, 0.0f, 1.0f) * COLOR;
 	radiance.green = constrain(radiance.green, 0.0f, 1.0f) * COLOR;
@@ -117,11 +117,11 @@ static float	_get_light_specular_reflection_dot(
  * @return float
  */
 t_fcolor	get_radiance(
-		t_global_data *data, t_sphere *sphere, t_vector3d ray, const float t)
+		t_global_data *data, t_objs *node, t_vector3d ray, const float t)
 {
 	const float	ambient_light_radiance = AMBIENT_LIGHT_REFLECTION
 		* data->ambient_light->ratio;
-	const float	dot = get_incidence_dot(data, sphere, ray, t);
+	const float	dot = get_incidence_dot(data, objs_get_coordinate(node), ray, t);
 	const float	light_diffuse_radiance
 		= data->light->ratio * dot;
 	const float	light_specular_reflection_radiance
@@ -131,13 +131,13 @@ t_fcolor	get_radiance(
 					get_intersection_pos(data->camera->coordinate, t, ray)),
 				get_normal_vector(get_intersection_pos(
 						data->camera->coordinate, t, ray),
-					sphere->coordinate)
+					objs_get_coordinate(node))
 				), GLOSSINESS
 			)
 		* SPECULAR_REFLECTION * data->light->ratio;
 
 	return (
-		_calc_radiance(sphere, ambient_light_radiance,
+		_calc_radiance(objs_get_color(node), ambient_light_radiance,
 			light_diffuse_radiance, light_specular_reflection_radiance)
 	);
 }
