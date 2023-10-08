@@ -106,6 +106,23 @@ static float	_get_incidence_dot(t_global_data *data, t_sphere *sphere, t_vector3
 
 
 /**
+ * @brief 値nをmin~maxまでの範囲に制限する
+ *
+ * @param n
+ * @param min
+ * @param max
+ * @return float
+ */
+float	constrain(float n, float min, float max)
+{
+	if (n > max)
+		n = max;
+	else if (n < min)
+		n = min;
+	return (n);
+}
+
+/**
  * @brief 直接光の拡散反射光の放射輝度𝑅𝑑の内積を計算する
  *
  * @param ray
@@ -113,7 +130,8 @@ static float	_get_incidence_dot(t_global_data *data, t_sphere *sphere, t_vector3
  * @param normal 法線ベクトル
  * @return float
  */
-static float	_calc_light_specular_reflection_radiance_dot(t_vector3d ray, t_vector3d incidence_vec, t_vector3d normal)
+static float	_calc_light_specular_reflection_radiance_dot
+	(t_vector3d ray, t_vector3d incidence_vec, t_vector3d normal)
 {
 	const t_vector3d	regular_reflection = vector3d_sub(
 			vector3d_fmulv(2.0f * vector3d_dot(normal, incidence_vec),
@@ -130,8 +148,6 @@ static float	_calc_light_specular_reflection_radiance_dot(t_vector3d ray, t_vect
 		dot = 0.0f;
 	return (dot);
 }
-
-
 
 /**
  * @brief 内積(𝐯⃗ ⋅𝐫⃗ )を計算する
@@ -159,8 +175,29 @@ static float	_get_ligth_specular_reflection_dot(
 	);
 }
 
+static t_fcolor	_calc_radiance(
+	t_sphere *sphere, const float ambient_light_radiance,
+		const float light_diffuse_radiance,
+		const float light_specular_reflection_radiance)
+{
+	t_fcolor	radiance;
+
+	radiance.red = (color_to_fcolor(sphere->color.red) * light_diffuse_radiance)
+		+ ambient_light_radiance + light_specular_reflection_radiance;
+	radiance.green
+		= (color_to_fcolor(sphere->color.green) * light_diffuse_radiance)
+		+ ambient_light_radiance + light_specular_reflection_radiance;
+	radiance.blue
+		= (color_to_fcolor(sphere->color.blue) * light_diffuse_radiance)
+		+ ambient_light_radiance + light_specular_reflection_radiance;
+	radiance.red = constrain(radiance.red, 0.0f, 1.0f) * COLOR;
+	radiance.green = constrain(radiance.green, 0.0f, 1.0f) * COLOR;
+	radiance.blue = constrain(radiance.blue, 0.0f, 1.0f) * COLOR;
+	return (radiance);
+}
+
 /**
- * @brief 反射光を計算する
+ * @brief 反射光の放射輝度𝑅𝑟を計算する
  *
  * 以下三つの足し算
  * 環境光
@@ -169,7 +206,7 @@ static float	_get_ligth_specular_reflection_dot(
  *
  * ambient_light_radiance:環境光の反射光の放射輝度
  * light_diffuse_radiance:直接光の拡散反射光の放射輝度
- * ligth_specular_reflection_radiance:直接光の鏡面反射光の放射輝度
+ * light_specular_reflection_radiance:直接光の鏡面反射光の放射輝度
  *
  * @param data
  * @param sphere
@@ -177,57 +214,30 @@ static float	_get_ligth_specular_reflection_dot(
  * @param t
  * @return float
  */
-static float	_get_radiance(
-		t_global_data *data, t_sphere *sphere, t_vector3d ray, const float t, const float diffuse_reflection)
+static t_fcolor	_get_radiance(
+		t_global_data *data, t_sphere *sphere, t_vector3d ray, const float t)
 {
 	const float	ambient_light_radiance = AMBIENT_LIGHT_REFLECTION
 		* data->ambient_light->ratio;
 	const float	dot = _get_incidence_dot(data, sphere, ray, t);
 	const float	light_diffuse_radiance
-		= diffuse_reflection * data->light->ratio
-		* dot;
-	const float	ligth_specular_reflection_radiance
+		= data->light->ratio * dot;
+	const float	light_specular_reflection_radiance
 		= powf(_get_ligth_specular_reflection_dot(
-			ray, dot,
-			_get_incidence_vector(data->light->coordinate,
-				_get_intersection_pos(data->camera->coordinate, t, ray)),
-			_get_normal_vector(_get_intersection_pos(
-					data->camera->coordinate, t, ray),
-				sphere->coordinate)
-			), GLOSSINESS)
+				ray, dot,
+				_get_incidence_vector(data->light->coordinate,
+					_get_intersection_pos(data->camera->coordinate, t, ray)),
+				_get_normal_vector(_get_intersection_pos(
+						data->camera->coordinate, t, ray),
+					sphere->coordinate)
+				), GLOSSINESS
+			)
 		* SPECULAR_REFLECTION * data->light->ratio;
 
-	// printf("alr=%f, ldr=%f, lsrr=%f, dot=%f t=%f\n", ambient_light_radiance, light_diffuse_radiance, ligth_specular_reflection_radiance, dot, t);
 	return (
-		// dot
-		ambient_light_radiance
-		+ light_diffuse_radiance
-		+ ligth_specular_reflection_radiance
+		_calc_radiance(sphere, ambient_light_radiance,
+			light_diffuse_radiance, light_specular_reflection_radiance)
 	);
-}
-
-/**
- * @brief 反射光の放射輝度𝑅𝑟を計算する
- *
- * ambient_light_radiance:環境光の反射光の放射輝度
- * light_diffuse_radiance:直接光の拡散反射光の放射輝度
- * ligth_specular_reflection_radiance:直接光の鏡面反射光の放射輝度
- *
- * @param data
- * @param ray
- * @param t
- * @return float
- */
-static	float	_calc_shade(t_global_data *data, t_sphere *sphere, t_vector3d ray, const float t, const float diffuse_reflection)
-{
-	float		radiance;
-
-	radiance = _get_radiance(data, sphere, ray, t, diffuse_reflection);
-	if (radiance > 1.0f)
-		radiance = 1.0f;
-	else if (radiance < 0.0f)
-		radiance = 0.0f;
-	return (COLOR * radiance);
 }
 
 void	render_sphere_loop(t_global_data *data, t_sphere *sphere)
@@ -236,11 +246,9 @@ void	render_sphere_loop(t_global_data *data, t_sphere *sphere)
 	int			x;
 	t_vector3d	camera_ray;
 	float	t;
-	float	radiance;
+	t_fcolor	radiance;
 
 	y = 0;
-	// vector3d_print(data->camera->coordinate);
-	// vector3d_print(sphere->coordinate);
 	while (y < WINDOW_HEIGHT)
 	{
 		x = 0;
@@ -253,15 +261,8 @@ void	render_sphere_loop(t_global_data *data, t_sphere *sphere)
 			// printf("t=%f\n", t);
 			if (t >= 0.0f)
 			{
-				radiance = _calc_shade(data, sphere, camera_ray, t, sphere->color.red);
-				// color_add(sphere->color, radiance);
-				// printf("radiance=%f\n", radiance);
-				my_mlx_pixel_put(data, x, y, create_rgb(_calc_shade(data, sphere, camera_ray, t, color_to_fcolor(sphere->color.red)), _calc_shade(data, sphere, camera_ray, t, color_to_fcolor(sphere->color.green)), _calc_shade(data, sphere, camera_ray, t, color_to_fcolor(sphere->color.blue))));
-				// my_mlx_pixel_put(data, x, y, create_rgb(color_to_color(_calc_shade(data, sphere, camera_ray, t, color_to_fcolor(sphere->color.red))),
-				// 	color_to_color(_calc_shade(data, sphere, camera_ray, t, color_to_fcolor(sphere->color.green))),
-				// 	color_to_color(_calc_shade(data, sphere, camera_ray, t, color_to_fcolor(sphere->color.blue)))));
-				// my_mlx_pixel_put(data, x, y, create_rgb(sphere->color.red * radiance, sphere->color.green * radiance, sphere->color.blue * radiance));
-				// my_mlx_pixel_put(data, x, y, create_rgb(radiance, radiance, radiance));
+				radiance = _get_radiance(data, sphere, camera_ray, t);
+				my_mlx_pixel_put(data, x, y, create_rgb(radiance.red, radiance.green, radiance.blue));
 			}
 			else
 				my_mlx_pixel_put(data, x, y, create_rgb(data->background.red, data->background.green, data->background.blue));

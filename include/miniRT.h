@@ -6,7 +6,7 @@
 /*   By: tterao <tterao@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 18:14:23 by tterao            #+#    #+#             */
-/*   Updated: 2023/10/08 15:32:34 by tterao           ###   ########.fr       */
+/*   Updated: 2023/10/08 16:33:45 by tterao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,13 @@ typedef struct s_color
 	int	green;
 	int	blue;
 }t_color;
+
+typedef struct s_fcolor
+{
+	float	red;
+	float	green;
+	float	blue;
+}t_fcolor;
 
 typedef struct s_ambient_lightning
 {
