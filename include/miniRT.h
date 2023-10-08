@@ -31,6 +31,13 @@ typedef struct s_color
 	int	blue;
 }t_color;
 
+typedef struct s_fcolor
+{
+	float	red;
+	float	green;
+	float	blue;
+}t_fcolor;
+
 typedef struct s_ambient_lightning
 {
 	t_color	color;
@@ -131,5 +138,9 @@ t_vector3d	get_camera_ray(int x, int y, t_global_data *data);
 t_vector3d	get_camera_ray_dynamic(int x, int y, t_global_data *data);;
 void		my_mlx_pixel_put(t_global_data *data, int x, int y, int color);
 int			create_rgb(int r, int g, int b);
+void		color_add(t_color color, float adding_num);
+float		color_to_fcolor(float color);
+float		color_to_color(float fcolor);
+float		constrain(float n, float min, float max);
 
 #endif

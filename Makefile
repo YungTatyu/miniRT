@@ -32,6 +32,10 @@ SRC = main.c \
 	render.c	\
 	vector3d.c	\
 	vector3d_utils.c	\
+	sphere.c	\
+	color.c	\
+	sphere_get_radiance.c	\
+	sphere_get_incidence_dot.c  \
 	vector3d_utils2.c	\
 	sphere.c \
 	cylinder.c \
