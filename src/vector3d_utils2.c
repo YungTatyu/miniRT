@@ -1,23 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   vector3d_operate.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ryhara <ryhara@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/30 17:42:27 by tterao            #+#    #+#             */
-/*   Updated: 2023/10/08 14:46:26 by ryhara           ###   ########.fr       */
+/*   Created: 2023/10/08 13:48:29 by ryhara            #+#    #+#             */
+/*   Updated: 2023/10/08 13:55:21 by ryhara           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parse.h"
-#include "objs.h"
-#include <stdlib.h>
+#include "vector3d.h"
 
-void	global_data_free(t_global_data *data)
+t_vector3d vector3d_cross(t_vector3d v1, t_vector3d v2)
 {
-	free(data->ambient_light);
-	free(data->light);
-	free(data->camera);
-	objs_free(data->objs_list);
+	t_vector3d	result;
+
+	result.x = v1.y * v2.z - v1.z * v2.y;
+	result.y = v1.z * v2.x - v1.x * v2.z;
+	result.z = v1.x * v2.y - v1.y * v2.x;
+	return (result);
+}
+
+t_vector3d	vector3d_create(float x, float y, float z)
+{
+	t_vector3d	new;
+
+	new.x = x;
+	new.y = y;
+	new.z = z;
+	return (new);
 }

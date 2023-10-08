@@ -185,8 +185,7 @@ void	render_sphere_loop(t_global_data *data, t_sphere *sphere)
 		x = 0;
 		while (x < WINDOW_WIDTH)
 		{
-			coordinate = get_3d_coordinate(x, y);
-			camera_ray = vector3d_sub(coordinate, data->camera->coordinate);
+			camera_ray = get_camera_ray(x, y, data);
 			t = hit_sphere(camera_ray, data->camera->coordinate, sphere->coordinate, sphere->radius);
 			printf("t=%f\n", t);
 			if (t >= 0.0f)

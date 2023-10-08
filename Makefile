@@ -32,8 +32,12 @@ SRC = main.c \
 	render.c	\
 	vector3d.c	\
 	vector3d_utils.c	\
+	vector3d_utils2.c	\
 	sphere.c \
-	cylinder.c
+	cylinder.c \
+	cylinder_utils.c \
+	get_camera_ray.c \
+	free.c
 
 SRCS = $(addprefix $(SRCS_DIR)/, $(SRC));
 
