@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tterao <tterao@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ryhara <ryhara@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 18:14:23 by tterao            #+#    #+#             */
-/*   Updated: 2023/10/07 14:20:54 by tterao           ###   ########.fr       */
+/*   Updated: 2023/10/08 14:40:31 by ryhara           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,14 @@
 
 # include "objs.h"
 # include "vector3d.h"
+# include <mlx.h>
+# include <math.h>
 # include <stdlib.h>
+# include <stdbool.h>
+
+# define ON_KEYDOWN 2
+# define ON_DESTROY 17
+# define ESC_KEY 53
 
 typedef struct s_color
 {
@@ -88,10 +95,40 @@ typedef struct s_global_data
 	t_objs				*objs_list;
 }t_global_data;
 
+typedef struct s_t_data
+{
+	float	a;
+	float	b;
+	float	c;
+	float	d;
+	float	t;
+	float	t1;
+	float	t2;
+}t_t_data;
+
+typedef struct s_cylinder_ray
+{
+	t_vector3d	ray_t1;
+	t_vector3d	ray_t2;
+}t_cylinder_ray;
+
+typedef struct s_screen_data
+{
+	t_vector3d	up;
+	t_vector3d	screen_unit_x;
+	t_vector3d	screen_unit_y;
+	float		camera_to_screen;
+	float		f_x;
+	float		f_y;
+	float		w_s;
+	float		h_s;
+}t_screen_data;
+
 void		*try_calloc(size_t count, size_t size);
 void		*try_malloc(size_t size);
 void		render(t_global_data *data);
-t_vector3d	get_3d_coordinate(int x, int y);
+t_vector3d	get_camera_ray(int x, int y, t_global_data *data);
+t_vector3d	get_camera_ray_dynamic(int x, int y, t_global_data *data);;
 void		my_mlx_pixel_put(t_global_data *data, int x, int y, int color);
 int			create_rgb(int r, int g, int b);
 
