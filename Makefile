@@ -32,7 +32,8 @@ SRC = main.c \
 	render.c	\
 	vector3d.c	\
 	vector3d_utils.c	\
-	sphere.c
+	sphere.c	\
+	color.c
 
 SRCS = $(addprefix $(SRCS_DIR)/, $(SRC));
 

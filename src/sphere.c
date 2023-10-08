@@ -6,8 +6,9 @@
 #include <mlx.h>
 
 #define DIFFUSE_REFLECTION 0.69f /* 拡散反射係数 */
-#define AMBIENT_LIGHT_REFLECTION 0.01f /* 環境光反射係数 */
-#define SPECULAR_REFLECTION 0.3f /* 鏡面反射係数 */
+#define AMBIENT_LIGHT_REFLECTION 0.5f /* 環境光反射係数 */
+#define SPECULAR_REFLECTION 0.5f /* 鏡面反射係数 */
+#define GLOSSINESS 100.0 /* 光沢度 */
 #define COLOR 255.0f /* colorの範囲 */
 
 /**
@@ -177,23 +178,23 @@ static float	_get_ligth_specular_reflection_dot(
  * @return float
  */
 static float	_get_radiance(
-		t_global_data *data, t_sphere *sphere, t_vector3d ray, const float t)
+		t_global_data *data, t_sphere *sphere, t_vector3d ray, const float t, const float diffuse_reflection)
 {
 	const float	ambient_light_radiance = AMBIENT_LIGHT_REFLECTION
 		* data->ambient_light->ratio;
 	const float	dot = _get_incidence_dot(data, sphere, ray, t);
 	const float	light_diffuse_radiance
-		= DIFFUSE_REFLECTION * data->light->ratio
+		= diffuse_reflection * data->light->ratio
 		* dot;
 	const float	ligth_specular_reflection_radiance
-		= _get_ligth_specular_reflection_dot(
+		= powf(_get_ligth_specular_reflection_dot(
 			ray, dot,
 			_get_incidence_vector(data->light->coordinate,
 				_get_intersection_pos(data->camera->coordinate, t, ray)),
 			_get_normal_vector(_get_intersection_pos(
 					data->camera->coordinate, t, ray),
 				sphere->coordinate)
-			)
+			), GLOSSINESS)
 		* SPECULAR_REFLECTION * data->light->ratio;
 
 	// printf("alr=%f, ldr=%f, lsrr=%f, dot=%f t=%f\n", ambient_light_radiance, light_diffuse_radiance, ligth_specular_reflection_radiance, dot, t);
@@ -217,11 +218,11 @@ static float	_get_radiance(
  * @param t
  * @return float
  */
-static	float	_calc_shade(t_global_data *data, t_sphere *sphere, t_vector3d ray, const float t)
+static	float	_calc_shade(t_global_data *data, t_sphere *sphere, t_vector3d ray, const float t, const float diffuse_reflection)
 {
 	float		radiance;
 
-	radiance = _get_radiance(data, sphere, ray, t);
+	radiance = _get_radiance(data, sphere, ray, t, diffuse_reflection);
 	if (radiance > 1.0f)
 		radiance = 1.0f;
 	else if (radiance < 0.0f)
@@ -252,11 +253,15 @@ void	render_sphere_loop(t_global_data *data, t_sphere *sphere)
 			// printf("t=%f\n", t);
 			if (t >= 0.0f)
 			{
-				radiance = _calc_shade(data, sphere, camera_ray, t);
+				radiance = _calc_shade(data, sphere, camera_ray, t, sphere->color.red);
+				// color_add(sphere->color, radiance);
 				// printf("radiance=%f\n", radiance);
-				// my_mlx_pixel_put(data, x, y, create_rgb(sphere->red, sphere->green, sphere->blue));
+				my_mlx_pixel_put(data, x, y, create_rgb(_calc_shade(data, sphere, camera_ray, t, color_to_fcolor(sphere->color.red)), _calc_shade(data, sphere, camera_ray, t, color_to_fcolor(sphere->color.green)), _calc_shade(data, sphere, camera_ray, t, color_to_fcolor(sphere->color.blue))));
+				// my_mlx_pixel_put(data, x, y, create_rgb(color_to_color(_calc_shade(data, sphere, camera_ray, t, color_to_fcolor(sphere->color.red))),
+				// 	color_to_color(_calc_shade(data, sphere, camera_ray, t, color_to_fcolor(sphere->color.green))),
+				// 	color_to_color(_calc_shade(data, sphere, camera_ray, t, color_to_fcolor(sphere->color.blue)))));
 				// my_mlx_pixel_put(data, x, y, create_rgb(sphere->color.red * radiance, sphere->color.green * radiance, sphere->color.blue * radiance));
-				my_mlx_pixel_put(data, x, y, create_rgb(radiance, radiance, radiance));
+				// my_mlx_pixel_put(data, x, y, create_rgb(radiance, radiance, radiance));
 			}
 			else
 				my_mlx_pixel_put(data, x, y, create_rgb(data->background.red, data->background.green, data->background.blue));
