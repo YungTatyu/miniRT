@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   objs_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tterao <tterao@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ryhara <ryhara@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 15:42:57 by tterao            #+#    #+#             */
-/*   Updated: 2023/10/01 14:24:10 by tterao           ###   ########.fr       */
+/*   Updated: 2023/10/08 17:22:35 by ryhara           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,11 @@ void	objs_free(t_objs *head)
 	t_objs	*tmp;
 
 	node = head->next;
-	while (node->next != head)
+	while (node != head)
 	{
 		tmp = node;
 		node = node->next;
+		free(tmp->obj);
 		free(tmp);
 	}
 	free(head);

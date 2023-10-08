@@ -6,7 +6,7 @@
 /*   By: ryhara <ryhara@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 18:14:23 by tterao            #+#    #+#             */
-/*   Updated: 2023/10/08 14:40:31 by ryhara           ###   ########.fr       */
+/*   Updated: 2023/10/08 16:24:15 by ryhara           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 # include <math.h>
 # include <stdlib.h>
 # include <stdbool.h>
+# include <string.h>
+# include <errno.h>
 
 # define ON_KEYDOWN 2
 # define ON_DESTROY 17
