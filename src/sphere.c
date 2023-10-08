@@ -63,7 +63,7 @@ static t_vector3d	_get_intersection_pos(const t_vector3d camera_pos, const float
 
 static t_vector3d	_get_incidence_vector(const t_vector3d light_pos, const t_vector3d intersection_pos)
 {
-	return (vector3d_sub(light_pos, intersection_pos));
+	return (vector3d_normalize(vector3d_sub(light_pos, intersection_pos)));
 }
 
 static t_vector3d	_get_normal_vector(const t_vector3d intersection_pos, const t_vector3d sphere_pos)
@@ -95,10 +95,7 @@ static float	_get_incidence_dot(t_global_data *data, t_sphere *sphere, t_vector3
 			intersection_pos, sphere->coordinate);
 	float				dot;
 
-	vector3d_print(intersection_pos);
-	vector3d_print(incidence_vec);
 	dot = vector3d_dot(normal, incidence_vec);
-	printf("dot=%f\n", dot);
 	if (dot > 1.0f)
 		dot = 1.0f;
 	else if (dot < 0.0f)
@@ -199,7 +196,7 @@ static float	_get_radiance(
 			)
 		* SPECULAR_REFLECTION * data->light->ratio;
 
-	printf("alr=%f, ldr=%f, lsrr=%f, dot=%f t=%f\n", ambient_light_radiance, light_diffuse_radiance, ligth_specular_reflection_radiance, dot, t);
+	// printf("alr=%f, ldr=%f, lsrr=%f, dot=%f t=%f\n", ambient_light_radiance, light_diffuse_radiance, ligth_specular_reflection_radiance, dot, t);
 	return (
 		// dot
 		ambient_light_radiance
@@ -236,7 +233,6 @@ void	render_sphere_loop(t_global_data *data, t_sphere *sphere)
 {
 	int			y;
 	int			x;
-	t_vector3d	coordinate;
 	t_vector3d	camera_ray;
 	float	t;
 	float	radiance;
@@ -249,16 +245,15 @@ void	render_sphere_loop(t_global_data *data, t_sphere *sphere)
 		x = 0;
 		while (x < WINDOW_WIDTH)
 		{
-			coordinate = get_3d_coordinate(x, y);
 			// vector3d_print(coordinate);
-			camera_ray = vector3d_sub(coordinate, data->camera->coordinate);
+			camera_ray = vector3d_sub(get_3d_coordinate(x, y), data->camera->coordinate);
 			// vector3d_print(camera_ray);
 			t = hit_sphere(camera_ray, data->camera->coordinate, sphere->coordinate, sphere->radius);
-			printf("t=%f\n", t);
+			// printf("t=%f\n", t);
 			if (t >= 0.0f)
 			{
 				radiance = _calc_shade(data, sphere, camera_ray, t);
-				printf("radiance=%f\n", radiance);
+				// printf("radiance=%f\n", radiance);
 				// my_mlx_pixel_put(data, x, y, create_rgb(sphere->red, sphere->green, sphere->blue));
 				// my_mlx_pixel_put(data, x, y, create_rgb(sphere->color.red * radiance, sphere->color.green * radiance, sphere->color.blue * radiance));
 				my_mlx_pixel_put(data, x, y, create_rgb(radiance, radiance, radiance));
