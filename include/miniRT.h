@@ -6,7 +6,7 @@
 /*   By: tterao <tterao@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 18:14:23 by tterao            #+#    #+#             */
-/*   Updated: 2023/10/08 16:33:45 by tterao           ###   ########.fr       */
+/*   Updated: 2023/10/08 17:02:10 by tterao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,5 +104,6 @@ int			create_rgb(int r, int g, int b);
 void		color_add(t_color color, float adding_num);
 float		color_to_fcolor(float color);
 float		color_to_color(float fcolor);
+float		constrain(float n, float min, float max);
 
 #endif
