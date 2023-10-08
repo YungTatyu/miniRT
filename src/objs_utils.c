@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   objs_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ryhara <ryhara@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: tterao <tterao@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 15:42:57 by tterao            #+#    #+#             */
-/*   Updated: 2023/10/08 17:22:35 by ryhara           ###   ########.fr       */
+/*   Updated: 2023/10/08 19:12:03 by tterao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parse.h"
+#include "miniRT.h"
+#include "objs.h"
 #include <unistd.h>
 #include <stddef.h>
 
@@ -47,4 +48,24 @@ void	objs_free(t_objs *head)
 		free(tmp);
 	}
 	free(head);
+}
+
+t_vector3d	objs_get_coordinate(t_objs *node)
+{
+	if (node->type == PLANE)
+		return (((t_plane *)node->obj)->coordinate);
+	else if (node->type == SPHERE)
+		return (((t_sphere *)node->obj)->coordinate);
+	// else if (node->type == CYLINDER)
+	return (((t_cylinder *)node->obj)->coordinate);
+}
+
+t_color	objs_get_color(t_objs *node)
+{
+	if (node->type == PLANE)
+		return (((t_plane *)node->obj)->color);
+	else if (node->type == SPHERE)
+		return (((t_sphere *)node->obj)->color);
+	// else if (node->type == CYLINDER)
+	return (((t_cylinder *)node->obj)->color);
 }
