@@ -6,7 +6,7 @@
 /*   By: ryhara <ryhara@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 14:59:20 by tterao            #+#    #+#             */
-/*   Updated: 2023/10/08 14:40:02 by ryhara           ###   ########.fr       */
+/*   Updated: 2023/10/08 16:20:33 by ryhara           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,5 +56,6 @@ bool				check_range_int(int num, int min, int max);
 size_t				get_array_size(char **array);
 void				free_char_array(char **array);
 bool				check_color_range(char **info, size_t start, size_t end);
+void				free_data_and_puterr(t_global_data *data, const char *message);
 
 #endif
