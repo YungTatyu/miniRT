@@ -6,7 +6,7 @@
 /*   By: tterao <tterao@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 15:26:32 by tterao            #+#    #+#             */
-/*   Updated: 2023/10/07 14:28:49 by tterao           ###   ########.fr       */
+/*   Updated: 2023/10/09 17:15:58 by tterao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
  * @param v2
  * @return float
  */
-float	vector3d_dot(t_vector3d v1, t_vector3d v2)
+float	vector3d_dot(const t_vector3d v1, const t_vector3d v2)
 {
 	return (v1.x * v2.x + v1.y * v2.y + v1.z * v2.z);
 }
@@ -31,7 +31,7 @@ float	vector3d_dot(t_vector3d v1, t_vector3d v2)
  * @param v
  * @return float
  */
-float	vector3d_mag_sq(t_vector3d v)
+float	vector3d_mag_sq(const t_vector3d v)
 {
 	return (powf(v.x, 2.0f) + powf(v.y, 2.0f) + powf(v.z, 2.0f));
 }
@@ -42,7 +42,7 @@ float	vector3d_mag_sq(t_vector3d v)
  * @param v
  * @return float
  */
-float	vector3d_mag(t_vector3d v)
+float	vector3d_mag(const t_vector3d v)
 {
 	return (sqrtf(vector3d_mag_sq(v)));
 }
@@ -54,7 +54,7 @@ float	vector3d_mag(t_vector3d v)
  * @param v
  * @return t_vector3d
  */
-t_vector3d	vector3d_fmulv(float f, t_vector3d v)
+t_vector3d	vector3d_fmulv(float f, const t_vector3d v)
 {
 	t_vector3d	result;
 
@@ -70,7 +70,7 @@ t_vector3d	vector3d_fmulv(float f, t_vector3d v)
  * @param v
  * @return t_vector3d
  */
-t_vector3d	vector3d_normalize(t_vector3d v)
+t_vector3d	vector3d_normalize(const t_vector3d v)
 {
 	const float	magnitude = vector3d_mag(v);
 	t_vector3d	result;

@@ -80,6 +80,7 @@ void	render_loop(t_global_data *data)
 			{
 				radiance = get_radiance(data, obj, camera_ray, t);
 				my_mlx_pixel_put(data, pos.x, pos.y, create_rgb(radiance.red, radiance.green, radiance.blue));
+				// my_mlx_pixel_put(data, pos.x, pos.y, create_rgb(objs_get_color(obj).red, objs_get_color(obj).green, objs_get_color(obj).blue));
 			}
 			else
 				my_mlx_pixel_put(data, pos.x, pos.y, create_rgb(data->background.red, data->background.green, data->background.blue));
