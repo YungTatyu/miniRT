@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tterao <tterao@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ryhara <ryhara@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 14:59:20 by tterao            #+#    #+#             */
-/*   Updated: 2023/10/08 16:20:33 by ryhara           ###   ########.fr       */
+/*   Updated: 2023/10/09 21:08:33 by ryhara           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@
 # include <fcntl.h>
 # include <stdio.h>
 
-# define WINDOW_HEIGHT 1200.0f
-# define WINDOW_WIDTH 1000.0f
+# define WINDOW_HEIGHT 800.0f
+# define WINDOW_WIDTH 800.0f
 # define MP_AMIBIENT_LIGHT "A "
 # define MP_CAMERA "C "
 # define MP_LIGHT "L "
