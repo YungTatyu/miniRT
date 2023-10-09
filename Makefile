@@ -41,7 +41,8 @@ SRC = main.c \
 	cylinder.c \
 	cylinder_utils.c \
 	get_camera_ray.c \
-	free.c
+	free.c	\
+	render_loop.c
 
 SRCS = $(addprefix $(SRCS_DIR)/, $(SRC));
 

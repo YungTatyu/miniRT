@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ryhara <ryhara@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: tterao <tterao@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 18:14:23 by tterao            #+#    #+#             */
-/*   Updated: 2023/10/08 16:24:15 by ryhara           ###   ########.fr       */
+/*   Updated: 2023/10/09 15:09:33 by tterao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,12 @@ typedef struct s_color
 	int	green;
 	int	blue;
 }t_color;
+
+typedef struct s_vector2d
+{
+	int	x;
+	int	y;
+}t_vector2d;
 
 typedef struct s_fcolor
 {
@@ -144,5 +150,12 @@ void		color_add(t_color color, float adding_num);
 float		color_to_fcolor(float color);
 float		color_to_color(float fcolor);
 float		constrain(float n, float min, float max);
+t_fcolor	get_radiance(t_global_data *data, t_objs *node,
+				t_vector3d ray, const float t);
+float		hit_sphere(t_vector3d ray, t_vector3d camera_pos,
+				t_vector3d obj_pos, float radius);
+float		hit_plane(t_vector3d ray, t_vector3d camera_pos,
+				t_vector3d obj_pos, t_vector3d obj_dir);
+void		render_loop(t_global_data *data);
 
 #endif
