@@ -112,16 +112,17 @@ void	render(t_global_data *data)
 
 	_mlx_init(data);
 	node = data->objs_list->next;
-	while (node->type != HEAD)
-	{
-		if (node->type == PLANE)
-			render_plane_loop(data, node);
-		else if (node->type == SPHERE)
-			render_sphere_loop(data, node);
-		else if (node->type == CYLINDER)
-			render_cylinder_loop(data, node);
-		node = node->next;
-	}
+	render_loop(data);
+// 	while (node->type != HEAD)
+// 	{
+// 		if (node->type == PLANE)
+// 			render_plane_loop(data, node);
+// 		else if (node->type == SPHERE)
+// 			render_sphere_loop(data, node);
+// 		else if (node->type == CYLINDER)
+// 			render_cylinder_loop(data, node);
+// 		node = node->next;
+// 	}
 	mlx_hook(data->mlx_win, ON_KEYDOWN, 0, close_esc, data);
 	mlx_hook(data->mlx_win, ON_DESTROY, 0, close_x, data);
 	mlx_loop(data->mlx);

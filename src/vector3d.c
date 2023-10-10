@@ -3,7 +3,7 @@
 #include "miniRT.h"
 #include <stdio.h>
 
-t_vector3d	vector3d_add(t_vector3d v1, t_vector3d v2)
+t_vector3d	vector3d_add(const t_vector3d v1, const t_vector3d v2)
 {
 	t_vector3d	result;
 
@@ -13,7 +13,7 @@ t_vector3d	vector3d_add(t_vector3d v1, t_vector3d v2)
 	return (result);
 }
 
-t_vector3d	vector3d_sub(t_vector3d v1, t_vector3d v2)
+t_vector3d	vector3d_sub(const t_vector3d v1, const t_vector3d v2)
 {
 	t_vector3d	result;
 
@@ -23,7 +23,7 @@ t_vector3d	vector3d_sub(t_vector3d v1, t_vector3d v2)
 	return (result);
 }
 
-t_vector3d	vector3d_mul(t_vector3d v1, t_vector3d v2)
+t_vector3d	vector3d_mul(const t_vector3d v1, const t_vector3d v2)
 {
 	t_vector3d	result;
 
@@ -33,7 +33,7 @@ t_vector3d	vector3d_mul(t_vector3d v1, t_vector3d v2)
 	return (result);
 }
 
-t_vector3d	vector3d_div(t_vector3d v1, t_vector3d v2)
+t_vector3d	vector3d_div(const t_vector3d v1, const t_vector3d v2)
 {
 	t_vector3d	result;
 

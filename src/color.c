@@ -31,9 +31,5 @@ float	color_to_color(float fcolor)
 	float	color;
 
 	color = fcolor * COLOR;
-	if (color > COLOR)
-		color = COLOR;
-	else if (color < 0.0f)
-		color = 0.0f;
-	return (color);
+	return (constrain(color, 0.0f, COLOR));
 }

@@ -5,9 +5,6 @@
 #include <math.h>
 #include <mlx.h>
 
-t_fcolor	get_radiance(t_global_data *data, t_objs *node,
-				t_vector3d ray, const float t);
-
 /**
  * @brief 解の公式のtを求める、二つのtのうち，値が正でかつ小さい方を𝑡とする
  *
