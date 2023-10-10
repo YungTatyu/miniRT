@@ -6,29 +6,12 @@
 /*   By: ryhara <ryhara@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 15:35:48 by ryhara            #+#    #+#             */
-/*   Updated: 2023/10/08 17:03:54 by ryhara           ###   ########.fr       */
+/*   Updated: 2023/10/10 09:59:43 by ryhara           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parse.h"
-
-static char	**_parse_check(const char *line)
-{
-	if (!ft_strncmp(MP_AMIBIENT_LIGHT, line, 2))
-		return (parse_ambient_light(line));
-	else if (!ft_strncmp(MP_CAMERA, line, 2))
-		return (parse_camera(line));
-	else if (!ft_strncmp(MP_LIGHT, line, 2))
-		return (parse_light(line));
-	else if (!ft_strncmp(MP_SPHERE, line, 3))
-		return (parse_sphere(line));
-	else if (!ft_strncmp(MP_PLANE, line, 3))
-		return (parse_plane(line));
-	else if (!ft_strncmp(MP_CYLINDER, line, 3))
-		return (parse_cylinder(line));
-	else
-		return (NULL);
-}
+#define INVALID_ERR "Error\nInvalid format\n"
 
 static void	_parse_to_init(t_global_data *data, const char **info)
 {
@@ -58,7 +41,7 @@ static void	_parse_to_init(t_global_data *data, const char **info)
 		objs_addback(data->objs_list, objs_newnode(CYLINDER, info));
 }
 
-static int	parse_open(t_global_data *data, const char *file)
+static int	_parse_open(t_global_data *data, const char *file)
 {
 	size_t	i;
 	int		fd;
@@ -77,7 +60,7 @@ static int	parse_open(t_global_data *data, const char *file)
 		return (free_data_and_puterr(data, "Please input *.rt file."), -1);
 }
 
-bool	parse_loop(t_global_data *data, int fd)
+static bool	_parse_loop(t_global_data *data, int fd)
 {
 	char	*line;
 	char	**info;
@@ -94,12 +77,12 @@ bool	parse_loop(t_global_data *data, int fd)
 			free(line);
 			continue ;
 		}
-		info = _parse_check(line);
+		info = parse_check(line);
 		if (info == NULL)
 		{
 			free(line);
 			global_data_free(data);
-			return (ft_dprintf(STDERR_FILENO, "Error\nInvalid format\n"), false);
+			return (ft_dprintf(STDERR_FILENO, INVALID_ERR), false);
 		}
 		free(line);
 		_parse_to_init(data, (const char **)info);
@@ -111,27 +94,16 @@ bool	parse_loop(t_global_data *data, int fd)
 	return (true);
 }
 
-bool	check_exist_A_C_L(t_global_data *data)
-{
-	if (data->ambient_light == NULL)
-		return (free_data_and_puterr(data, "A does not exist"), false);
-	if (data->camera == NULL)
-		return (free_data_and_puterr(data, "C does not exist"), false);
-	if (data->light == NULL)
-		return (free_data_and_puterr(data, "L does not exist"), false);
-	return (true);
-}
-
 bool	parse(t_global_data *data, const char *file)
 {
 	int		fd;
 
-	fd = parse_open(data, file);
+	fd = _parse_open(data, file);
 	if (fd == -1)
 		return (false);
-	if (!parse_loop(data, fd))
+	if (!_parse_loop(data, fd))
 		return (false);
-	if (!check_exist_A_C_L(data))
+	if (!check_exist_a_c_l(data))
 		return (false);
-	return(true);
+	return (true);
 }
