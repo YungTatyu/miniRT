@@ -20,6 +20,7 @@ MINILIBX_FLAGS = -Lmlx -lmlx -framework OpenGL -framework AppKit
 SRCS_DIR = src
 SRC = main.c \
 	parse.c \
+	parse_check.c \
 	parse_objs.c \
 	parse_utils.c \
 	parse_settings.c \

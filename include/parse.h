@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tterao <tterao@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ryhara <ryhara@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 14:59:20 by tterao            #+#    #+#             */
 /*   Updated: 2023/10/09 15:51:47 by tterao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef PARSE_H
 # define PARSE_H
@@ -21,8 +22,8 @@
 # include <fcntl.h>
 # include <stdio.h>
 
-# define WINDOW_HEIGHT 1200.0f
-# define WINDOW_WIDTH 1000.0f
+# define WINDOW_HEIGHT 800.0f
+# define WINDOW_WIDTH 800.0f
 # define MP_AMIBIENT_LIGHT "A "
 # define MP_CAMERA "C "
 # define MP_LIGHT "L "
@@ -36,26 +37,36 @@
 # define ARR_SIZE_PL 10
 # define ARR_SIZE_CY 12
 
-
-void				global_data_init(t_global_data *data);
+// error.c
+void				put_error(const char *name);
+// free.c
 void				global_data_free(t_global_data *data);
-bool				parse(t_global_data *data, const char *file);
+void				free_data_and_puterr(t_global_data *data, const char *message);
+void				free_char_array(char **array);
+// init.c
+void				global_data_init(t_global_data *data);
 t_ambient_lightning	*ambient_light_init(const char **info);
 t_camera			*camera_init(const char **info);
 t_light				*light_init(const char **info);
-
-char				**parse_ambient_light(const char *line);
-char				**parse_camera(const char *line);
-char				**parse_light(const char *line);
+// parse_check.c
+bool				check_line(const char *line);
+bool				check_exist_a_c_l(t_global_data *data);
+bool				check_vector_valid(char **info, size_t start, size_t end);
+char				**parse_check(const char *line);
+// parse_objs.c
 char				**parse_sphere(const char *line);
 char				**parse_plane(const char *line);
 char				**parse_cylinder(const char *line);
-
+// parse_settings.c
+char				**parse_ambient_light(const char *line);
+char				**parse_camera(const char *line);
+char				**parse_light(const char *line);
+// parse_utils.c
 bool				check_range_float(float num, float min, float max);
 bool				check_range_int(int num, int min, int max);
 size_t				get_array_size(char **array);
-void				free_char_array(char **array);
 bool				check_color_range(char **info, size_t start, size_t end);
-void				free_data_and_puterr(t_global_data *data, const char *message);
+// parse.c
+bool				parse(t_global_data *data, const char *file);
 
 #endif

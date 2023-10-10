@@ -6,7 +6,7 @@
 /*   By: ryhara <ryhara@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 16:35:48 by ryhara            #+#    #+#             */
-/*   Updated: 2023/09/30 18:00:03 by ryhara           ###   ########.fr       */
+/*   Updated: 2023/10/10 09:49:16 by ryhara           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,21 +36,6 @@ size_t	get_array_size(char **array)
 	while (array[i])
 		i++;
 	return (i);
-}
-
-void	free_char_array(char **array)
-{
-	size_t	i;
-
-	i = 0;
-	while (array[i])
-	{
-		free(array[i]);
-		array[i] = NULL;
-		i++;
-	}
-	free(array);
-	array = NULL;
 }
 
 bool	check_color_range(char **info, size_t start, size_t end)

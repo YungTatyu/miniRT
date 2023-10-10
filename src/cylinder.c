@@ -6,7 +6,7 @@
 /*   By: ryhara <ryhara@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 14:15:30 by ryhara            #+#    #+#             */
-/*   Updated: 2023/10/08 14:41:15 by ryhara           ###   ########.fr       */
+/*   Updated: 2023/10/09 21:13:27 by ryhara           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,36 +16,51 @@
 bool			check_cylinder_cross(float dot, float height, float t);
 t_cylinder_ray	get_cylinder_ray(t_global_data *data, t_cylinder *cylinder,
 					t_t_data t, t_vector3d camera_ray);
+t_fcolor	get_radiance(t_global_data *data, t_objs *node,
+				t_vector3d ray, const float t);
 
-bool	hit_cylinder(t_vector3d ray, t_global_data *data,
-			t_cylinder *cylinder, t_t_data *t)
+float	hit_cylinder(t_vector3d ray, t_global_data *data,
+			t_cylinder *cylinder)
 {
+	t_t_data	t;
 	t_vector3d	camera_pos;
+	t_cylinder_ray	ray_cylinder;
 
 	camera_pos = data->camera->coordinate;
-	t->a = vector3d_mag_sq(vector3d_cross(ray, cylinder->direction));
-	if (t->a == 0.0f)
-		return (false);
-	t->b = 2.0f * (vector3d_dot(vector3d_cross(ray, cylinder->direction),
+	t.a = vector3d_mag_sq(vector3d_cross(ray, cylinder->direction));
+	if (t.a == 0.0f)
+		return (-1.0f);
+	t.b = 2.0f * (vector3d_dot(vector3d_cross(ray, cylinder->direction),
 				vector3d_cross(vector3d_sub(camera_pos, cylinder->coordinate),
 					cylinder->direction)));
-	t->c = vector3d_mag_sq(vector3d_cross(
+	t.c = vector3d_mag_sq(vector3d_cross(
 				vector3d_sub(camera_pos, cylinder->coordinate),
 				cylinder->direction)) - powf(cylinder->radius, 2.0f);
-	t->d = powf(t->b, 2.0f) - (4.0f * t->a * t->c);
-	if (t->d < 0.0f)
-		return (false);
-	return (true);
+	t.d = powf(t.b, 2.0f) - (4.0f * t.a * t.c);
+	if (t.d == 0)
+		t.t = (-(t.b) / (2.0f * t.a));
+	t.t1 = (-t.b + sqrtf(powf(t.b, 2.0f) - (4.0f * t.a * t.c))) / (2.0f * t.a);
+	t.t2 = (-t.b - sqrtf(powf(t.b, 2.0f) - (4.0f * t.a * t.c))) / (2.0f * t.a);
+	ray_cylinder = get_cylinder_ray(data, cylinder, t, ray);
+	if (check_cylinder_cross(vector3d_dot(ray_cylinder.ray_t1, cylinder->direction), cylinder->height, t.t1))
+		t.t = t.t1;
+	else if (check_cylinder_cross(vector3d_dot(ray_cylinder.ray_t2, cylinder->direction), cylinder->height, t.t2))
+		t.t = t.t2;
+	else
+		t.t = -1.0f;
+	return (t.t);
 }
 
-void	render_cylinder_loop(t_global_data *data, t_cylinder *cylinder)
+void	render_cylinder_loop(t_global_data *data, t_objs *node)
 {
 	int				y;
 	int				x;
 	t_vector3d		camera_ray;
-	t_cylinder_ray	ray;
-	t_t_data		t;
+	t_cylinder		*cylinder;
+	t_fcolor		radiance;
+	float			t;
 
+	cylinder = (t_cylinder *)node->obj;
 	y = 0;
 	while (y < WINDOW_HEIGHT)
 	{
@@ -53,29 +68,14 @@ void	render_cylinder_loop(t_global_data *data, t_cylinder *cylinder)
 		while (x < WINDOW_WIDTH)
 		{
 			camera_ray = get_camera_ray_dynamic(x, y, data);
-			if (hit_cylinder(camera_ray, data, cylinder, &t))
-			{
-				t.t1 = (-t.b + sqrtf(powf(t.b, 2.0f) - (4.0f * t.a * t.c))) / (2.0f * t.a);
-				t.t2 = (-t.b - sqrtf(powf(t.b, 2.0f) - (4.0f * t.a * t.c))) / (2.0f * t.a);
-				if (t.d == 0)
-					t.t = (-(t.b) / (2.0f * t.a));
-				else
-				{
-					ray = get_cylinder_ray(data, cylinder, t, camera_ray);
-					if (check_cylinder_cross(vector3d_dot(ray.ray_t1, cylinder->direction), cylinder->height, t.t1))
-						t.t = t.t1;
-					else if (check_cylinder_cross(vector3d_dot(ray.ray_t2, cylinder->direction), cylinder->height, t.t2))
-						t.t = t.t2;
-					else
-						t.t = -1.0f;
-				}
-				if (t.t < 0.0f)
-					my_mlx_pixel_put(data, x, y, create_rgb(data->background.red, data->background.green, data->background.blue));
-				else
-					my_mlx_pixel_put(data, x, y, create_rgb(cylinder->color.red, cylinder->color.green, cylinder->color.blue));
-			}
-			else
+			t = hit_cylinder(camera_ray, data, cylinder);
+			if (t < 0.0f)
 				my_mlx_pixel_put(data, x, y, create_rgb(data->background.red, data->background.green, data->background.blue));
+			else
+			{
+				radiance = get_radiance(data, node, camera_ray, t);
+				my_mlx_pixel_put(data, x, y, create_rgb(radiance.red, radiance.green, radiance.blue));
+			}
 			x++;
 		}
 		y++;

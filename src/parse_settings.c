@@ -6,13 +6,11 @@
 /*   By: ryhara <ryhara@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 17:04:51 by ryhara            #+#    #+#             */
-/*   Updated: 2023/10/01 15:34:19 by ryhara           ###   ########.fr       */
+/*   Updated: 2023/10/10 10:02:37 by ryhara           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parse.h"
-
-void	put_error(const char *name);
 
 char	**parse_ambient_light(const char *line)
 {
@@ -49,14 +47,10 @@ char	**parse_camera(const char *line)
 			return (free_char_array(info), NULL);
 		i++;
 	}
-	while (i < 7)
-	{
-		if (!ft_isdouble(info[i])
-			|| !check_range_float(ft_atof(info[i]), -1.0, 1.0))
-			return (free_char_array(info), NULL);
-		i++;
-	}
-	if (!ft_isint(info[7]) || !check_range_int(ft_atoi(info[7]), 0, 180))
+	if (!check_vector_valid(info, 4, 7))
+		return (free_char_array(info), NULL);
+	if (!ft_isint(info[7]) || !check_range_int(ft_atoi(info[7]), 0, 180)
+		|| ft_atoi(info[7]) == 0)
 		return (free_char_array(info), NULL);
 	return (info);
 }
