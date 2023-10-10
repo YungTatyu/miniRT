@@ -52,8 +52,9 @@ float	hit_object(t_vector3d start_pos, t_objs *head, t_vector3d ray, t_objs **ob
 			t = _get_t_obj(t, hit_sphere(ray, start_pos,
 						objs_get_coordinate(node),
 						((t_sphere *)node->obj)->radius), node, obj);
-		// else if (node->type == CYLINDER)
-		// 	t = hit_cylinder(ray, data, node, t);
+		else if (node->type == CYLINDER)
+			t = _get_t_obj(t, hit_cylinder(ray, start_pos,
+						(t_cylinder *)node->obj), node, obj);
 		node = node->next;
 	}
 	return (t);
