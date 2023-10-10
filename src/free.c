@@ -6,7 +6,7 @@
 /*   By: ryhara <ryhara@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 17:42:27 by tterao            #+#    #+#             */
-/*   Updated: 2023/10/08 17:19:49 by ryhara           ###   ########.fr       */
+/*   Updated: 2023/10/10 09:49:24 by ryhara           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,4 +29,19 @@ void	free_data_and_puterr(t_global_data *data, const char *message)
 	ft_dprintf(STDERR_FILENO, "\n");
 	global_data_free(data);
 	exit(1);
+}
+
+void	free_char_array(char **array)
+{
+	size_t	i;
+
+	i = 0;
+	while (array[i])
+	{
+		free(array[i]);
+		array[i] = NULL;
+		i++;
+	}
+	free(array);
+	array = NULL;
 }
