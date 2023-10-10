@@ -6,7 +6,7 @@
 /*   By: tterao <tterao@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 16:54:43 by tterao            #+#    #+#             */
-/*   Updated: 2023/10/09 17:19:18 by tterao           ###   ########.fr       */
+/*   Updated: 2023/10/10 15:34:59 by tterao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,8 @@ t_vector3d	get_normal_vector(
  * @param t
  * @return float
  */
-float	get_incidence_dot(
-		t_global_data *data, const t_objs *node, const t_vector3d ray, const float t)
+float	get_incidence_dot(t_global_data *data, const t_objs *node,
+						const t_vector3d ray, const float t)
 {
 	const t_vector3d	intersection_pos = get_intersection_pos(
 			data->camera->coordinate, t, ray);
@@ -84,9 +84,5 @@ float	get_incidence_dot(
 	float				dot;
 
 	dot = vector3d_dot(normal, incidence_vec);
-	if (dot > 1.0f)
-		dot = 1.0f;
-	else if (dot < 0.0f)
-		dot = 0.0f;
-	return (dot);
+	return (constrain(dot, 0.0f, 1.0f));
 }
