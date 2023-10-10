@@ -6,7 +6,7 @@
 /*   By: tterao <tterao@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 18:14:23 by tterao            #+#    #+#             */
-/*   Updated: 2023/10/09 15:09:33 by tterao           ###   ########.fr       */
+/*   Updated: 2023/10/10 15:02:47 by tterao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,6 +156,8 @@ float		hit_sphere(t_vector3d ray, t_vector3d camera_pos,
 				t_vector3d obj_pos, float radius);
 float		hit_plane(t_vector3d ray, t_vector3d camera_pos,
 				t_vector3d obj_pos, t_vector3d obj_dir);
+float		hit_object(t_vector3d start_pos, t_objs *head,
+				t_vector3d ray, t_objs **obj);
 void		render_loop(t_global_data *data);
 
 #endif

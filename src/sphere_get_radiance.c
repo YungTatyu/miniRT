@@ -6,14 +6,14 @@
 /*   By: tterao <tterao@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 16:54:18 by tterao            #+#    #+#             */
-/*   Updated: 2023/10/09 17:12:10 by tterao           ###   ########.fr       */
+/*   Updated: 2023/10/10 15:19:53 by tterao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 #include "objs.h"
 #define DIFFUSE_REFLECTION 0.69f /* 拡散反射係数 */
-#define AMBIENT_LIGHT_REFLECTION 0.5f /* 環境光反射係数 */
+#define AMBIENT_LIGHT_REFLECTION 1.0f /* 環境光反射係数 */
 #define SPECULAR_REFLECTION 0.5f /* 鏡面反射係数 */
 #define GLOSSINESS 100.0 /* 光沢度 */
 #define COLOR 255.0f /* colorの範囲 */
@@ -26,6 +26,8 @@ t_vector3d	get_normal_vector(const t_vector3d intersection_pos,
 				t_objs *node);
 float		get_incidence_dot(t_global_data *data, const t_objs *node,
 				const t_vector3d ray, const float t);
+float		shadow_res(t_global_data *data, t_vector3d shadow_ray,
+				t_vector3d intersection_pos);
 
 static t_fcolor	_calc_radiance(
 	t_color color, const float ambient_light_radiance,
@@ -34,17 +36,25 @@ static t_fcolor	_calc_radiance(
 {
 	t_fcolor	radiance;
 
-	radiance.red = (color_to_fcolor(color.red) * light_diffuse_radiance)
-		+ ambient_light_radiance + light_specular_reflection_radiance;
+	// radiance.red = (color_to_fcolor(color.red) * light_diffuse_radiance)
+	// 	+ ambient_light_radiance + light_specular_reflection_radiance;
+	// radiance.green
+	// 	= (color_to_fcolor(color.green) * light_diffuse_radiance)
+	// 	+ ambient_light_radiance + light_specular_reflection_radiance;
+	// radiance.blue
+	// 	= (color_to_fcolor(color.blue) * light_diffuse_radiance)
+	// 	+ ambient_light_radiance + light_specular_reflection_radiance;
+	radiance.red = (color.red * constrain((light_diffuse_radiance
+		+ ambient_light_radiance + light_specular_reflection_radiance), 0.0f, 1.0f));
 	radiance.green
-		= (color_to_fcolor(color.green) * light_diffuse_radiance)
-		+ ambient_light_radiance + light_specular_reflection_radiance;
+		= (color.green * constrain((light_diffuse_radiance
+		+ ambient_light_radiance + light_specular_reflection_radiance), 0.0f, 1.0f));
 	radiance.blue
-		= (color_to_fcolor(color.blue) * light_diffuse_radiance)
-		+ ambient_light_radiance + light_specular_reflection_radiance;
-	radiance.red = constrain(radiance.red, 0.0f, 1.0f) * COLOR;
-	radiance.green = constrain(radiance.green, 0.0f, 1.0f) * COLOR;
-	radiance.blue = constrain(radiance.blue, 0.0f, 1.0f) * COLOR;
+		= (color.blue * constrain((light_diffuse_radiance
+		+ ambient_light_radiance + light_specular_reflection_radiance), 0.0f, 1.0f));
+	// radiance.red = constrain(radiance.red, 0.0f, 1.0f) * COLOR;
+	// radiance.green = constrain(radiance.green, 0.0f, 1.0f) * COLOR;
+	// radiance.blue = constrain(radiance.blue, 0.0f, 1.0f) * COLOR;
 	return (radiance);
 }
 
@@ -111,7 +121,7 @@ static float	_get_light_specular_reflection_dot(
  * light_specular_reflection_radiance:直接光の鏡面反射光の放射輝度
  *
  * @param data
- * @param sphere
+ * @param node
  * @param ray
  * @param t
  * @return float
@@ -136,6 +146,10 @@ t_fcolor	get_radiance(
 			)
 		* SPECULAR_REFLECTION * data->light->ratio;
 
+	if (shadow_res(data, get_incidence_vector(data->light->coordinate,
+				get_intersection_pos(data->camera->coordinate, t, ray)),
+			get_intersection_pos(data->camera->coordinate, t, ray)) >= 0.0f)
+		return (_calc_radiance(objs_get_color(node), ambient_light_radiance, 0.0f, 0.0f));
 	return (
 		_calc_radiance(objs_get_color(node), ambient_light_radiance,
 			light_diffuse_radiance, light_specular_reflection_radiance)
