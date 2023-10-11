@@ -11,17 +11,17 @@
  * @param a
  * @param b
  * @param c
- * @return float
+ * @return double
  */
-static float	_calc_t(float a, float b, float c)
+static double	_calc_t(double a, double b, double c)
 {
-	const float	t1 = (-b + sqrtf(powf(b, 2.0f) - (4.0f * a * c))) / (2.0f * a);
-	const float	t2 = (-b - sqrtf(powf(b, 2.0f) - (4.0f * a * c))) / (2.0f * a);
+	const double	t1 = (-b + sqrtf(powf(b, 2.0) - (4.0 * a * c))) / (2.0 * a);
+	const double	t2 = (-b - sqrtf(powf(b, 2.0) - (4.0 * a * c))) / (2.0 * a);
 
-	if (t1 > 0.0f && t2 > 0.0f)
-		return (fminf(t1, t2));
+	if (t1 > 0.0 && t2 > 0.0)
+		return (fmin(t1, t2));
 	else
-		return (fmaxf(t1, t2));
+		return (fmax(t1, t2));
 }
 
 /**
@@ -33,21 +33,22 @@ static float	_calc_t(float a, float b, float c)
  * @param camera_pos
  * @param obj_pos
  * @param radius
- * @return float t レイのベクトル方程式：𝐩⃗ =𝐬⃗ +𝑡𝐝⃗
+ * @return double t レイのベクトル方程式：𝐩⃗ =𝐬⃗ +𝑡𝐝⃗
  */
-float	hit_sphere(t_vector3d ray, t_vector3d camera_pos,
-						t_vector3d obj_pos, float radius)
+double	hit_sphere(t_vector3d ray, t_vector3d camera_pos,
+						t_vector3d obj_pos, double radius)
 {
-	const float	a = vector3d_mag_sq(ray);
-	const float	b = 2.0f * vector3d_dot(vector3d_sub(camera_pos, obj_pos), ray);
-	const float	c = vector3d_mag_sq(
-			vector3d_sub(camera_pos, obj_pos)) - powf(radius, 2.0f);
-	const float	d = powf(b, 2.0f) - (4.0f * a * c);
+	const double	a = vector3d_mag_sq(ray);
+	const double	b = 2.0 * vector3d_dot(
+			vector3d_sub(camera_pos, obj_pos), ray);
+	const double	c = vector3d_mag_sq(
+			vector3d_sub(camera_pos, obj_pos)) - powf(radius, 2.0);
+	const double	d = powf(b, 2.0) - (4.0 * a * c);
 
-	if (d == 0.0f)
-		return (-(b) / (2.0f * a));
+	if (d == 0.0)
+		return (-(b) / (2.0 * a));
 	else if (d < 0)
-		return (-1.0f);
+		return (-1.0);
 	return (_calc_t(a, b, c));
 }
 
@@ -57,9 +58,9 @@ float	hit_sphere(t_vector3d ray, t_vector3d camera_pos,
  * @param n
  * @param min
  * @param max
- * @return float
+ * @return double
  */
-float	constrain(float n, float min, float max)
+double	constrain(double n, double min, double max)
 {
 	if (n > max)
 		n = max;
@@ -73,7 +74,7 @@ void	render_sphere_loop(t_global_data *data, t_objs *node)
 	int			y;
 	int			x;
 	t_vector3d	camera_ray;
-	float	t;
+	double		t;
 	t_fcolor	radiance;
 
 	y = 0;
@@ -85,7 +86,7 @@ void	render_sphere_loop(t_global_data *data, t_objs *node)
 			camera_ray = get_camera_ray_dynamic(x, y, data);
 			t = hit_sphere(camera_ray, data->camera->coordinate, objs_get_coordinate(node), ((t_sphere *)node->obj)->radius);
 			// printf("t=%f\n", t);
-			if (t >= 0.0f)
+			if (t >= 0.0)
 			{
 				radiance = get_radiance(data, node, camera_ray, t);
 				my_mlx_pixel_put(data, x, y, create_rgb(radiance.red, radiance.green, radiance.blue));

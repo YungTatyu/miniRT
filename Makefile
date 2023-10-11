@@ -13,7 +13,7 @@ X11_DIR = /usr/X11
 LIBFT_DIR = libft
 LIBFT_FLAGS = libft/libft.a libft/libftprintf.a libft/libftdprintf.a
 
-INCLUDES =  -I$(INCLUDES_DIR) -I$(MINILIBX_DIR) -I$(X11_DIR)/include -I$(LIBFT_DIR)/includes
+INCLUDES =  -I$(INCLUDES_DIR) -I$(MINILIBX_DIR) -I$(X11_DIR)/include -I$(LIBFT_DIR)/includes -I$(LIBFT_DIR)/stdio/ft_dprintf -I$(LIBFT_DIR)/stdio/ft_printf
 MINILIBX_FLAGS = -Lmlx -lmlx -framework OpenGL -framework AppKit
 
 
@@ -44,7 +44,9 @@ SRC = main.c \
 	get_camera_ray.c \
 	free.c	\
 	render_loop.c	\
-	shadow.c
+	shadow.c	\
+	plane.c	\
+	mlx_key.c
 
 SRCS = $(addprefix $(SRCS_DIR)/, $(SRC));
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   objs_newnode.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ryhara <ryhara@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: tterao <tterao@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 16:13:00 by tterao            #+#    #+#             */
-/*   Updated: 2023/10/08 11:21:39 by ryhara           ###   ########.fr       */
+/*   Updated: 2023/10/11 16:13:28 by tterao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static t_sphere	*_sphere_newnode(const char **info)
 	newnode->coordinate.y = ft_atof(*(info++));
 	newnode->coordinate.z = ft_atof(*(info++));
 	newnode->diameter = ft_atof(*(info++));
-	newnode->radius = newnode->diameter / 2.0f;
+	newnode->radius = newnode->diameter / 2.0;
 	newnode->color.red = ft_atoi(*(info++));
 	newnode->color.green = ft_atoi(*(info++));
 	newnode->color.blue = ft_atoi(*(info++));
@@ -62,7 +62,7 @@ static t_cylinder	*_cylinder_newnode(const char **info)
 	newnode->direction.y = ft_atof(*(info++));
 	newnode->direction.z = ft_atof(*(info++));
 	newnode->diameter = ft_atof(*(info++));
-	newnode->radius = newnode->diameter / 2.0f;
+	newnode->radius = newnode->diameter / 2.0;
 	newnode->height = ft_atof(*(info++));
 	newnode->color.red = ft_atoi(*(info++));
 	newnode->color.green = ft_atoi(*(info++));

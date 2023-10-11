@@ -6,47 +6,47 @@
 /*   By: tterao <tterao@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 16:54:18 by tterao            #+#    #+#             */
-/*   Updated: 2023/10/11 15:12:54 by tterao           ###   ########.fr       */
+/*   Updated: 2023/10/11 16:13:28 by tterao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 #include "objs.h"
 #define DIFFUSE_REFLECTION 0.69f /* 拡散反射係数 */
-#define AMBIENT_LIGHT_REFLECTION 1.0f /* 環境光反射係数 */
+#define AMBIENT_LIGHT_REFLECTION 1.0 /* 環境光反射係数 */
 #define SPECULAR_REFLECTION 0.5f /* 鏡面反射係数 */
 #define GLOSSINESS 100.0 /* 光沢度 */
-#define COLOR 255.0f /* colorの範囲 */
+#define COLOR 255.0 /* colorの範囲 */
 
 t_vector3d	get_intersection_pos(const t_vector3d camera_pos,
-				const float t, const t_vector3d ray);
+				const double t, const t_vector3d ray);
 t_vector3d	get_incidence_vector(const t_vector3d light_pos,
 				const t_vector3d intersection_pos);
 t_vector3d	get_normal_vector(const t_vector3d intersection_pos,
 				t_objs *node);
-float		get_incidence_dot(t_global_data *data, const t_objs *node,
-				const t_vector3d ray, const float t);
-float		shadow_res(t_global_data *data, t_vector3d shadow_ray,
+double		get_incidence_dot(t_global_data *data, const t_objs *node,
+				const t_vector3d ray, const double t);
+double		shadow_res(t_global_data *data, t_vector3d shadow_ray,
 				t_vector3d intersection_pos);
 
 static t_fcolor	_calc_radiance(
-	t_color color, const float ambient_light_radiance,
-		const float light_diffuse_radiance,
-		const float light_specular_reflection_radiance)
+	t_color color, const double ambient_light_radiance,
+		const double light_diffuse_radiance,
+		const double light_specular_reflection_radiance)
 {
 	t_fcolor	radiance;
 
 	radiance.red = (color.red * constrain((light_diffuse_radiance
 					+ ambient_light_radiance
-					+ light_specular_reflection_radiance), 0.0f, 1.0f));
+					+ light_specular_reflection_radiance), 0.0, 1.0));
 	radiance.green
 		= (color.green * constrain((light_diffuse_radiance
 					+ ambient_light_radiance
-					+ light_specular_reflection_radiance), 0.0f, 1.0f));
+					+ light_specular_reflection_radiance), 0.0, 1.0));
 	radiance.blue
 		= (color.blue * constrain((light_diffuse_radiance
 					+ ambient_light_radiance
-					+ light_specular_reflection_radiance), 0.0f, 1.0f));
+					+ light_specular_reflection_radiance), 0.0, 1.0));
 	return (radiance);
 }
 
@@ -56,21 +56,21 @@ static t_fcolor	_calc_radiance(
  * @param ray
  * @param incidence_vec 入射ベクトル
  * @param normal 法線ベクトル
- * @return float
+ * @return double
  */
-static float	_calc_light_specular_reflection_radiance_dot(
+static double	_calc_light_specular_reflection_radiance_dot(
 				t_vector3d ray, t_vector3d incidence_vec, t_vector3d normal)
 {
 	const t_vector3d	regular_reflection = vector3d_sub(
-			vector3d_fmulv(2.0f * vector3d_dot(normal, incidence_vec),
+			vector3d_fmulv(2.0 * vector3d_dot(normal, incidence_vec),
 				normal),
 			incidence_vec);
 	const t_vector3d	rev_ray = vector3d_normalize(
-			vector3d_fmulv(-1.0f, ray));
-	float				dot;
+			vector3d_fmulv(-1.0, ray));
+	double				dot;
 
 	dot = vector3d_dot(rev_ray, regular_reflection);
-	return (constrain(dot, 0.0f, 1.0f));
+	return (constrain(dot, 0.0, 1.0));
 }
 
 /**
@@ -82,14 +82,14 @@ static float	_calc_light_specular_reflection_radiance_dot(
  * @param dot
  * @param incidence_vec
  * @param normal_vec
- * @return float
+ * @return double
  */
-static float	_get_light_specular_reflection_dot(
-			const t_vector3d ray, const float dot,
+static double	_get_light_specular_reflection_dot(
+			const t_vector3d ray, const double dot,
 			const t_vector3d incidence_vec, const t_vector3d normal_vec)
 {
-	if (dot <= 0.0f)
-		return (0.0f);
+	if (dot <= 0.0)
+		return (0.0);
 	return (
 		_calc_light_specular_reflection_radiance_dot
 		(ray, incidence_vec, normal_vec)
@@ -112,17 +112,17 @@ static float	_get_light_specular_reflection_dot(
  * @param node
  * @param ray
  * @param t
- * @return float
+ * @return double
  */
 t_fcolor	get_radiance(t_global_data *data, t_objs *node,
-							t_vector3d ray, const float t)
+							t_vector3d ray, const double t)
 {
-	const float	ambient_light_radiance = AMBIENT_LIGHT_REFLECTION
+	const double	ambient_light_radiance = AMBIENT_LIGHT_REFLECTION
 		* data->ambient_light->ratio;
-	const float	dot = get_incidence_dot(data, node, ray, t);
-	const float	light_diffuse_radiance
+	const double	dot = get_incidence_dot(data, node, ray, t);
+	const double	light_diffuse_radiance
 		= data->light->ratio * dot;
-	const float	light_specular_reflection_radiance
+	const double	light_specular_reflection_radiance
 		= powf(_get_light_specular_reflection_dot(
 				ray, dot, get_incidence_vector(data->light->coordinate,
 					get_intersection_pos(data->camera->coordinate, t, ray)),
@@ -135,9 +135,9 @@ t_fcolor	get_radiance(t_global_data *data, t_objs *node,
 
 	if (shadow_res(data, get_incidence_vector(data->light->coordinate,
 				get_intersection_pos(data->camera->coordinate, t, ray)),
-			get_intersection_pos(data->camera->coordinate, t, ray)) >= 0.0f)
+			get_intersection_pos(data->camera->coordinate, t, ray)) >= 0.0)
 		return (_calc_radiance(objs_get_color(node),
-				ambient_light_radiance, 0.0f, 0.0f));
+				ambient_light_radiance, 0.0, 0.0));
 	return (
 		_calc_radiance(objs_get_color(node), ambient_light_radiance,
 			light_diffuse_radiance, light_specular_reflection_radiance)

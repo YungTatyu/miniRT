@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ryhara <ryhara@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: tterao <tterao@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 16:35:48 by ryhara            #+#    #+#             */
-/*   Updated: 2023/10/10 09:49:16 by ryhara           ###   ########.fr       */
+/*   Updated: 2023/10/11 16:10:47 by tterao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parse.h"
 
-bool	check_range_float(float num, float min, float max)
+bool	check_range_float(double num, double min, double max)
 {
 	if (num >= min && num <= max)
 		return (true);

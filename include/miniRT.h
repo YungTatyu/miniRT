@@ -6,7 +6,7 @@
 /*   By: tterao <tterao@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 18:14:23 by tterao            #+#    #+#             */
-/*   Updated: 2023/10/10 15:59:56 by tterao           ###   ########.fr       */
+/*   Updated: 2023/10/11 16:10:47 by tterao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,15 +41,15 @@ typedef struct s_vector2d
 
 typedef struct s_fcolor
 {
-	float	red;
-	float	green;
-	float	blue;
+	double	red;
+	double	green;
+	double	blue;
 }t_fcolor;
 
 typedef struct s_ambient_lightning
 {
 	t_color	color;
-	float	ratio;
+	double	ratio;
 }t_ambient_lightning;
 
 typedef struct s_camera
@@ -63,15 +63,15 @@ typedef struct s_light
 {
 	t_vector3d	coordinate;
 	t_vector3d	direction;
-	float		ratio;
+	double		ratio;
 	t_color		color;
 }t_light;
 
 typedef struct s_sphere
 {
 	t_vector3d	coordinate;
-	float		diameter;
-	float		radius;
+	double		diameter;
+	double		radius;
 	t_color		color;
 }t_sphere;
 
@@ -87,9 +87,9 @@ typedef struct s_cylinder
 	t_vector3d	coordinate;
 	t_vector3d	direction;
 	t_color		color;
-	float		diameter;
-	float		radius;
-	float		height;
+	double		diameter;
+	double		radius;
+	double		height;
 }t_cylinder;
 
 typedef struct s_global_data
@@ -112,13 +112,13 @@ typedef struct s_global_data
 
 typedef struct s_t_data
 {
-	float	a;
-	float	b;
-	float	c;
-	float	d;
-	float	t;
-	float	t1;
-	float	t2;
+	double	a;
+	double	b;
+	double	c;
+	double	d;
+	double	t;
+	double	t1;
+	double	t2;
 }t_t_data;
 
 typedef struct s_cylinder_ray
@@ -132,11 +132,11 @@ typedef struct s_screen_data
 	t_vector3d	up;
 	t_vector3d	screen_unit_x;
 	t_vector3d	screen_unit_y;
-	float		camera_to_screen;
-	float		f_x;
-	float		f_y;
-	float		w_s;
-	float		h_s;
+	double		camera_to_screen;
+	double		f_x;
+	double		f_y;
+	double		w_s;
+	double		h_s;
 }t_screen_data;
 
 void		*try_calloc(size_t count, size_t size);
@@ -146,19 +146,19 @@ t_vector3d	get_camera_ray(int x, int y, t_global_data *data);
 t_vector3d	get_camera_ray_dynamic(int x, int y, t_global_data *data);;
 void		my_mlx_pixel_put(t_global_data *data, int x, int y, int color);
 int			create_rgb(int r, int g, int b);
-void		color_add(t_color color, float adding_num);
-float		color_to_fcolor(float color);
-float		color_to_color(float fcolor);
-float		constrain(float n, float min, float max);
+void		color_add(t_color color, double adding_num);
+double		color_to_fcolor(double color);
+double		color_to_color(double fcolor);
+double		constrain(double n, double min, double max);
 t_fcolor	get_radiance(t_global_data *data, t_objs *node,
-				t_vector3d ray, const float t);
-float		hit_sphere(t_vector3d ray, t_vector3d camera_pos,
-				t_vector3d obj_pos, float radius);
-float		hit_plane(t_vector3d ray, t_vector3d camera_pos,
+				t_vector3d ray, const double t);
+double		hit_sphere(t_vector3d ray, t_vector3d camera_pos,
+				t_vector3d obj_pos, double radius);
+double		hit_plane(t_vector3d ray, t_vector3d camera_pos,
 				t_vector3d obj_pos, t_vector3d obj_dir);
-float		hit_cylinder(t_vector3d ray, t_vector3d start_pos,
+double		hit_cylinder(t_vector3d ray, t_vector3d start_pos,
 				t_cylinder *cylinder);
-float		hit_object(t_vector3d start_pos, t_objs *head,
+double		hit_object(t_vector3d start_pos, t_objs *head,
 				t_vector3d ray, t_objs **obj);
 void		render_loop(t_global_data *data);
 

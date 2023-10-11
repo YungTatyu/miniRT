@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   render_loop.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tterao <tterao@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/10/11 16:14:48 by tterao            #+#    #+#             */
+/*   Updated: 2023/10/11 16:25:34 by tterao           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "miniRT.h"
 #include "parse.h"
@@ -12,13 +23,14 @@
  * @param t
  * @param node
  * @param obj
- * @return float
+ * @return double
  */
-static float	_get_t_obj(float current_t, float t, t_objs *node, t_objs **obj)
+static double	_get_t_obj(double current_t, double t,
+						t_objs *node, t_objs **obj)
 {
-	if (t < 0.0f)
+	if (t < 0.0)
 		return (current_t);
-	else if (current_t < 0.0f || fminf(current_t, t) == t)
+	else if (current_t < 0.0 || fmin(current_t, t) == t)
 	{
 		*obj = node;
 		return (t);
@@ -33,16 +45,16 @@ static float	_get_t_obj(float current_t, float t, t_objs *node, t_objs **obj)
  * @param head
  * @param ray
  * @param obj
- * @return float
+ * @return double
  */
-float	hit_object(t_vector3d start_pos, t_objs *head,
+double	hit_object(t_vector3d start_pos, t_objs *head,
 					t_vector3d ray, t_objs **obj)
 {
-	float	t;
+	double	t;
 	t_objs	*node;
 
 	node = head->next;
-	t = -1.0f;
+	t = -1.0;
 	while (node != head)
 	{
 		if (node->type == PLANE)
@@ -63,12 +75,12 @@ float	hit_object(t_vector3d start_pos, t_objs *head,
 
 static void	_put_pixel(t_global_data *data, t_vector3d ray, t_vector2d pos)
 {
-	t_objs		*obj;
-	const float	t = hit_object(data->camera->coordinate,
+	t_objs			*obj;
+	const double	t = hit_object(data->camera->coordinate,
 			data->objs_list, ray, &obj);
-	t_fcolor	radiance;
+	t_fcolor		radiance;
 
-	if (t >= 0.0f)
+	if (t >= 0.0)
 	{
 		radiance = get_radiance(data, obj, ray, t);
 		my_mlx_pixel_put(data, pos.x, pos.y,

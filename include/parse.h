@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ryhara <ryhara@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: tterao <tterao@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 14:59:20 by tterao            #+#    #+#             */
-/*   Updated: 2023/10/09 15:51:47 by tterao           ###   ########.fr       */
+/*   Updated: 2023/10/11 16:33:30 by tterao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,15 @@
 # define PARSE_H
 
 # include "miniRT.h"
-# include "../libft/includes/libft.h"
-# include "../libft/stdio/ft_printf/ft_printf.h"
-# include "../libft/stdio/ft_dprintf/ft_dprintf.h"
+# include "libft.h"
+# include "ft_printf.h"
+# include "ft_dprintf.h"
 # include <stdbool.h>
 # include <fcntl.h>
 # include <stdio.h>
 
-# define WINDOW_HEIGHT 800.0f
-# define WINDOW_WIDTH 800.0f
+# define WINDOW_HEIGHT 800.0
+# define WINDOW_WIDTH 800.0
 # define MP_AMIBIENT_LIGHT "A "
 # define MP_CAMERA "C "
 # define MP_LIGHT "L "
@@ -41,7 +41,8 @@
 void				put_error(const char *name);
 // free.c
 void				global_data_free(t_global_data *data);
-void				free_data_and_puterr(t_global_data *data, const char *message);
+void				free_data_and_puterr(t_global_data *data,
+						const char *message);
 void				free_char_array(char **array);
 // init.c
 void				global_data_init(t_global_data *data);
@@ -62,7 +63,7 @@ char				**parse_ambient_light(const char *line);
 char				**parse_camera(const char *line);
 char				**parse_light(const char *line);
 // parse_utils.c
-bool				check_range_float(float num, float min, float max);
+bool				check_range_float(double num, double min, double max);
 bool				check_range_int(int num, int min, int max);
 size_t				get_array_size(char **array);
 bool				check_color_range(char **info, size_t start, size_t end);

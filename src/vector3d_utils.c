@@ -6,7 +6,7 @@
 /*   By: tterao <tterao@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 15:26:32 by tterao            #+#    #+#             */
-/*   Updated: 2023/10/09 17:15:58 by tterao           ###   ########.fr       */
+/*   Updated: 2023/10/11 16:21:30 by tterao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@
  *
  * @param v1
  * @param v2
- * @return float
+ * @return double
  */
-float	vector3d_dot(const t_vector3d v1, const t_vector3d v2)
+double	vector3d_dot(const t_vector3d v1, const t_vector3d v2)
 {
 	return (v1.x * v2.x + v1.y * v2.y + v1.z * v2.z);
 }
@@ -29,20 +29,20 @@ float	vector3d_dot(const t_vector3d v1, const t_vector3d v2)
  * @brief ベクトルの大きさの二乗を返す
  *
  * @param v
- * @return float
+ * @return double
  */
-float	vector3d_mag_sq(const t_vector3d v)
+double	vector3d_mag_sq(const t_vector3d v)
 {
-	return (powf(v.x, 2.0f) + powf(v.y, 2.0f) + powf(v.z, 2.0f));
+	return (powf(v.x, 2.0) + powf(v.y, 2.0) + powf(v.z, 2.0));
 }
 
 /**
  * @brief ベクトルの大きさを返す
  *
  * @param v
- * @return float
+ * @return double
  */
-float	vector3d_mag(const t_vector3d v)
+double	vector3d_mag(const t_vector3d v)
 {
 	return (sqrtf(vector3d_mag_sq(v)));
 }
@@ -54,7 +54,7 @@ float	vector3d_mag(const t_vector3d v)
  * @param v
  * @return t_vector3d
  */
-t_vector3d	vector3d_fmulv(float f, const t_vector3d v)
+t_vector3d	vector3d_fmulv(double f, const t_vector3d v)
 {
 	t_vector3d	result;
 
@@ -72,8 +72,8 @@ t_vector3d	vector3d_fmulv(float f, const t_vector3d v)
  */
 t_vector3d	vector3d_normalize(const t_vector3d v)
 {
-	const float	magnitude = vector3d_mag(v);
-	t_vector3d	result;
+	const double	magnitude = vector3d_mag(v);
+	t_vector3d		result;
 
 	result.x = v.x / magnitude;
 	result.y = v.y / magnitude;
