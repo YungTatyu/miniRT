@@ -81,6 +81,6 @@ debug: fclean
 	make WITH_DEBUG=1
 
 test:
-	bash -c 'for f in files/ng/*; do ./miniRT $$f; done;'
+	bash -c 'for f in files/error/*; do echo $$f; ./miniRT $$f; echo; done;'
 
 .PHONY: all fclean clean re debug test
