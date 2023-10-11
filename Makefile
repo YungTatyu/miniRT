@@ -1,6 +1,6 @@
 NAME = miniRT
 CC = cc
-# CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra
 
 ifdef WITH_DEBUG
 	CFLAGS += -g -fsanitize=address
@@ -35,8 +35,8 @@ SRC = main.c \
 	vector3d_utils.c	\
 	sphere.c	\
 	color.c	\
-	sphere_get_radiance.c	\
-	sphere_get_incidence_dot.c  \
+	get_radiance.c	\
+	get_incidence_dot.c  \
 	vector3d_utils2.c	\
 	sphere.c \
 	cylinder.c \

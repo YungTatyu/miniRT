@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sphere_get_incidence_dot.c                         :+:      :+:    :+:   */
+/*   get_incidence_dot.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tterao <tterao@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 16:54:43 by tterao            #+#    #+#             */
-/*   Updated: 2023/10/10 15:34:59 by tterao           ###   ########.fr       */
+/*   Updated: 2023/10/11 15:27:47 by tterao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ t_vector3d	get_normal_vector(
 	if (node->type == PLANE)
 		return (((t_plane *)node->obj)->direction);
 	// else if (node->type == SPHERE)
-	return (vector3d_normalize(vector3d_sub(intersection_pos, objs_get_coordinate(node))));
+	return (vector3d_normalize(
+			vector3d_sub(intersection_pos, objs_get_coordinate(node))));
 }
 
 /**

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sphere_get_radiance.c                              :+:      :+:    :+:   */
+/*   get_radiance.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tterao <tterao@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 16:54:18 by tterao            #+#    #+#             */
-/*   Updated: 2023/10/10 15:31:21 by tterao           ###   ########.fr       */
+/*   Updated: 2023/10/11 15:12:54 by tterao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,8 @@ static t_fcolor	_calc_radiance(
  * @param normal 法線ベクトル
  * @return float
  */
-static float	_calc_light_specular_reflection_radiance_dot
-	(t_vector3d ray, t_vector3d incidence_vec, t_vector3d normal)
+static float	_calc_light_specular_reflection_radiance_dot(
+				t_vector3d ray, t_vector3d incidence_vec, t_vector3d normal)
 {
 	const t_vector3d	regular_reflection = vector3d_sub(
 			vector3d_fmulv(2.0f * vector3d_dot(normal, incidence_vec),

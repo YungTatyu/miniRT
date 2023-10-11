@@ -4,8 +4,8 @@
 #include <mlx.h>
 #include <math.h>
 
-void	render_cylinder_loop(t_global_data *data, t_objs *node);
-void	render_sphere_loop(t_global_data *data, t_objs *node);
+void		render_cylinder_loop(t_global_data *data, t_objs *node);
+void		render_sphere_loop(t_global_data *data, t_objs *node);
 t_fcolor	get_radiance(t_global_data *data, t_objs *node,
 				t_vector3d ray, const float t);
 
@@ -50,7 +50,6 @@ float	hit_plane(t_vector3d ray, t_vector3d camera_pos,
 				vector3d_sub(camera_pos, obj_pos),
 				obj_dir))
 		/ vector3d_dot(ray, obj_dir);
-	//分母が0の場合、t = nan になる
 	if (isnan(t))
 		t = -1.0f;
 	return (t);
@@ -60,7 +59,6 @@ void	render_plane_loop(t_global_data *data, t_objs *node)
 {
 	int			y;
 	int			x;
-	t_vector3d	coordinate;
 	t_vector3d	camera_ray;
 	t_fcolor	radiance;
 	t_plane		*plane;
@@ -113,16 +111,16 @@ void	render(t_global_data *data)
 	_mlx_init(data);
 	node = data->objs_list->next;
 	render_loop(data);
-// 	while (node->type != HEAD)
-// 	{
-// 		if (node->type == PLANE)
-// 			render_plane_loop(data, node);
-// 		else if (node->type == SPHERE)
-// 			render_sphere_loop(data, node);
-// 		else if (node->type == CYLINDER)
-// 			render_cylinder_loop(data, node);
-// 		node = node->next;
-// 	}
+	// while (node->type != HEAD)
+	// {
+	// 	if (node->type == PLANE)
+	// 		render_plane_loop(data, node);
+	// 	else if (node->type == SPHERE)
+	// 		render_sphere_loop(data, node);
+	// 	else if (node->type == CYLINDER)
+	// 		render_cylinder_loop(data, node);
+	// 	node = node->next;
+	// }
 	mlx_hook(data->mlx_win, ON_KEYDOWN, 0, close_esc, data);
 	mlx_hook(data->mlx_win, ON_DESTROY, 0, close_x, data);
 	mlx_loop(data->mlx);

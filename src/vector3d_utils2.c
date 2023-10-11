@@ -6,12 +6,19 @@
 /*   By: tterao <tterao@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 13:48:29 by ryhara            #+#    #+#             */
-/*   Updated: 2023/10/09 17:16:25 by tterao           ###   ########.fr       */
+/*   Updated: 2023/10/11 15:44:33 by tterao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vector3d.h"
 
+/**
+ * @brief 外積を計算する
+ *
+ * @param v1
+ * @param v2
+ * @return t_vector3d
+ */
 t_vector3d	vector3d_cross(const t_vector3d v1, const t_vector3d v2)
 {
 	t_vector3d	result;

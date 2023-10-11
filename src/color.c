@@ -2,6 +2,12 @@
 #include "miniRT.h"
 #define COLOR 255.0f /* colorの範囲 */
 
+/**
+ * @brief colorを色を追加する
+ *
+ * @param color
+ * @param adding_num
+ */
 void	color_add(t_color color, float adding_num)
 {
 	color.red += adding_num;

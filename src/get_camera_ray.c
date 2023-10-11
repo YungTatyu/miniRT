@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_camera_ray.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ryhara <ryhara@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: tterao <tterao@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 13:59:02 by ryhara            #+#    #+#             */
-/*   Updated: 2023/10/08 14:42:49 by ryhara           ###   ########.fr       */
+/*   Updated: 2023/10/11 15:15:30 by tterao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,6 @@
 static bool	_is_direct_y(t_vector3d v)
 {
 	if (v.x == 0 && (v.y == 1 || v.y == -1) && v.z == 0)
-		return (true);
-	else
-		return (false);
-}
-
-static bool	_is_valid_vector(float x, float y, float z, t_vector3d v)
-{
-	if (v.x == x && v.y == y && v.z == z)
 		return (true);
 	else
 		return (false);

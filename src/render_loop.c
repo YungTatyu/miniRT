@@ -35,7 +35,8 @@ static float	_get_t_obj(float current_t, float t, t_objs *node, t_objs **obj)
  * @param obj
  * @return float
  */
-float	hit_object(t_vector3d start_pos, t_objs *head, t_vector3d ray, t_objs **obj)
+float	hit_object(t_vector3d start_pos, t_objs *head,
+					t_vector3d ray, t_objs **obj)
 {
 	float	t;
 	t_objs	*node;
@@ -60,13 +61,29 @@ float	hit_object(t_vector3d start_pos, t_objs *head, t_vector3d ray, t_objs **ob
 	return (t);
 }
 
+static void	_put_pixel(t_global_data *data, t_vector3d ray, t_vector2d pos)
+{
+	t_objs		*obj;
+	const float	t = hit_object(data->camera->coordinate,
+			data->objs_list, ray, &obj);
+	t_fcolor	radiance;
+
+	if (t >= 0.0f)
+	{
+		radiance = get_radiance(data, obj, ray, t);
+		my_mlx_pixel_put(data, pos.x, pos.y,
+			create_rgb(radiance.red, radiance.green, radiance.blue));
+	}
+	else
+		my_mlx_pixel_put(data, pos.x, pos.y,
+			create_rgb(data->background.red, data->background.green,
+				data->background.blue));
+}
+
 void	render_loop(t_global_data *data)
 {
 	t_vector2d	pos;
 	t_vector3d	camera_ray;
-	float		t;
-	t_objs		*obj;
-	t_fcolor	radiance;
 
 	pos.y = 0;
 	while (pos.y < WINDOW_HEIGHT)
@@ -75,16 +92,7 @@ void	render_loop(t_global_data *data)
 		while (pos.x < WINDOW_WIDTH)
 		{
 			camera_ray = get_camera_ray_dynamic(pos.x, pos.y, data);
-			t = hit_object(data->camera->coordinate, data->objs_list, get_camera_ray_dynamic(pos.x, pos.y, data), &obj);
-			// printf("t=%f\n", t);
-			if (t >= 0.0f)
-			{
-				radiance = get_radiance(data, obj, camera_ray, t);
-				my_mlx_pixel_put(data, pos.x, pos.y, create_rgb(radiance.red, radiance.green, radiance.blue));
-				// my_mlx_pixel_put(data, pos.x, pos.y, create_rgb(objs_get_color(obj).red, objs_get_color(obj).green, objs_get_color(obj).blue));
-			}
-			else
-				my_mlx_pixel_put(data, pos.x, pos.y, create_rgb(data->background.red, data->background.green, data->background.blue));
+			_put_pixel(data, camera_ray, pos);
 			pos.x++;
 		}
 		pos.y++;
