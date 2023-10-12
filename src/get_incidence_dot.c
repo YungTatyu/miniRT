@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sphere_get_incidence_dot.c                         :+:      :+:    :+:   */
+/*   get_incidence_dot.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tterao <tterao@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 16:54:43 by tterao            #+#    #+#             */
-/*   Updated: 2023/10/10 15:34:59 by tterao           ###   ########.fr       */
+/*   Updated: 2023/10/11 16:13:28 by tterao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
  * @return t_vector3d
  */
 t_vector3d	get_intersection_pos(
-		const t_vector3d camera_pos, const float t, const t_vector3d ray)
+		const t_vector3d camera_pos, const double t, const t_vector3d ray)
 {
 	return (vector3d_add(camera_pos, vector3d_fmulv(t, ray)));
 }
@@ -55,7 +55,8 @@ t_vector3d	get_normal_vector(
 	if (node->type == PLANE)
 		return (((t_plane *)node->obj)->direction);
 	// else if (node->type == SPHERE)
-	return (vector3d_normalize(vector3d_sub(intersection_pos, objs_get_coordinate(node))));
+	return (vector3d_normalize(
+			vector3d_sub(intersection_pos, objs_get_coordinate(node))));
 }
 
 /**
@@ -70,10 +71,10 @@ t_vector3d	get_normal_vector(
  * @param data
  * @param ray
  * @param t
- * @return float
+ * @return double
  */
-float	get_incidence_dot(t_global_data *data, const t_objs *node,
-						const t_vector3d ray, const float t)
+double	get_incidence_dot(t_global_data *data, const t_objs *node,
+						const t_vector3d ray, const double t)
 {
 	const t_vector3d	intersection_pos = get_intersection_pos(
 			data->camera->coordinate, t, ray);
@@ -81,8 +82,8 @@ float	get_incidence_dot(t_global_data *data, const t_objs *node,
 			data->light->coordinate, intersection_pos);
 	const t_vector3d	normal = get_normal_vector(
 			intersection_pos, node);
-	float				dot;
+	double				dot;
 
 	dot = vector3d_dot(normal, incidence_vec);
-	return (constrain(dot, 0.0f, 1.0f));
+	return (constrain(dot, 0.0, 1.0));
 }

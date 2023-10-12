@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_objs.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ryhara <ryhara@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: tterao <tterao@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 16:19:01 by ryhara            #+#    #+#             */
-/*   Updated: 2023/10/10 10:02:11 by ryhara           ###   ########.fr       */
+/*   Updated: 2023/10/11 16:13:28 by tterao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	**parse_sphere(const char *line)
 			return (free_char_array(info), NULL);
 		i++;
 	}
-	if (!ft_isdouble(info[4]) || ft_atof(info[4]) <= 0.0f)
+	if (!ft_isdouble(info[4]) || ft_atof(info[4]) <= 0.0)
 		return (free_char_array(info), NULL);
 	if (!check_color_range(info, 5, 8))
 		return (free_char_array(info), NULL);
@@ -79,7 +79,7 @@ char	**parse_cylinder(const char *line)
 	if (!check_vector_valid(info, 4, 7))
 		return (free_char_array(info), NULL);
 	if (!ft_isdouble(info[7]) || !ft_isdouble(info[8])
-		|| ft_atof(info[7]) <= 0.0f || ft_atof(info[8]) <= 0.0f)
+		|| ft_atof(info[7]) <= 0.0 || ft_atof(info[8]) <= 0.0)
 		return (free_char_array(info), NULL);
 	if (!check_color_range(info, 9, 12))
 		return (free_char_array(info), NULL);

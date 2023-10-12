@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_check.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ryhara <ryhara@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: tterao <tterao@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 09:44:57 by ryhara            #+#    #+#             */
-/*   Updated: 2023/10/10 10:01:25 by ryhara           ###   ########.fr       */
+/*   Updated: 2023/10/11 16:13:28 by tterao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ bool	check_vector_valid(char **info, size_t start, size_t end)
 	i = start;
 	while (i < end)
 	{
-		if (ft_atof(info[i]) != 0.0f)
+		if (ft_atof(info[i]) != 0.0)
 			flag = true;
 		i++;
 	}

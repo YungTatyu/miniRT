@@ -1,6 +1,6 @@
 NAME = miniRT
 CC = cc
-# CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra
 
 ifdef WITH_DEBUG
 	CFLAGS += -g -fsanitize=address
@@ -13,7 +13,7 @@ X11_DIR = /usr/X11
 LIBFT_DIR = libft
 LIBFT_FLAGS = libft/libft.a libft/libftprintf.a libft/libftdprintf.a
 
-INCLUDES =  -I$(INCLUDES_DIR) -I$(MINILIBX_DIR) -I$(X11_DIR)/include -I$(LIBFT_DIR)/includes
+INCLUDES =  -I$(INCLUDES_DIR) -I$(MINILIBX_DIR) -I$(X11_DIR)/include -I$(LIBFT_DIR)/includes -I$(LIBFT_DIR)/stdio/ft_dprintf -I$(LIBFT_DIR)/stdio/ft_printf
 MINILIBX_FLAGS = -Lmlx -lmlx -framework OpenGL -framework AppKit
 
 
@@ -35,8 +35,8 @@ SRC = main.c \
 	vector3d_utils.c	\
 	sphere.c	\
 	color.c	\
-	sphere_get_radiance.c	\
-	sphere_get_incidence_dot.c  \
+	get_radiance.c	\
+	get_incidence_dot.c  \
 	vector3d_utils2.c	\
 	sphere.c \
 	cylinder.c \
@@ -44,7 +44,9 @@ SRC = main.c \
 	get_camera_ray.c \
 	free.c	\
 	render_loop.c	\
-	shadow.c
+	shadow.c	\
+	plane.c	\
+	mlx_key.c
 
 SRCS = $(addprefix $(SRCS_DIR)/, $(SRC));
 
@@ -79,6 +81,6 @@ debug: fclean
 	make WITH_DEBUG=1
 
 test:
-	./miniRT files/subject.rt
+	bash -c 'for f in files/error/*; do echo $$f; ./miniRT $$f; echo; done;'
 
 .PHONY: all fclean clean re debug test

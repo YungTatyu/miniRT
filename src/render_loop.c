@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   render_loop.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tterao <tterao@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/10/11 16:14:48 by tterao            #+#    #+#             */
+/*   Updated: 2023/10/11 16:25:34 by tterao           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "miniRT.h"
 #include "parse.h"
@@ -12,13 +23,14 @@
  * @param t
  * @param node
  * @param obj
- * @return float
+ * @return double
  */
-static float	_get_t_obj(float current_t, float t, t_objs *node, t_objs **obj)
+static double	_get_t_obj(double current_t, double t,
+						t_objs *node, t_objs **obj)
 {
-	if (t < 0.0f)
+	if (t < 0.0)
 		return (current_t);
-	else if (current_t < 0.0f || fminf(current_t, t) == t)
+	else if (current_t < 0.0 || fmin(current_t, t) == t)
 	{
 		*obj = node;
 		return (t);
@@ -33,15 +45,16 @@ static float	_get_t_obj(float current_t, float t, t_objs *node, t_objs **obj)
  * @param head
  * @param ray
  * @param obj
- * @return float
+ * @return double
  */
-float	hit_object(t_vector3d start_pos, t_objs *head, t_vector3d ray, t_objs **obj)
+double	hit_object(t_vector3d start_pos, t_objs *head,
+					t_vector3d ray, t_objs **obj)
 {
-	float	t;
+	double	t;
 	t_objs	*node;
 
 	node = head->next;
-	t = -1.0f;
+	t = -1.0;
 	while (node != head)
 	{
 		if (node->type == PLANE)
@@ -60,13 +73,29 @@ float	hit_object(t_vector3d start_pos, t_objs *head, t_vector3d ray, t_objs **ob
 	return (t);
 }
 
+static void	_put_pixel(t_global_data *data, t_vector3d ray, t_vector2d pos)
+{
+	t_objs			*obj;
+	const double	t = hit_object(data->camera->coordinate,
+			data->objs_list, ray, &obj);
+	t_fcolor		radiance;
+
+	if (t >= 0.0)
+	{
+		radiance = get_radiance(data, obj, ray, t);
+		my_mlx_pixel_put(data, pos.x, pos.y,
+			create_rgb(radiance.red, radiance.green, radiance.blue));
+	}
+	else
+		my_mlx_pixel_put(data, pos.x, pos.y,
+			create_rgb(data->background.red, data->background.green,
+				data->background.blue));
+}
+
 void	render_loop(t_global_data *data)
 {
 	t_vector2d	pos;
 	t_vector3d	camera_ray;
-	float		t;
-	t_objs		*obj;
-	t_fcolor	radiance;
 
 	pos.y = 0;
 	while (pos.y < WINDOW_HEIGHT)
@@ -75,16 +104,7 @@ void	render_loop(t_global_data *data)
 		while (pos.x < WINDOW_WIDTH)
 		{
 			camera_ray = get_camera_ray_dynamic(pos.x, pos.y, data);
-			t = hit_object(data->camera->coordinate, data->objs_list, get_camera_ray_dynamic(pos.x, pos.y, data), &obj);
-			// printf("t=%f\n", t);
-			if (t >= 0.0f)
-			{
-				radiance = get_radiance(data, obj, camera_ray, t);
-				my_mlx_pixel_put(data, pos.x, pos.y, create_rgb(radiance.red, radiance.green, radiance.blue));
-				// my_mlx_pixel_put(data, pos.x, pos.y, create_rgb(objs_get_color(obj).red, objs_get_color(obj).green, objs_get_color(obj).blue));
-			}
-			else
-				my_mlx_pixel_put(data, pos.x, pos.y, create_rgb(data->background.red, data->background.green, data->background.blue));
+			_put_pixel(data, camera_ray, pos);
 			pos.x++;
 		}
 		pos.y++;

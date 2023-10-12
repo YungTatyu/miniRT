@@ -1,36 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   mlx_key.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tterao <tterao@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/29 17:54:04 by tterao            #+#    #+#             */
-/*   Updated: 2023/10/11 17:09:22 by tterao           ###   ########.fr       */
+/*   Created: 2023/10/11 16:16:03 by tterao            #+#    #+#             */
+/*   Updated: 2023/10/11 16:16:29 by tterao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
-#include "parse.h"
-#include <stdlib.h>
 
-int	main(int argc, char *argv[])
+int	close_esc(int keycode, t_global_data *data)
 {
-	t_global_data	data;
-
-	if (argc == 2)
+	if (keycode == ESC_KEY)
 	{
-		global_data_init(&data);
-		if (!parse(&data, argv[1]))
-			return (1);
-		render(&data);
+		mlx_destroy_window(data->mlx, data->mlx_win);
+		exit(0);
 	}
-	else
-		ft_dprintf(STDERR_FILENO, "Error\nInvalid number of arguments\n");
 	return (0);
 }
 
-// __attribute__((destructor))
-// static void destructor() {
-// 	system("leaks -q miniRT");
-// }
+int	close_x(t_global_data *data)
+{
+	mlx_destroy_window(data->mlx, data->mlx_win);
+	exit(0);
+	return (0);
+}

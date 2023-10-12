@@ -6,13 +6,13 @@
 /*   By: tterao <tterao@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 14:22:01 by ryhara            #+#    #+#             */
-/*   Updated: 2023/10/10 15:59:20 by tterao           ###   ########.fr       */
+/*   Updated: 2023/10/11 16:10:47 by tterao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-bool	check_cylinder_cross(float dot, float height, float t)
+bool	check_cylinder_cross(double dot, double height, double t)
 {
 	if (0 <= dot && dot <= height && t > 0)
 		return (true);
