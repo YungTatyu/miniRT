@@ -15,8 +15,8 @@
  */
 static double	_calc_t(double a, double b, double c)
 {
-	const double	t1 = (-b + sqrtf(powf(b, 2.0) - (4.0 * a * c))) / (2.0 * a);
-	const double	t2 = (-b - sqrtf(powf(b, 2.0) - (4.0 * a * c))) / (2.0 * a);
+	const double	t1 = (-b + sqrt(pow(b, 2.0) - (4.0 * a * c))) / (2.0 * a);
+	const double	t2 = (-b - sqrt(pow(b, 2.0) - (4.0 * a * c))) / (2.0 * a);
 
 	if (t1 > 0.0 && t2 > 0.0)
 		return (fmin(t1, t2));
@@ -42,8 +42,8 @@ double	hit_sphere(t_vector3d ray, t_vector3d camera_pos,
 	const double	b = 2.0 * vector3d_dot(
 			vector3d_sub(camera_pos, obj_pos), ray);
 	const double	c = vector3d_mag_sq(
-			vector3d_sub(camera_pos, obj_pos)) - powf(radius, 2.0);
-	const double	d = powf(b, 2.0) - (4.0 * a * c);
+			vector3d_sub(camera_pos, obj_pos)) - pow(radius, 2.0);
+	const double	d = pow(b, 2.0) - (4.0 * a * c);
 
 	if (d == 0.0)
 		return (-(b) / (2.0 * a));

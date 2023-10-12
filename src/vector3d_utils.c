@@ -6,7 +6,7 @@
 /*   By: tterao <tterao@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 15:26:32 by tterao            #+#    #+#             */
-/*   Updated: 2023/10/11 16:21:30 by tterao           ###   ########.fr       */
+/*   Updated: 2023/10/12 14:36:03 by tterao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ double	vector3d_dot(const t_vector3d v1, const t_vector3d v2)
  */
 double	vector3d_mag_sq(const t_vector3d v)
 {
-	return (powf(v.x, 2.0) + powf(v.y, 2.0) + powf(v.z, 2.0));
+	return (pow(v.x, 2.0) + pow(v.y, 2.0) + pow(v.z, 2.0));
 }
 
 /**
@@ -44,7 +44,7 @@ double	vector3d_mag_sq(const t_vector3d v)
  */
 double	vector3d_mag(const t_vector3d v)
 {
-	return (sqrtf(vector3d_mag_sq(v)));
+	return (sqrt(vector3d_mag_sq(v)));
 }
 
 /**

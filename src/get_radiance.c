@@ -6,7 +6,7 @@
 /*   By: tterao <tterao@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 16:54:18 by tterao            #+#    #+#             */
-/*   Updated: 2023/10/11 16:13:28 by tterao           ###   ########.fr       */
+/*   Updated: 2023/10/12 14:35:36 by tterao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ t_fcolor	get_radiance(t_global_data *data, t_objs *node,
 	const double	light_diffuse_radiance
 		= data->light->ratio * dot;
 	const double	light_specular_reflection_radiance
-		= powf(_get_light_specular_reflection_dot(
+		= pow(_get_light_specular_reflection_dot(
 				ray, dot, get_incidence_vector(data->light->coordinate,
 					get_intersection_pos(data->camera->coordinate, t, ray)),
 				get_normal_vector(get_intersection_pos(

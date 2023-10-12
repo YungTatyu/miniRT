@@ -6,7 +6,7 @@
 /*   By: tterao <tterao@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 13:59:02 by ryhara            #+#    #+#             */
-/*   Updated: 2023/10/11 16:13:28 by tterao           ###   ########.fr       */
+/*   Updated: 2023/10/12 14:36:27 by tterao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	screen_data_init(int x, int y, t_global_data *data,
 	screen->w_s = 2.0;
 	screen->h_s = WINDOW_HEIGHT * screen->w_s / WINDOW_WIDTH;
 	screen->camera_to_screen = screen->w_s
-		/ (2.0 * (tanf((double)(data->camera->fov * M_PI / 180) / 2.0)));
+		/ (2.0 * (tan((double)(data->camera->fov * M_PI / 180) / 2.0)));
 	screen->f_x = (screen->w_s * (double)x) / (WINDOW_WIDTH - 1)
 		- screen->w_s / 2;
 	screen->f_y = (-screen->h_s * (double)y) / (WINDOW_HEIGHT - 1)
