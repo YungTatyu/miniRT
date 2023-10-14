@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   objs.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tterao <tterao@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ryhara <ryhara@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 14:27:32 by tterao            #+#    #+#             */
-/*   Updated: 2023/10/11 16:12:29 by tterao           ###   ########.fr       */
+/*   Updated: 2023/10/14 14:34:53 by ryhara           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,5 @@ t_objs		*objs_lastnode(t_objs *head);
 void		objs_free(t_objs *head);
 t_vector3d	objs_get_coordinate(const t_objs *node);
 t_color		objs_get_color(const t_objs *node);
-
 
 #endif

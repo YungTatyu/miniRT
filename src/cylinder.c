@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cylinder.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tterao <tterao@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ryhara <ryhara@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 14:15:30 by ryhara            #+#    #+#             */
-/*   Updated: 2023/10/12 14:36:03 by tterao           ###   ########.fr       */
+/*   Updated: 2023/10/14 14:32:00 by ryhara           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ static double	_calc_t(t_cylinder *cylinder,
 		t.t = t.t2;
 	else
 		t.t = -1.0;
+	cylinder->t = t;
 	return (t.t);
 }
 
@@ -53,37 +54,8 @@ double	hit_cylinder(t_vector3d ray, t_vector3d start_pos,
 	t.d = pow(t.b, 2.0) - (4.0 * t.a * t.c);
 	if (t.d == 0)
 		t.t = (-(t.b) / (2.0 * t.a));
-	t.t1 = (-t.b + sqrt(pow(t.b, 2.0) - (4.0 * t.a * t.c))) / (2.0 * t.a);
-	t.t2 = (-t.b - sqrt(pow(t.b, 2.0) - (4.0 * t.a * t.c))) / (2.0 * t.a);
+	t.t1 = (-t.b - sqrt(pow(t.b, 2.0) - (4.0 * t.a * t.c))) / (2.0 * t.a);
+	t.t2 = (-t.b + sqrt(pow(t.b, 2.0) - (4.0 * t.a * t.c))) / (2.0 * t.a);
 	ray_cylinder = get_cylinder_ray(start_pos, cylinder, t, ray);
 	return (_calc_t(cylinder, ray_cylinder, t));
-}
-
-void	render_cylinder_loop(t_global_data *data, t_objs *node)
-{
-	t_vector2d		pos;
-	t_vector3d		camera_ray;
-	t_fcolor		radiance;
-	double			t;
-
-	pos.y = 0;
-	while (pos.y < WINDOW_HEIGHT)
-	{
-		pos.x = 0;
-		while (pos.x < WINDOW_WIDTH)
-		{
-			camera_ray = get_camera_ray_dynamic(pos.x, pos.y, data);
-			t = hit_cylinder(camera_ray, data->camera->coordinate, (t_cylinder *)node->obj);
-			if (t < 0.0)
-				my_mlx_pixel_put(data, pos.x, pos.y, create_rgb(data->background.red, data->background.green, data->background.blue));
-			else
-			{
-				radiance = get_radiance(data, node, camera_ray, t);
-				my_mlx_pixel_put(data, pos.x, pos.y, create_rgb(radiance.red, radiance.green, radiance.blue));
-			}
-			pos.x++;
-		}
-		pos.y++;
-	}
-	mlx_put_image_to_window(data->mlx, data->mlx_win, data->img, 0, 0);
 }

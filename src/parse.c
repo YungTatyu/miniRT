@@ -6,7 +6,7 @@
 /*   By: ryhara <ryhara@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 15:35:48 by ryhara            #+#    #+#             */
-/*   Updated: 2023/10/10 09:59:43 by ryhara           ###   ########.fr       */
+/*   Updated: 2023/10/14 14:30:33 by ryhara           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,13 @@ static int	_parse_open(t_global_data *data, const char *file)
 		return (free_data_and_puterr(data, "Please input *.rt file."), -1);
 }
 
+static void	_free_line_and_data(char *line, t_global_data *data)
+{
+	free(line);
+	global_data_free(data);
+	ft_dprintf(STDERR_FILENO, INVALID_ERR);
+}
+
 static bool	_parse_loop(t_global_data *data, int fd)
 {
 	char	*line;
@@ -77,17 +84,12 @@ static bool	_parse_loop(t_global_data *data, int fd)
 			free(line);
 			continue ;
 		}
-		info = parse_check(line);
+		info = parse_check(line, &count);
 		if (info == NULL)
-		{
-			free(line);
-			global_data_free(data);
-			return (ft_dprintf(STDERR_FILENO, INVALID_ERR), false);
-		}
+			return (_free_line_and_data(line, data), false);
 		free(line);
 		_parse_to_init(data, (const char **)info);
 		free_char_array(info);
-		count++;
 	}
 	if (count == 0)
 		return (free_data_and_puterr(data, "This is empty file."), false);

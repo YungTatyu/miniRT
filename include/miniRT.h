@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tterao <tterao@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ryhara <ryhara@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 18:14:23 by tterao            #+#    #+#             */
-/*   Updated: 2023/10/11 16:10:47 by tterao           ###   ########.fr       */
+/*   Updated: 2023/10/14 14:22:26 by ryhara           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,17 @@ typedef struct s_fcolor
 	double	green;
 	double	blue;
 }t_fcolor;
+
+typedef struct s_t_data
+{
+	double	a;
+	double	b;
+	double	c;
+	double	d;
+	double	t;
+	double	t1;
+	double	t2;
+}t_t_data;
 
 typedef struct s_ambient_lightning
 {
@@ -86,6 +97,7 @@ typedef struct s_cylinder
 {
 	t_vector3d	coordinate;
 	t_vector3d	direction;
+	t_t_data	t;
 	t_color		color;
 	double		diameter;
 	double		radius;
@@ -109,17 +121,6 @@ typedef struct s_global_data
 	t_light				*light;
 	t_objs				*objs_list;
 }t_global_data;
-
-typedef struct s_t_data
-{
-	double	a;
-	double	b;
-	double	c;
-	double	d;
-	double	t;
-	double	t1;
-	double	t2;
-}t_t_data;
 
 typedef struct s_cylinder_ray
 {

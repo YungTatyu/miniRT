@@ -6,7 +6,7 @@
 /*   By: ryhara <ryhara@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 17:04:51 by ryhara            #+#    #+#             */
-/*   Updated: 2023/10/10 10:02:37 by ryhara           ###   ########.fr       */
+/*   Updated: 2023/10/14 11:18:40 by ryhara           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,7 @@ char	**parse_camera(const char *line)
 	}
 	if (!check_vector_valid(info, 4, 7))
 		return (free_char_array(info), NULL);
-	if (!ft_isint(info[7]) || !check_range_int(ft_atoi(info[7]), 0, 180)
-		|| ft_atoi(info[7]) == 0)
+	if (!ft_isint(info[7]) || !check_range_int(ft_atoi(info[7]), 1, 179))
 		return (free_char_array(info), NULL);
 	return (info);
 }
