@@ -37,15 +37,15 @@ static t_fcolor	_calc_radiance(
 	t_fcolor	radiance;
 
 	radiance.red = (color.red * constrain((light_diffuse_radiance
-					+ ambient_light_radiance.red
+					+ color_to_fcolor(ambient_light_radiance.red)
 					+ light_specular_reflection_radiance), 0.0, 1.0));
 	radiance.green
 		= (color.green * constrain((light_diffuse_radiance
-					+ ambient_light_radiance.green
+					+ color_to_fcolor(ambient_light_radiance.green)
 					+ light_specular_reflection_radiance), 0.0, 1.0));
 	radiance.blue
 		= (color.blue * constrain((light_diffuse_radiance
-					+ ambient_light_radiance.blue
+					+ color_to_fcolor(ambient_light_radiance.blue)
 					+ light_specular_reflection_radiance), 0.0, 1.0));
 	return (radiance);
 }
