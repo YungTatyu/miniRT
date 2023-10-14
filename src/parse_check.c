@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_check.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tterao <tterao@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ryhara <ryhara@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 09:44:57 by ryhara            #+#    #+#             */
-/*   Updated: 2023/10/11 16:13:28 by tterao           ###   ########.fr       */
+/*   Updated: 2023/10/14 14:31:36 by ryhara           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,9 @@ bool	check_vector_valid(char **info, size_t start, size_t end)
 	return (flag);
 }
 
-char	**parse_check(const char *line)
+char	**parse_check(const char *line, size_t *count)
 {
+	(*count)++;
 	if (!check_line(line))
 		return (NULL);
 	if (!ft_strncmp(MP_AMIBIENT_LIGHT, line, 2))

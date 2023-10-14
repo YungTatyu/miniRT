@@ -6,7 +6,7 @@
 /*   By: ryhara <ryhara@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 13:10:28 by ryhara            #+#    #+#             */
-/*   Updated: 2023/09/29 14:03:51 by ryhara           ###   ########.fr       */
+/*   Updated: 2023/10/14 13:05:56 by ryhara           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ int	ft_isdouble(char *s)
 		i++;
 	if (s[i] == '-' || s[i] == '+')
 		i++;
+	if (!ft_isdigit(s[i]))
+		return (0);
 	while (s[i] && ft_isdigit(s[i]))
 		i++;
 	if (i != 0 && s[i] == '.')
