@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ryhara <ryhara@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: tterao <tterao@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 18:14:23 by tterao            #+#    #+#             */
-/*   Updated: 2023/10/14 14:22:26 by ryhara           ###   ########.fr       */
+/*   Updated: 2023/10/14 16:50:15 by tterao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,6 +150,7 @@ int			create_rgb(int r, int g, int b);
 void		color_add(t_color color, double adding_num);
 double		color_to_fcolor(double color);
 double		color_to_color(double fcolor);
+t_color		color_fmulc(double f, const t_color c);
 double		constrain(double n, double min, double max);
 t_fcolor	get_radiance(t_global_data *data, t_objs *node,
 				t_vector3d ray, const double t);
