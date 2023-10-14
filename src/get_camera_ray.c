@@ -6,7 +6,7 @@
 /*   By: tterao <tterao@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 13:59:02 by ryhara            #+#    #+#             */
-/*   Updated: 2023/10/12 14:36:27 by tterao           ###   ########.fr       */
+/*   Updated: 2023/10/14 14:29:34 by tterao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,6 @@ t_vector3d	get_camera_ray_dynamic(int x, int y, t_global_data *data)
 	t_screen_data	screen;
 	t_vector3d		camera_dir;
 
-	// if (_is_valid_vector(0, 0, 0, data->camera->direction))
-	// 	return (get_camera_ray(x, y, data));
-	// 0,0,0 はerror
 	screen_data_init(x, y, data, &screen);
 	camera_dir = vector3d_add(data->camera->coordinate,
 			vector3d_fmulv(screen.camera_to_screen, data->camera->direction));

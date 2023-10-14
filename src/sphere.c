@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   sphere.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tterao <tterao@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/10/14 14:33:46 by tterao            #+#    #+#             */
+/*   Updated: 2023/10/14 14:33:49 by tterao           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "miniRT.h"
 #include "parse.h"
@@ -67,35 +78,4 @@ double	constrain(double n, double min, double max)
 	else if (n < min)
 		n = min;
 	return (n);
-}
-
-void	render_sphere_loop(t_global_data *data, t_objs *node)
-{
-	int			y;
-	int			x;
-	t_vector3d	camera_ray;
-	double		t;
-	t_fcolor	radiance;
-
-	y = 0;
-	while (y < WINDOW_HEIGHT)
-	{
-		x = 0;
-		while (x < WINDOW_WIDTH)
-		{
-			camera_ray = get_camera_ray_dynamic(x, y, data);
-			t = hit_sphere(camera_ray, data->camera->coordinate, objs_get_coordinate(node), ((t_sphere *)node->obj)->radius);
-			// printf("t=%f\n", t);
-			if (t >= 0.0)
-			{
-				radiance = get_radiance(data, node, camera_ray, t);
-				my_mlx_pixel_put(data, x, y, create_rgb(radiance.red, radiance.green, radiance.blue));
-			}
-			else
-				my_mlx_pixel_put(data, x, y, create_rgb(data->background.red, data->background.green, data->background.blue));
-			x++;
-		}
-		y++;
-	}
-	mlx_put_image_to_window(data->mlx, data->mlx_win, data->img, 0, 0);
 }
