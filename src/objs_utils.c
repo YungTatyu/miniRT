@@ -6,7 +6,7 @@
 /*   By: tterao <tterao@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 15:42:57 by tterao            #+#    #+#             */
-/*   Updated: 2023/10/09 17:17:37 by tterao           ###   ########.fr       */
+/*   Updated: 2023/10/14 14:30:05 by tterao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ t_vector3d	objs_get_coordinate(const t_objs *node)
 		return (((t_plane *)node->obj)->coordinate);
 	else if (node->type == SPHERE)
 		return (((t_sphere *)node->obj)->coordinate);
-	// else if (node->type == CYLINDER)
 	return (((t_cylinder *)node->obj)->coordinate);
 }
 
@@ -66,6 +65,5 @@ t_color	objs_get_color(const t_objs *node)
 		return (((t_plane *)node->obj)->color);
 	else if (node->type == SPHERE)
 		return (((t_sphere *)node->obj)->color);
-	// else if (node->type == CYLINDER)
 	return (((t_cylinder *)node->obj)->color);
 }

@@ -6,7 +6,7 @@
 /*   By: tterao <tterao@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 17:54:04 by tterao            #+#    #+#             */
-/*   Updated: 2023/10/11 17:09:22 by tterao           ###   ########.fr       */
+/*   Updated: 2023/10/14 15:01:00 by tterao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,6 @@ int	main(int argc, char *argv[])
 }
 
 // __attribute__((destructor))
-// static void destructor() {
+// 	static void	destructor(void) {
 // 	system("leaks -q miniRT");
 // }

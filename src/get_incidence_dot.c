@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_incidence_dot.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ryhara <ryhara@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: tterao <tterao@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 16:54:43 by tterao            #+#    #+#             */
-/*   Updated: 2023/10/14 14:33:03 by ryhara           ###   ########.fr       */
+/*   Updated: 2023/10/14 14:46:49 by tterao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,21 +39,25 @@ t_vector3d	get_incidence_vector(
 	return (vector3d_normalize(vector3d_sub(light_pos, intersection_pos)));
 }
 
-t_vector3d get_normal_cylinder(t_vector3d intersection_pos, const t_objs *node)
+t_vector3d	get_normal_cylinder(t_vector3d intersection_pos, const t_objs *node)
 {
 	t_vector3d	intersection_sub_coordinate;
 	t_vector3d	dot_direction;
 	t_cylinder	*cylinder;
 
 	cylinder = ((t_cylinder *)node->obj);
-	intersection_sub_coordinate = vector3d_sub(intersection_pos, cylinder->coordinate);
-	dot_direction = vector3d_fmulv(vector3d_dot(intersection_sub_coordinate, cylinder->direction), cylinder->direction);
+	intersection_sub_coordinate = vector3d_sub(intersection_pos,
+			cylinder->coordinate);
+	dot_direction = vector3d_fmulv(vector3d_dot(intersection_sub_coordinate,
+				cylinder->direction), cylinder->direction);
 	if (cylinder->t.t == cylinder->t.t1)
-		return (vector3d_fmulv(1.0 / vector3d_mag(vector3d_sub(intersection_sub_coordinate, dot_direction)),
-			vector3d_sub(intersection_sub_coordinate, dot_direction)));
+		return (vector3d_fmulv(1.0 / vector3d_mag(
+					vector3d_sub(intersection_sub_coordinate, dot_direction)),
+				vector3d_sub(intersection_sub_coordinate, dot_direction)));
 	else
-		return (vector3d_fmulv(1.0 / vector3d_mag(vector3d_sub(dot_direction, intersection_sub_coordinate)),
-			vector3d_sub(dot_direction, intersection_sub_coordinate)));
+		return (vector3d_fmulv(1.0 / vector3d_mag(vector3d_sub(
+						dot_direction, intersection_sub_coordinate)),
+				vector3d_sub(dot_direction, intersection_sub_coordinate)));
 }
 
 /**
@@ -72,8 +76,8 @@ t_vector3d	get_normal_vector(
 	if (node->type == PLANE)
 		return (((t_plane *)node->obj)->direction);
 	else if (node->type == SPHERE)
-		return (vector3d_normalize(
-			vector3d_sub(intersection_pos, objs_get_coordinate(node))));
+		return (vector3d_normalize(vector3d_sub(
+					intersection_pos, objs_get_coordinate(node))));
 	else
 		return (get_normal_cylinder(intersection_pos, node));
 }

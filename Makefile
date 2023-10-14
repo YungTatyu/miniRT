@@ -80,7 +80,12 @@ re: fclean all
 debug: fclean
 	make WITH_DEBUG=1
 
-test:
-	bash -c 'for f in files/error/*; do echo $$f; ./miniRT $$f; echo; done;'
+files:	all
+	@bash -c 'for f in files/my_test/*; do echo $$f; ./miniRT $$f; echo; done;'
 
-.PHONY: all fclean clean re debug test
+test:	all
+	@echo "------------------test start------------------"
+	@bash -c 'for f in files/ng/*; do echo $$f; ./miniRT $$f; echo; done;'
+	@echo "------------------test end------------------"
+
+.PHONY: all fclean clean re debug test files
