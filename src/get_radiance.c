@@ -6,7 +6,7 @@
 /*   By: tterao <tterao@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 16:54:18 by tterao            #+#    #+#             */
-/*   Updated: 2023/10/12 14:35:36 by tterao           ###   ########.fr       */
+/*   Updated: 2023/10/14 16:54:52 by tterao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,22 +30,22 @@ double		shadow_res(t_global_data *data, t_vector3d shadow_ray,
 				t_vector3d intersection_pos);
 
 static t_fcolor	_calc_radiance(
-	t_color color, const double ambient_light_radiance,
+	t_color color, const t_color ambient_light_radiance,
 		const double light_diffuse_radiance,
 		const double light_specular_reflection_radiance)
 {
 	t_fcolor	radiance;
 
 	radiance.red = (color.red * constrain((light_diffuse_radiance
-					+ ambient_light_radiance
+					+ ambient_light_radiance.red
 					+ light_specular_reflection_radiance), 0.0, 1.0));
 	radiance.green
 		= (color.green * constrain((light_diffuse_radiance
-					+ ambient_light_radiance
+					+ ambient_light_radiance.green
 					+ light_specular_reflection_radiance), 0.0, 1.0));
 	radiance.blue
 		= (color.blue * constrain((light_diffuse_radiance
-					+ ambient_light_radiance
+					+ ambient_light_radiance.blue
 					+ light_specular_reflection_radiance), 0.0, 1.0));
 	return (radiance);
 }
@@ -117,8 +117,8 @@ static double	_get_light_specular_reflection_dot(
 t_fcolor	get_radiance(t_global_data *data, t_objs *node,
 							t_vector3d ray, const double t)
 {
-	const double	ambient_light_radiance = AMBIENT_LIGHT_REFLECTION
-		* data->ambient_light->ratio;
+	const t_color	ambient_light_radiance = color_fmulc(
+			data->ambient_light->ratio, data->ambient_light->color);
 	const double	dot = get_incidence_dot(data, node, ray, t);
 	const double	light_diffuse_radiance
 		= data->light->ratio * dot;

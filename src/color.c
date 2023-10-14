@@ -6,7 +6,7 @@
 /*   By: tterao <tterao@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 14:32:00 by tterao            #+#    #+#             */
-/*   Updated: 2023/10/14 14:32:03 by tterao           ###   ########.fr       */
+/*   Updated: 2023/10/14 16:55:31 by tterao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,14 @@ double	color_to_color(double fcolor)
 
 	color = fcolor * COLOR;
 	return (constrain(color, 0.0, COLOR));
+}
+
+t_color	color_fmulc(double f, const t_color c)
+{
+	t_color	result;
+
+	result.red = f * c.red;
+	result.green = f * c.green;
+	result.blue = f * c.blue;
+	return (result);
 }
