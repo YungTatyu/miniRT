@@ -81,7 +81,7 @@ debug: fclean
 	make WITH_DEBUG=1
 
 files:	all
-	@bash -c 'for f in files/test/*; do echo $$f; ./miniRT $$f; echo; done;'
+	@bash -c 'for f in files/my_test/*; do echo $$f; ./miniRT $$f; echo; done;'
 
 test:	all
 	@echo "------------------test start------------------"

@@ -6,7 +6,7 @@
 /*   By: tterao <tterao@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 13:59:02 by ryhara            #+#    #+#             */
-/*   Updated: 2023/10/14 14:29:34 by tterao           ###   ########.fr       */
+/*   Updated: 2023/10/14 14:44:38 by tterao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ void	screen_data_init(int x, int y, t_global_data *data,
 				t_screen_data *screen)
 {
 	if (_is_direct_y(data->camera->direction))
-		screen->up = vector3d_create(1, 0, 0);
+		screen->up = vector3d_create(0.0, 0.0, -1.0);
 	else
-		screen->up = vector3d_create(0, 1, 0);
+		screen->up = vector3d_create(0.0, 1.0, 0.0);
 	screen->screen_unit_x = vector3d_cross(screen->up, data->camera->direction);
 	screen->screen_unit_y = vector3d_cross(data->camera->direction,
 			screen->screen_unit_x);

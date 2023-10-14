@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tterao <tterao@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ryhara <ryhara@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 14:59:20 by tterao            #+#    #+#             */
-/*   Updated: 2023/10/11 16:33:30 by tterao           ###   ########.fr       */
+/*   Updated: 2023/10/14 14:34:57 by ryhara           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #ifndef PARSE_H
 # define PARSE_H
@@ -53,7 +52,7 @@ t_light				*light_init(const char **info);
 bool				check_line(const char *line);
 bool				check_exist_a_c_l(t_global_data *data);
 bool				check_vector_valid(char **info, size_t start, size_t end);
-char				**parse_check(const char *line);
+char				**parse_check(const char *line, size_t *count);
 // parse_objs.c
 char				**parse_sphere(const char *line);
 char				**parse_plane(const char *line);
